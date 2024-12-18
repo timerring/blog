@@ -1,0 +1,75 @@
+<!doctype html><html lang=en dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="写了一个 github-action 的demo # 如何使用 gpg 签名部署 Github Pages 并验证 # 这周在忙着迁移自己的博客，恰巧知道了在 github 上会存在 commit 伪造的情况，因此安全起见，我添加了 gpg 签"><meta name=theme-color content="#FFFFFF"><meta name=color-scheme content="light dark"><meta property="og:title" content><meta property="og:description" content="写了一个 github-action 的demo # 如何使用 gpg 签名部署 Github Pages 并验证 # 这周在忙着迁移自己的博客，恰巧知道了在 github 上会存在 commit 伪造的情况，因此安全起见，我添加了 gpg 签"><meta property="og:type" content="article"><meta property="og:url" content="https://timerring.github.io/blog/posts/2024-12/how-to-deploy-github-pages-with-gpg-signing/"><meta property="article:section" content="posts"><title>How to Deploy Github Pages With Gpg Signing | timerring</title><link rel=manifest href=/blog/manifest.json><link rel=icon href=/blog/favicon.png type=image/x-icon><link rel=stylesheet href=/blog/book.min.7239e0dcc2289fa3a2c7a7cc740d1819032d83b73d80b466eb84fd369eb71906.css integrity="sha256-cjng3MIon6Oix6fMdA0YGQMtg7c9gLRm64T9Np63GQY=" crossorigin=anonymous><script defer src=/blog/flexsearch.min.js></script>
+<script defer src=/blog/en.search.min.75e8d53ef2e25c128865f8093809c0d8a04f9482dc4e8011772fd836d0b92355.js integrity="sha256-dejVPvLiXBKIZfgJOAnA2KBPlILcToARdy/YNtC5I1U=" crossorigin=anonymous></script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/blog/><img src=/blog/favicon.png alt=Logo><span>timerring</span></a></h2><hr><p>To make each day count.</p><div class=book-search><div class=gcse-search></div></div><script async src="https://cse.google.com/cse.js?cx=40782701766144f96"></script><ul><li><a href=/blog/posts/>Blogs</a></li><li><a href=/blog/docs/now/>Now</a></li><li><a href=/blog/docs/about/>About</a></li><li><a href>Newsletter</a></li><li><a href=/blog/docs/friends/>Friends</a></li><li><a href=/blog/index.xml>RSS</a></li></ul><script>function goToRandomPost(){const e=["/blog/posts/2024/gpg-101/?utm_source=random","/blog/posts/2024/housewarming-2024/?utm_source=random"],t=Math.floor(Math.random()*e.length);window.location.href=e[t]}</script><a class=random onclick=goToRandomPost()>Stroll</a></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/blog/svg/menu.svg class=book-icon alt=Menu></label>
+<strong>timerring</strong>
+<label for=toc-control><img src=/blog/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><a href=#如何使用-gpg-签名部署-github-pages-并验证>如何使用 gpg 签名部署 Github Pages 并验证</a><ul><li><a href=#导入-gpg-密钥>导入 gpg 密钥</a></li><li><a href=#部署>部署</a></li></ul></li><li><a href=#附件>附件</a></li></ul></nav></aside></header><article class=markdown><h1><a href=/blog/posts/2024-12/how-to-deploy-github-pages-with-gpg-signing/>How to Deploy Github Pages With Gpg Signing</a></h1><h1 id=写了一个-github-action-的demo>写了一个 github-action 的demo
+<a class=anchor href=#%e5%86%99%e4%ba%86%e4%b8%80%e4%b8%aa-github-action-%e7%9a%84demo>#</a></h1><h2 id=如何使用-gpg-签名部署-github-pages-并验证>如何使用 gpg 签名部署 Github Pages 并验证
+<a class=anchor href=#%e5%a6%82%e4%bd%95%e4%bd%bf%e7%94%a8-gpg-%e7%ad%be%e5%90%8d%e9%83%a8%e7%bd%b2-github-pages-%e5%b9%b6%e9%aa%8c%e8%af%81>#</a></h2><p>这周在忙着迁移自己的博客，恰巧知道了在 github 上会存在 commit 伪造的情况，因此安全起见，我添加了 gpg 签名，但是在部署 hugo 时仍然遇到了很多问题。</p><p>部署主要有两种情况：</p><ol><li>直接将所有源文件 push 到 github 上，然后使用相关的 action 自己完成部署的全过程。</li><li>将博客源文件与 build 好的文件隔离，每次 push 源文件到 github 的私有仓库里，然后在该私有仓库中设置相关的 workflow 完成向公开的静态仓库 push 的过程。</li></ol><p>为了更加安全，我选择了第二种方式，将 hugo 部署在 github pages 上的 workflow 里，需要使用到 actions-gh-pages 这个 action，但是由于种种原因这个 action 的作者并<a href=https://github.com/peaceiris/actions-gh-pages/issues/164 target=_blank>不想添加 gpg 签名的功能</a>。因此，我们只能自己动手丰衣足食。</p><h3 id=导入-gpg-密钥>导入 gpg 密钥
+<a class=anchor href=#%e5%af%bc%e5%85%a5-gpg-%e5%af%86%e9%92%a5>#</a></h3><p>首先我从 github 上搜到了一个<a href=https://github.com/crazy-max/ghaction-import-gpg target=_blank>导入 gpg 密钥的 workflow</a>，通过阅读文档，我自己使用的 workflow 如下所示：</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span>- name: Import GPG key
+</span></span><span style=display:flex><span>    uses: crazy-max/ghaction-import-gpg@v6
+</span></span><span style=display:flex><span>    with:
+</span></span><span style=display:flex><span>        gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+</span></span><span style=display:flex><span>        passphrase: ${{ secrets.PASSPHRASE }}
+</span></span><span style=display:flex><span>        git_user_signingkey: <span style=color:#00f>true</span>
+</span></span><span style=display:flex><span>        git_commit_gpgsign: <span style=color:#00f>true</span>
+</span></span><span style=display:flex><span>        fingerprint: ${{ secrets.FINGERPRINT }} <span style=color:green># the fingerprint of the public subkey you use, if you use primary key, you can delete this line</span>
+</span></span></code></pre></div><p>其中，如果你只是用 gpg 的 primary secret key，则无需添加 fingerprint，安全起见我用主密钥生成了专门用于签名的 subkey，因此需要指定 subkey 对应的 public key 的 fingerprint。注意，<strong>填写 fingerprint 时需要删除中间的所有空格</strong>，否则会报错 <code>67108933 Not implemented &lt;GPG Agent></code>，我给<a href=https://github.com/crazy-max/ghaction-import-gpg/issues/146 target=_blank>对应的 issue</a> 里添加了这个注意事项。</p><blockquote><p>别忘记在仓库中填写对应的 secret 变量以及值。</p></blockquote><h3 id=部署>部署
+<a class=anchor href=#%e9%83%a8%e7%bd%b2>#</a></h3><p>由于作者不打算添加 gpg 签名，因此我们需要自己 clone 项目并进行修改。通常在 commit 中使用 <code>-S</code> 选项来指定使用 gpg 签名，因此我找到<a href=https://github.com/timerring/actions-gh-pages/commit/561aae06ebd230bf90042551dfa13cc7603313f5#diff-87ed3c6f2d658782ab84c9c4af8a4b97af5e8b0d0fb8c92ea247c7a8b2194d22L204 target=_blank>该 workflow 中 commit 对应的函数</a>，并添加了对应的 <code>-S</code> 选项。</p><p>请注意，自己修改后的 workflow 并不能直接使用，作者说明如下：</p><blockquote><p>This action and my other actions do not provide the branch execution. I add the lib/index.js for only each release commit. After releasing, I delete it.</p></blockquote><p>因此，我们仍需自己发布一个版本，在该项目中直接运行 <code>./release.sh</code>，并且发布你编写的版本。之后就可以在 workflow 中引用你的版本了，我的 workflow 如下：</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span>- name: Deploy Web
+</span></span><span style=display:flex><span>    uses: timerring/actions-gh-pages@e47f7a6802418fb6074655ca670367acd945a2df
+</span></span><span style=display:flex><span>    with:
+</span></span><span style=display:flex><span>        personal_token: ${{ secrets.PERSONAL_TOKEN }}
+</span></span><span style=display:flex><span>        external_repository: timerring/blog <span style=color:green># your target repository</span>
+</span></span><span style=display:flex><span>        publish_branch: main
+</span></span><span style=display:flex><span>        publish_dir: ./public
+</span></span><span style=display:flex><span>        user_name: <span style=color:#a31515>&#39;timerring&#39;</span>
+</span></span><span style=display:flex><span>        user_email: &#39;89397553+timerring@users.noreply.github.com&#39; # ATTENTION: 请务必添加你 github 验证的 email，安全起见，我使用验证邮箱后 github 为我生成的邮箱地址。
+</span></span><span style=display:flex><span>        commit_message: ${{ github.event.head_commit.message }}
+</span></span></code></pre></div><p>注意，<strong>请务必添加你 github 验证后的 email</strong>，否则由于作者设置的默认参数 <code>${process.env.GITHUB_ACTOR}@users.noreply.github.com</code> 只会生成 <code>timerring@users.noreply.github.com</code>，但是你的私钥中并没有该 uuid，因此是无法通过 gpg 验证。（即使你在 keys 中添加了该 uuid，由于该用户邮箱并没有经过 github 验证，最后也只会显示 <code>unverified</code>）。</p><p>最后，push 到 <code>blogsource</code> 仓库后，该 workflow 会自动部署在 <code>blog</code> 仓库中，并且 commit 经过了 gpg 的签名显示 <code>verified</code>！</p><h2 id=附件>附件
+<a class=anchor href=#%e9%99%84%e4%bb%b6>#</a></h2><p>如果你也需要我的部署方法，可以直接使用我修改后发布的 action 版本，参考我完整的 workflow yaml，别忘记填写对应的 secret 变量以及值：</p><div class=highlight><pre tabindex=0 style=background-color:#fff;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=display:flex><span>name: deploy
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>on:
+</span></span><span style=display:flex><span>    push:
+</span></span><span style=display:flex><span>        branches:
+</span></span><span style=display:flex><span>            - main
+</span></span><span style=display:flex><span>    workflow_dispatch:
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>jobs:
+</span></span><span style=display:flex><span>    build:
+</span></span><span style=display:flex><span>        runs-on: ubuntu-latest
+</span></span><span style=display:flex><span>        steps:
+</span></span><span style=display:flex><span>            - name: Checkout
+</span></span><span style=display:flex><span>              uses: actions/checkout@v3
+</span></span><span style=display:flex><span>              with:
+</span></span><span style=display:flex><span>                  submodules: <span style=color:#00f>true</span>
+</span></span><span style=display:flex><span>                  fetch-depth: 0
+</span></span><span style=display:flex><span>                  ref: main
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            - name: Setup Hugo
+</span></span><span style=display:flex><span>              uses: peaceiris/actions-hugo@v2
+</span></span><span style=display:flex><span>              with:
+</span></span><span style=display:flex><span>                  hugo-version: <span style=color:#a31515>&#34;0.108.0&#34;</span>
+</span></span><span style=display:flex><span>                  extended: <span style=color:#00f>true</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            - name: Build Web
+</span></span><span style=display:flex><span>              run: hugo --minify
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            - name: Import GPG key
+</span></span><span style=display:flex><span>              uses: crazy-max/ghaction-import-gpg@v6
+</span></span><span style=display:flex><span>              with:
+</span></span><span style=display:flex><span>                  gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+</span></span><span style=display:flex><span>                  passphrase: ${{ secrets.PASSPHRASE }}
+</span></span><span style=display:flex><span>                  git_user_signingkey: <span style=color:#00f>true</span>
+</span></span><span style=display:flex><span>                  git_commit_gpgsign: <span style=color:#00f>true</span>
+</span></span><span style=display:flex><span>                  fingerprint: ${{ secrets.FINGERPRINT }} <span style=color:green># the fingerprint of the public subkey you use</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>            - name: Deploy Web
+</span></span><span style=display:flex><span>              uses: timerring/actions-gh-pages@e47f7a6802418fb6074655ca670367acd945a2df
+</span></span><span style=display:flex><span>              with:
+</span></span><span style=display:flex><span>                  personal_token: ${{ secrets.PERSONAL_TOKEN }}
+</span></span><span style=display:flex><span>                  external_repository: timerring/blog
+</span></span><span style=display:flex><span>                  publish_branch: main
+</span></span><span style=display:flex><span>                  publish_dir: ./public
+</span></span><span style=display:flex><span>                  user_name: <span style=color:#a31515>&#39;timerring&#39;</span>
+</span></span><span style=display:flex><span>                  user_email: <span style=color:#a31515>&#39;89397553+timerring@users.noreply.github.com&#39;</span>
+</span></span><span style=display:flex><span>                  commit_message: ${{ github.event.head_commit.message }}
+</span></span></code></pre></div></article><footer class=book-footer><div class="flex flex-wrap justify-between"></div><script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments><div class="book-tabs-content markdown-inner"><div id=tcomment></div><script src=https://giscus.app/client.js data-repo=timerring/blog data-repo-id=R_kgDONeZYZg data-category=Announcements data-category-id=DIC_kwDONeZYZs4ClRWs data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=bottom data-theme=preferred_color_scheme data-lang=en crossorigin=anonymous async></script></div></div><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav id=TableOfContents><ul><li><a href=#如何使用-gpg-签名部署-github-pages-并验证>如何使用 gpg 签名部署 Github Pages 并验证</a><ul><li><a href=#导入-gpg-密钥>导入 gpg 密钥</a></li><li><a href=#部署>部署</a></li></ul></li><li><a href=#附件>附件</a></li></ul></nav></div></aside></main></body></html>
