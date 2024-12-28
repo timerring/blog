@@ -1,5 +1,5 @@
-<!doctype html><html lang=en dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="This article will review the basic knowledge of Python, including generator, iterator, and decorator."><meta name=theme-color content="#FFFFFF"><meta name=color-scheme content="light dark"><meta property="og:title" content="Python Generator Iterator and Decorator"><meta property="og:description" content="This article will review the basic knowledge of Python, including generator, iterator, and decorator."><meta property="og:type" content="article"><meta property="og:url" content="https://timerring.com/blog/posts/2024/python-generator-iterator-and-decorator/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2024-12-23T19:19:14+08:00"><meta property="article:modified_time" content="2024-12-23T19:19:14+08:00"><title>Python Generator Iterator and Decorator | timerring</title><link rel=manifest href=/blog/manifest.json><link rel=icon href=/blog/favicon.png type=image/x-icon><link rel=stylesheet href=/blog/book.min.7239e0dcc2289fa3a2c7a7cc740d1819032d83b73d80b466eb84fd369eb71906.css integrity="sha256-cjng3MIon6Oix6fMdA0YGQMtg7c9gLRm64T9Np63GQY=" crossorigin=anonymous><script defer src=/blog/flexsearch.min.js></script>
-<script defer src=/blog/en.search.min.8dbabee8f9d09b8f7017faf89d516ab346be86f66f2b8b3dd80802a2815d4432.js integrity="sha256-jbq+6PnQm49wF/r4nVFqs0a+hvZvK4s92AgCooFdRDI=" crossorigin=anonymous></script>
+<!doctype html><html lang=en dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="This article will review the basic knowledge of Python, including generator, iterator, and decorator."><meta name=theme-color content="#FFFFFF"><meta name=color-scheme content="light dark"><meta property="og:title" content="Python Generator Iterator and Decorator"><meta property="og:description" content="This article will review the basic knowledge of Python, including generator, iterator, and decorator."><meta property="og:type" content="article"><meta property="og:url" content="https://timerring.com/blog/posts/2024/python-generator-iterator-and-decorator/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2024-12-23T19:19:14+08:00"><meta property="article:modified_time" content="2024-12-23T19:19:14+08:00"><title>Python Generator Iterator and Decorator | timerring</title><link rel=manifest href=/blog/manifest.json><link rel=icon href=/blog/favicon.png type=image/x-icon><link rel=stylesheet href=/blog/book.min.49da3e83a33f549093f6fd13275fdbabde9735a9a00782fab2e883cd5100560e.css integrity="sha256-Sdo+g6M/VJCT9v0TJ1/bq96XNamgB4L6suiDzVEAVg4=" crossorigin=anonymous><script defer src=/blog/flexsearch.min.js></script>
+<script defer src=/blog/en.search.min.e47d1dfd9a5ade6b39137a2f155db0b65dfe47d9c9638053e2ef5d6b0ca1a5cc.js integrity="sha256-5H0d/Zpa3ms5E3ovFV2wtl3+R9nJY4BT4u9dawyhpcw=" crossorigin=anonymous></script>
 <script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script><meta name=referrer content="no-referrer-when-downgrade"></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
 <input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/blog/><img src=/blog/favicon.png alt=Logo><span>timerring</span></a></h2><hr><p>To make each day count.</p><div class=book-search><div class=gcse-search></div></div><script async src="https://cse.google.com/cse.js?cx=40782701766144f96"></script><ul><li><a href=/blog/>Dashboard</a></li><li><a href=/blog/posts/>Blogs</a></li><li><a href=/blog/categories/weekly/>Newsletter</a></li><li><a href=/blog/index.xml>RSS</a></li><li><a href=/blog/docs/friends/>Friends</a></li><li><a href=/blog/docs/about/>About</a></li></ul><script>function goToRandomPost(){const e=["/blog/posts/2024/real-computer-network/?utm_source=random","/blog/posts/2024/python-generator-iterator-and-decorator/?utm_source=random","/blog/posts/2024/python-underlying-mechanism/?utm_source=random","/blog/posts/2024/python-files-exceptions-and-modules/?utm_source=random","/blog/posts/2024/python-object-oriented-programming/?utm_source=random","/blog/posts/2024/python-cheatsheet/?utm_source=random","/blog/posts/2024/python-function-parameter/?utm_source=random","/blog/posts/2024/python-control-structure/?utm_source=random","/blog/posts/2024/python-composite-data-type/?utm_source=random","/blog/posts/2024/python-basic-data-type/?utm_source=random","/blog/posts/2024/python-basic-syntax-elements/?utm_source=random","/blog/posts/2024/deploy-github-pages-with-gpg-signing/?utm_source=random","/blog/posts/2024/gpg-101/?utm_source=random","/blog/posts/2024/housewarming-2024/?utm_source=random"],t=Math.floor(Math.random()*e.length);window.location.href=e[t]}</script><a class=random onclick=goToRandomPost()>Stroll</a></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/blog/svg/menu.svg class=book-icon alt=Menu></label>
 <strong>timerring</strong>
@@ -8,396 +8,396 @@
 8 min read
 <span id=busuanzi_container_page_pv>· Page View: <span id=busuanzi_value_page_pv></span></span></h5><div><a href=/blog/categories/tutorial/>tutorial</a></div><div><a href=/blog/tags/python/>python</a></div><blockquote class="book-hint info">If you have any questions, feel free to comment below.</blockquote><hr><p>This article will review the basic knowledge of Python, including generator, iterator, and decorator.</p><h1 id=ch9-generator-iterator-and-decorator>CH9 Generator, Iterator, and Decorator
 <a class=anchor href=#ch9-generator-iterator-and-decorator>#</a></h1><h2 id=generator>Generator
-<a class=anchor href=#generator>#</a></h2><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>ls <span style=color:#666>=</span> [ i<span style=color:#666>**</span><span style=color:#40a070>2</span> <span style=color:#007020;font-weight:700>for</span> i <span style=color:#007020;font-weight:700>in</span> <span style=color:#007020>range</span>(<span style=color:#40a070>1</span>, <span style=color:#40a070>1000001</span>)]
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>for</span> i <span style=color:#007020;font-weight:700>in</span> ls:
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>pass</span>
+<a class=anchor href=#generator>#</a></h2><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>ls <span style=color:#666>=</span> [ i<span style=color:#666>**</span><span style=color:#666>2</span> <span style=color:green;font-weight:700>for</span> i <span style=color:#a2f;font-weight:700>in</span> <span style=color:green>range</span>(<span style=color:#666>1</span>, <span style=color:#666>1000001</span>)]
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>for</span> i <span style=color:#a2f;font-weight:700>in</span> ls:
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>pass</span>
 </span></span></code></pre></div><p>Disadvantage: Occupying a lot of memory</p><ol><li>Use lazy calculation</li><li>Do not need to store a large amount of data at once</li><li>Calculate on the fly, only calculate the value needed each time</li><li>Actually always executing the next() operation until there is no value left</li></ol><h3 id=generator-expression>Generator Expression
-<a class=anchor href=#generator-expression>#</a></h3><p>Do not need to store all data</p><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#007020>sum</span>((i <span style=color:#007020;font-weight:700>for</span> i <span style=color:#007020;font-weight:700>in</span> <span style=color:#007020>range</span>(<span style=color:#40a070>101</span>))) <span style=color:#60a0b0;font-style:italic># Sum, inside a generator</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># 5050</span>
+<a class=anchor href=#generator-expression>#</a></h3><p>Do not need to store all data</p><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:green>sum</span>((i <span style=color:green;font-weight:700>for</span> i <span style=color:#a2f;font-weight:700>in</span> <span style=color:green>range</span>(<span style=color:#666>101</span>))) <span style=color:#408080;font-style:italic># Sum, inside a generator</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># 5050</span>
 </span></span></code></pre></div><h3 id=generator-function-yield>Generator Function <code>yield</code>
-<a class=anchor href=#generator-function-yield>#</a></h3><ul><li>Generate Fibonacci sequence</li></ul><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>fib</span>(<span style=color:#007020>max</span>):
-</span></span><span style=display:flex><span>    n, a, b <span style=color:#666>=</span> <span style=color:#40a070>0</span>, <span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>while</span> n <span style=color:#666>&lt;</span> <span style=color:#007020>max</span>:
-</span></span><span style=display:flex><span>        <span style=color:#007020>print</span>(a)
+<a class=anchor href=#generator-function-yield>#</a></h3><ul><li>Generate Fibonacci sequence</li></ul><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>fib</span>(<span style=color:green>max</span>):
+</span></span><span style=display:flex><span>    n, a, b <span style=color:#666>=</span> <span style=color:#666>0</span>, <span style=color:#666>1</span>, <span style=color:#666>1</span>
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>while</span> n <span style=color:#666>&lt;</span> <span style=color:green>max</span>:
+</span></span><span style=display:flex><span>        <span style=color:green>print</span>(a)
 </span></span><span style=display:flex><span>        a, b <span style=color:#666>=</span> b, a <span style=color:#666>+</span> b
-</span></span><span style=display:flex><span>        n <span style=color:#666>=</span> n <span style=color:#666>+</span> <span style=color:#40a070>1</span>
-</span></span></code></pre></div><p>Construct generator function, execute each time when next() is called, return when encountering yield statement, continue execution from the yield statement last returned.</p><p>Difference:</p><ul><li>A normal function executes all code in the function body at once when called, returning a result (if there is a return value) and then ends.</li><li>The function containing yield (i.e., the generator function) executes until yield, returns a value, and then continues execution multiple times based on needs, possibly returning new values each time, until the function is executed to completion (e.g., when reaching the end of the function or encountering a return statement). It seems like the function has memory effect.</li></ul><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>fib</span>(<span style=color:#007020>max</span>):
-</span></span><span style=display:flex><span>    n, a, b <span style=color:#666>=</span> <span style=color:#40a070>0</span>, <span style=color:#40a070>1</span>, <span style=color:#40a070>1</span>
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>while</span> n <span style=color:#666>&lt;</span> <span style=color:#007020>max</span>:
-</span></span><span style=display:flex><span>        <span style=color:#007020;font-weight:700>yield</span> a
+</span></span><span style=display:flex><span>        n <span style=color:#666>=</span> n <span style=color:#666>+</span> <span style=color:#666>1</span>
+</span></span></code></pre></div><p>Construct generator function, execute each time when next() is called, return when encountering yield statement, continue execution from the yield statement last returned.</p><p>Difference:</p><ul><li>A normal function executes all code in the function body at once when called, returning a result (if there is a return value) and then ends.</li><li>The function containing yield (i.e., the generator function) executes until yield, returns a value, and then continues execution multiple times based on needs, possibly returning new values each time, until the function is executed to completion (e.g., when reaching the end of the function or encountering a return statement). It seems like the function has memory effect.</li></ul><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>fib</span>(<span style=color:green>max</span>):
+</span></span><span style=display:flex><span>    n, a, b <span style=color:#666>=</span> <span style=color:#666>0</span>, <span style=color:#666>1</span>, <span style=color:#666>1</span>
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>while</span> n <span style=color:#666>&lt;</span> <span style=color:green>max</span>:
+</span></span><span style=display:flex><span>        <span style=color:green;font-weight:700>yield</span> a
 </span></span><span style=display:flex><span>        a, b <span style=color:#666>=</span> b, a <span style=color:#666>+</span> b
-</span></span><span style=display:flex><span>        n <span style=color:#666>=</span> n <span style=color:#666>+</span> <span style=color:#40a070>1</span>
+</span></span><span style=display:flex><span>        n <span style=color:#666>=</span> n <span style=color:#666>+</span> <span style=color:#666>1</span>
 </span></span><span style=display:flex><span> 
-</span></span><span style=display:flex><span>fib(<span style=color:#40a070>10</span>)
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># &lt;generator object fib at 0x000001BE11B19048&gt;</span>
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>for</span> i <span style=color:#007020;font-weight:700>in</span> fib(<span style=color:#40a070>10</span>):
-</span></span><span style=display:flex><span>    <span style=color:#007020>print</span>(i)
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># 1</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># 1</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># 2</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># 3</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># 5</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># 8</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># 13</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># ...</span>
+</span></span><span style=display:flex><span>fib(<span style=color:#666>10</span>)
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># &lt;generator object fib at 0x000001BE11B19048&gt;</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>for</span> i <span style=color:#a2f;font-weight:700>in</span> fib(<span style=color:#666>10</span>):
+</span></span><span style=display:flex><span>    <span style=color:green>print</span>(i)
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># 1</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># 1</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># 2</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># 3</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># 5</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># 8</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># 13</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># ...</span>
 </span></span></code></pre></div><h2 id=iterator>Iterator
 <a class=anchor href=#iterator>#</a></h2><h3 id=iterable>Iterable
-<a class=anchor href=#iterable>#</a></h3><p>Objects that can be directly used in for loops are collectively referred to as Iterable:</p><p><strong>List, tuple, string, dictionary, set, file</strong></p><blockquote><p>Use <code>isinstance()</code> to determine if an object is an Iterable object</p></blockquote><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#007020;font-weight:700>from</span> <span style=color:#0e84b5;font-weight:700>collections</span> <span style=color:#007020;font-weight:700>import</span> Iterable
-</span></span><span style=display:flex><span><span style=color:#007020>isinstance</span>([<span style=color:#40a070>1</span>, <span style=color:#40a070>2</span>, <span style=color:#40a070>3</span>], Iterable)
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># True</span>
-</span></span></code></pre></div><p>Generator</p><p>Generators can not only be used in for loops but also be called by the next() function</p><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>squares <span style=color:#666>=</span> (i<span style=color:#666>**</span><span style=color:#40a070>2</span> <span style=color:#007020;font-weight:700>for</span> i <span style=color:#007020;font-weight:700>in</span> <span style=color:#007020>range</span>(<span style=color:#40a070>5</span>))
-</span></span><span style=display:flex><span><span style=color:#007020>isinstance</span>(squares, Iterable)
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># True</span>
-</span></span><span style=display:flex><span><span style=color:#007020>print</span>(<span style=color:#007020>next</span>(squares))
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># Until there is no data to take, throw StopIteration</span>
-</span></span><span style=display:flex><span><span style=color:#007020>print</span>(<span style=color:#007020>next</span>(squares)) <span style=color:#60a0b0;font-style:italic># StopIteration: </span>
+<a class=anchor href=#iterable>#</a></h3><p>Objects that can be directly used in for loops are collectively referred to as Iterable:</p><p><strong>List, tuple, string, dictionary, set, file</strong></p><blockquote><p>Use <code>isinstance()</code> to determine if an object is an Iterable object</p></blockquote><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:green;font-weight:700>from</span> <span style=color:#00f;font-weight:700>collections</span> <span style=color:green;font-weight:700>import</span> Iterable
+</span></span><span style=display:flex><span><span style=color:green>isinstance</span>([<span style=color:#666>1</span>, <span style=color:#666>2</span>, <span style=color:#666>3</span>], Iterable)
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># True</span>
+</span></span></code></pre></div><p>Generator</p><p>Generators can not only be used in for loops but also be called by the next() function</p><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>squares <span style=color:#666>=</span> (i<span style=color:#666>**</span><span style=color:#666>2</span> <span style=color:green;font-weight:700>for</span> i <span style=color:#a2f;font-weight:700>in</span> <span style=color:green>range</span>(<span style=color:#666>5</span>))
+</span></span><span style=display:flex><span><span style=color:green>isinstance</span>(squares, Iterable)
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># True</span>
+</span></span><span style=display:flex><span><span style=color:green>print</span>(<span style=color:green>next</span>(squares))
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># Until there is no data to take, throw StopIteration</span>
+</span></span><span style=display:flex><span><span style=color:green>print</span>(<span style=color:green>next</span>(squares)) <span style=color:#408080;font-style:italic># StopIteration: </span>
 </span></span></code></pre></div><p><strong>Objects that can be called by the next() function and return the next value until there is no data to take are called Iterators: Iterator</strong></p><h3 id=iterator-1>Iterator
-<a class=anchor href=#iterator-1>#</a></h3><p>Use <code>isinstance()</code> to determine if an object is an Iterator object</p><ol><li>Generators are Iterators</li></ol><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#007020;font-weight:700>from</span> <span style=color:#0e84b5;font-weight:700>collections</span> <span style=color:#007020;font-weight:700>import</span> Iterator
+<a class=anchor href=#iterator-1>#</a></h3><p>Use <code>isinstance()</code> to determine if an object is an Iterator object</p><ol><li>Generators are Iterators</li></ol><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:green;font-weight:700>from</span> <span style=color:#00f;font-weight:700>collections</span> <span style=color:green;font-weight:700>import</span> Iterator
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>squares <span style=color:#666>=</span> (i<span style=color:#666>**</span><span style=color:#40a070>2</span> <span style=color:#007020;font-weight:700>for</span> i <span style=color:#007020;font-weight:700>in</span> <span style=color:#007020>range</span>(<span style=color:#40a070>5</span>))
-</span></span><span style=display:flex><span><span style=color:#007020>isinstance</span>(squares, Iterator)
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># True</span>
-</span></span></code></pre></div><ol start=2><li>List, tuple, string, dictionary, set are not Iterators</li></ol><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#007020>isinstance</span>([<span style=color:#40a070>1</span>, <span style=color:#40a070>2</span>, <span style=color:#40a070>3</span>], Iterator)
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># False</span>
-</span></span></code></pre></div><ol start=3><li>Can create an Iterator by <code>iter(Iterable)</code></li></ol><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#007020>isinstance</span>(<span style=color:#007020>iter</span>([<span style=color:#40a070>1</span>, <span style=color:#40a070>2</span>, <span style=color:#40a070>3</span>]), Iterator)
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># True</span>
+</span></span><span style=display:flex><span>squares <span style=color:#666>=</span> (i<span style=color:#666>**</span><span style=color:#666>2</span> <span style=color:green;font-weight:700>for</span> i <span style=color:#a2f;font-weight:700>in</span> <span style=color:green>range</span>(<span style=color:#666>5</span>))
+</span></span><span style=display:flex><span><span style=color:green>isinstance</span>(squares, Iterator)
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># True</span>
+</span></span></code></pre></div><ol start=2><li>List, tuple, string, dictionary, set are not Iterators</li></ol><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:green>isinstance</span>([<span style=color:#666>1</span>, <span style=color:#666>2</span>, <span style=color:#666>3</span>], Iterator)
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># False</span>
+</span></span></code></pre></div><ol start=3><li>Can create an Iterator by <code>iter(Iterable)</code></li></ol><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:green>isinstance</span>(<span style=color:green>iter</span>([<span style=color:#666>1</span>, <span style=color:#666>2</span>, <span style=color:#666>3</span>]), Iterator)
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># True</span>
 </span></span></code></pre></div><p>for item in Iterable is equivalent to:
-First get the Iterator of the Iterable by <code>iter()</code> function, then call <code>next()</code> method on the obtained Iterator to get the next value and assign it to item, and the loop ends when encountering the <code>StopIteration</code> exception.</p><ol start=4><li><code>zip</code> <code>enumerate</code> and other functions in <code>itertools</code> are Iterators</li></ol><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>x <span style=color:#666>=</span> [<span style=color:#40a070>1</span>, <span style=color:#40a070>2</span>]
-</span></span><span style=display:flex><span>y <span style=color:#666>=</span> [<span style=color:#4070a0>&#34;a&#34;</span>, <span style=color:#4070a0>&#34;b&#34;</span>]
-</span></span><span style=display:flex><span><span style=color:#007020>zip</span>(x, y) <span style=color:#60a0b0;font-style:italic># &lt;zip at 0x1be11b13c48&gt;</span>
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>for</span> i <span style=color:#007020;font-weight:700>in</span> <span style=color:#007020>zip</span>(x, y):
-</span></span><span style=display:flex><span>    <span style=color:#007020>print</span>(i)
-</span></span><span style=display:flex><span><span style=color:#007020>isinstance</span>(<span style=color:#007020>zip</span>(x, y), Iterator) <span style=color:#60a0b0;font-style:italic># True</span>
+First get the Iterator of the Iterable by <code>iter()</code> function, then call <code>next()</code> method on the obtained Iterator to get the next value and assign it to item, and the loop ends when encountering the <code>StopIteration</code> exception.</p><ol start=4><li><code>zip</code> <code>enumerate</code> and other functions in <code>itertools</code> are Iterators</li></ol><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>x <span style=color:#666>=</span> [<span style=color:#666>1</span>, <span style=color:#666>2</span>]
+</span></span><span style=display:flex><span>y <span style=color:#666>=</span> [<span style=color:#ba2121>&#34;a&#34;</span>, <span style=color:#ba2121>&#34;b&#34;</span>]
+</span></span><span style=display:flex><span><span style=color:green>zip</span>(x, y) <span style=color:#408080;font-style:italic># &lt;zip at 0x1be11b13c48&gt;</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>for</span> i <span style=color:#a2f;font-weight:700>in</span> <span style=color:green>zip</span>(x, y):
+</span></span><span style=display:flex><span>    <span style=color:green>print</span>(i)
+</span></span><span style=display:flex><span><span style=color:green>isinstance</span>(<span style=color:green>zip</span>(x, y), Iterator) <span style=color:#408080;font-style:italic># True</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>numbers <span style=color:#666>=</span> [<span style=color:#40a070>1</span>, <span style=color:#40a070>2</span>, <span style=color:#40a070>3</span>, <span style=color:#40a070>4</span>, <span style=color:#40a070>5</span>]
-</span></span><span style=display:flex><span><span style=color:#007020>enumerate</span>(numbers) <span style=color:#60a0b0;font-style:italic># &lt;enumerate at 0x1be11b39990&gt;</span>
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>for</span> i <span style=color:#007020;font-weight:700>in</span> <span style=color:#007020>enumerate</span>(numbers):
-</span></span><span style=display:flex><span>    <span style=color:#007020>print</span>(i)
+</span></span><span style=display:flex><span>numbers <span style=color:#666>=</span> [<span style=color:#666>1</span>, <span style=color:#666>2</span>, <span style=color:#666>3</span>, <span style=color:#666>4</span>, <span style=color:#666>5</span>]
+</span></span><span style=display:flex><span><span style=color:green>enumerate</span>(numbers) <span style=color:#408080;font-style:italic># &lt;enumerate at 0x1be11b39990&gt;</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>for</span> i <span style=color:#a2f;font-weight:700>in</span> <span style=color:green>enumerate</span>(numbers):
+</span></span><span style=display:flex><span>    <span style=color:green>print</span>(i)
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#007020>isinstance</span>(<span style=color:#007020>enumerate</span>(numbers), Iterator) <span style=color:#60a0b0;font-style:italic># True</span>
-</span></span></code></pre></div><ol start=5><li>File is an Iterator</li></ol><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#007020;font-weight:700>with</span> <span style=color:#007020>open</span>(<span style=color:#4070a0>&#34;测试文件.txt&#34;</span>, <span style=color:#4070a0>&#34;r&#34;</span>, encoding <span style=color:#666>=</span> <span style=color:#4070a0>&#34;utf-8&#34;</span>) <span style=color:#007020;font-weight:700>as</span> f:
-</span></span><span style=display:flex><span>    <span style=color:#007020>print</span>(<span style=color:#007020>isinstance</span>(f, Iterator)) <span style=color:#60a0b0;font-style:italic># True</span>
-</span></span></code></pre></div><ol start=6><li>Iterator is consumable</li></ol><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>squares <span style=color:#666>=</span> (i<span style=color:#666>**</span><span style=color:#40a070>2</span> <span style=color:#007020;font-weight:700>for</span> i <span style=color:#007020;font-weight:700>in</span> <span style=color:#007020>range</span>(<span style=color:#40a070>3</span>))
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>for</span> square <span style=color:#007020;font-weight:700>in</span> squares:
-</span></span><span style=display:flex><span>    <span style=color:#007020>print</span>(square)
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic>#  0</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># 1</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># 4</span>
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>for</span> square <span style=color:#007020;font-weight:700>in</span> squares:
-</span></span><span style=display:flex><span>    <span style=color:#007020>print</span>(square)
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># Cannot iterate anymore, because it has been exhausted</span>
-</span></span></code></pre></div><ol start=7><li><code>range()</code> is not an Iterator</li></ol><p>Can be called <code>range()</code> as a lazy sequence, it is a sequence, but does not contain any content in memory, but answers questions through calculation.</p><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>numbers <span style=color:#666>=</span> <span style=color:#007020>range</span>(<span style=color:#40a070>10</span>)
-</span></span><span style=display:flex><span><span style=color:#007020>isinstance</span>(numbers, Iterator) <span style=color:#60a0b0;font-style:italic># False</span>
-</span></span><span style=display:flex><span><span style=color:#007020>print</span>(<span style=color:#007020>len</span>(numbers))   <span style=color:#60a0b0;font-style:italic># Has length 10</span>
-</span></span><span style=display:flex><span><span style=color:#007020>print</span>(numbers[<span style=color:#40a070>0</span>])     <span style=color:#60a0b0;font-style:italic># Can be indexed 0</span>
-</span></span><span style=display:flex><span><span style=color:#007020>print</span>(<span style=color:#40a070>9</span> <span style=color:#007020;font-weight:700>in</span> numbers)   <span style=color:#60a0b0;font-style:italic># Can exist calculation True</span>
-</span></span><span style=display:flex><span><span style=color:#007020>next</span>(numbers)         <span style=color:#60a0b0;font-style:italic># Cannot be called by next() TypeError: &#39;range&#39; object is not an iterator</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># Will not be exhausted</span>
+</span></span><span style=display:flex><span><span style=color:green>isinstance</span>(<span style=color:green>enumerate</span>(numbers), Iterator) <span style=color:#408080;font-style:italic># True</span>
+</span></span></code></pre></div><ol start=5><li>File is an Iterator</li></ol><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:green;font-weight:700>with</span> <span style=color:green>open</span>(<span style=color:#ba2121>&#34;测试文件.txt&#34;</span>, <span style=color:#ba2121>&#34;r&#34;</span>, encoding <span style=color:#666>=</span> <span style=color:#ba2121>&#34;utf-8&#34;</span>) <span style=color:green;font-weight:700>as</span> f:
+</span></span><span style=display:flex><span>    <span style=color:green>print</span>(<span style=color:green>isinstance</span>(f, Iterator)) <span style=color:#408080;font-style:italic># True</span>
+</span></span></code></pre></div><ol start=6><li>Iterator is consumable</li></ol><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>squares <span style=color:#666>=</span> (i<span style=color:#666>**</span><span style=color:#666>2</span> <span style=color:green;font-weight:700>for</span> i <span style=color:#a2f;font-weight:700>in</span> <span style=color:green>range</span>(<span style=color:#666>3</span>))
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>for</span> square <span style=color:#a2f;font-weight:700>in</span> squares:
+</span></span><span style=display:flex><span>    <span style=color:green>print</span>(square)
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic>#  0</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># 1</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># 4</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>for</span> square <span style=color:#a2f;font-weight:700>in</span> squares:
+</span></span><span style=display:flex><span>    <span style=color:green>print</span>(square)
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># Cannot iterate anymore, because it has been exhausted</span>
+</span></span></code></pre></div><ol start=7><li><code>range()</code> is not an Iterator</li></ol><p>Can be called <code>range()</code> as a lazy sequence, it is a sequence, but does not contain any content in memory, but answers questions through calculation.</p><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>numbers <span style=color:#666>=</span> <span style=color:green>range</span>(<span style=color:#666>10</span>)
+</span></span><span style=display:flex><span><span style=color:green>isinstance</span>(numbers, Iterator) <span style=color:#408080;font-style:italic># False</span>
+</span></span><span style=display:flex><span><span style=color:green>print</span>(<span style=color:green>len</span>(numbers))   <span style=color:#408080;font-style:italic># Has length 10</span>
+</span></span><span style=display:flex><span><span style=color:green>print</span>(numbers[<span style=color:#666>0</span>])     <span style=color:#408080;font-style:italic># Can be indexed 0</span>
+</span></span><span style=display:flex><span><span style=color:green>print</span>(<span style=color:#666>9</span> <span style=color:#a2f;font-weight:700>in</span> numbers)   <span style=color:#408080;font-style:italic># Can exist calculation True</span>
+</span></span><span style=display:flex><span><span style=color:green>next</span>(numbers)         <span style=color:#408080;font-style:italic># Cannot be called by next() TypeError: &#39;range&#39; object is not an iterator</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># Will not be exhausted</span>
 </span></span></code></pre></div><h2 id=decorator>Decorator
 <a class=anchor href=#decorator>#</a></h2><h3 id=demand>Demand
 <a class=anchor href=#demand>#</a></h3><p>(1) Need to add some features to the already developed program
 (2) Cannot modify the source code of the function in the program
 (3) Cannot change the calling method of the function in the program</p><h3 id=function-object>Function Object
-<a class=anchor href=#function-object>#</a></h3><ol><li>You can assign a function to a variable and call the variable to realize the function of the original function.</li><li>Functions can be passed as parameters</li></ol><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>square</span>(x):
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>return</span> x<span style=color:#666>**</span><span style=color:#40a070>2</span>
+<a class=anchor href=#function-object>#</a></h3><ol><li>You can assign a function to a variable and call the variable to realize the function of the original function.</li><li>Functions can be passed as parameters</li></ol><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>square</span>(x):
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>return</span> x<span style=color:#666>**</span><span style=color:#666>2</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#007020>print</span>(<span style=color:#007020>type</span>(square))      <span style=color:#60a0b0;font-style:italic># square is an instance of the function class</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># &lt;class &#39;function&#39;&gt;</span>
-</span></span><span style=display:flex><span>pow_2 <span style=color:#666>=</span> square          <span style=color:#60a0b0;font-style:italic># It can be understood that this function is given an alias pow 2</span>
-</span></span><span style=display:flex><span><span style=color:#007020>print</span>(pow_2(<span style=color:#40a070>5</span>)) <span style=color:#60a0b0;font-style:italic>#  25</span>
-</span></span><span style=display:flex><span><span style=color:#007020>print</span>(square(<span style=color:#40a070>5</span>)) <span style=color:#60a0b0;font-style:italic>#  25</span>
+</span></span><span style=display:flex><span><span style=color:green>print</span>(<span style=color:green>type</span>(square))      <span style=color:#408080;font-style:italic># square is an instance of the function class</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># &lt;class &#39;function&#39;&gt;</span>
+</span></span><span style=display:flex><span>pow_2 <span style=color:#666>=</span> square          <span style=color:#408080;font-style:italic># It can be understood that this function is given an alias pow 2</span>
+</span></span><span style=display:flex><span><span style=color:green>print</span>(pow_2(<span style=color:#666>5</span>)) <span style=color:#408080;font-style:italic>#  25</span>
+</span></span><span style=display:flex><span><span style=color:green>print</span>(square(<span style=color:#666>5</span>)) <span style=color:#408080;font-style:italic>#  25</span>
 </span></span></code></pre></div><h3 id=high-order-function>High-order Function
-<a class=anchor href=#high-order-function>#</a></h3><p>One of the following is sufficient:</p><ol><li>Receives a function as a parameter</li><li>Or returns a function</li></ol><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>square</span>(x):
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>return</span> x<span style=color:#666>**</span><span style=color:#40a070>2</span>
+<a class=anchor href=#high-order-function>#</a></h3><p>One of the following is sufficient:</p><ol><li>Receives a function as a parameter</li><li>Or returns a function</li></ol><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>square</span>(x):
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>return</span> x<span style=color:#666>**</span><span style=color:#666>2</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>pow_2</span>(fun):
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>return</span> fun
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>pow_2</span>(fun):
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>return</span> fun
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>f <span style=color:#666>=</span> pow_2(square)
-</span></span><span style=display:flex><span>f(<span style=color:#40a070>8</span>) <span style=color:#60a0b0;font-style:italic># 64</span>
-</span></span><span style=display:flex><span><span style=color:#007020>print</span>(f <span style=color:#666>==</span> square) <span style=color:#60a0b0;font-style:italic># True</span>
+</span></span><span style=display:flex><span>f(<span style=color:#666>8</span>) <span style=color:#408080;font-style:italic># 64</span>
+</span></span><span style=display:flex><span><span style=color:green>print</span>(f <span style=color:#666>==</span> square) <span style=color:#408080;font-style:italic># True</span>
 </span></span></code></pre></div><h3 id=nested-function>Nested Function
-<a class=anchor href=#nested-function>#</a></h3><p>Define a function inside a function</p><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>outer</span>():
-</span></span><span style=display:flex><span>    <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;outer is running&#34;</span>)
+<a class=anchor href=#nested-function>#</a></h3><p>Define a function inside a function</p><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>outer</span>():
+</span></span><span style=display:flex><span>    <span style=color:green>print</span>(<span style=color:#ba2121>&#34;outer is running&#34;</span>)
 </span></span><span style=display:flex><span>    
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>inner</span>():
-</span></span><span style=display:flex><span>        <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;inner is running&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>def</span> <span style=color:#00f>inner</span>():
+</span></span><span style=display:flex><span>        <span style=color:green>print</span>(<span style=color:#ba2121>&#34;inner is running&#34;</span>)
 </span></span><span style=display:flex><span>        
 </span></span><span style=display:flex><span>    inner()
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>outer()
 </span></span></code></pre></div><h3 id=closure>Closure
-<a class=anchor href=#closure>#</a></h3><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>outer</span>():
-</span></span><span style=display:flex><span>    x <span style=color:#666>=</span> <span style=color:#40a070>1</span>
-</span></span><span style=display:flex><span>    z <span style=color:#666>=</span> <span style=color:#40a070>10</span>
+<a class=anchor href=#closure>#</a></h3><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>outer</span>():
+</span></span><span style=display:flex><span>    x <span style=color:#666>=</span> <span style=color:#666>1</span>
+</span></span><span style=display:flex><span>    z <span style=color:#666>=</span> <span style=color:#666>10</span>
 </span></span><span style=display:flex><span>    
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>inner</span>():
-</span></span><span style=display:flex><span>        y <span style=color:#666>=</span> x <span style=color:#666>+</span> <span style=color:#40a070>100</span>
-</span></span><span style=display:flex><span>        <span style=color:#007020;font-weight:700>return</span> y, z
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>def</span> <span style=color:#00f>inner</span>():
+</span></span><span style=display:flex><span>        y <span style=color:#666>=</span> x <span style=color:#666>+</span> <span style=color:#666>100</span>
+</span></span><span style=display:flex><span>        <span style=color:green;font-weight:700>return</span> y, z
 </span></span><span style=display:flex><span>        
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>return</span> inner
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>return</span> inner
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>f <span style=color:#666>=</span> outer()   <span style=color:#60a0b0;font-style:italic># In fact, f contains the inner function itself + the environment of the outer function</span>
-</span></span><span style=display:flex><span><span style=color:#007020>print</span>(f)
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># &lt;function outer.&lt;locals&gt;.inner at 0x000001BE11B1D730&gt;</span>
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#007020>print</span>(f<span style=color:#666>.</span>__closure__)         <span style=color:#60a0b0;font-style:italic># __closure__ property contains information from the outer function</span>
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>for</span> i <span style=color:#007020;font-weight:700>in</span> f<span style=color:#666>.</span>__closure__:
-</span></span><span style=display:flex><span>    <span style=color:#007020>print</span>(i<span style=color:#666>.</span>cell_contents)
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic>#     (&lt;cell at 0x000001BE0FDE06D8: int object at 0x00007FF910D59340&gt;, &lt;cell at 0x000001BE0FDE0A98: int object at 0x00007FF910D59460&gt;)</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic>#     1</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic>#     10</span>
+</span></span><span style=display:flex><span>f <span style=color:#666>=</span> outer()   <span style=color:#408080;font-style:italic># In fact, f contains the inner function itself + the environment of the outer function</span>
+</span></span><span style=display:flex><span><span style=color:green>print</span>(f)
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># &lt;function outer.&lt;locals&gt;.inner at 0x000001BE11B1D730&gt;</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:green>print</span>(f<span style=color:#666>.</span>__closure__)         <span style=color:#408080;font-style:italic># __closure__ property contains information from the outer function</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>for</span> i <span style=color:#a2f;font-weight:700>in</span> f<span style=color:#666>.</span>__closure__:
+</span></span><span style=display:flex><span>    <span style=color:green>print</span>(i<span style=color:#666>.</span>cell_contents)
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic>#     (&lt;cell at 0x000001BE0FDE06D8: int object at 0x00007FF910D59340&gt;, &lt;cell at 0x000001BE0FDE0A98: int object at 0x00007FF910D59460&gt;)</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic>#     1</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic>#     10</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>res <span style=color:#666>=</span> f()
-</span></span><span style=display:flex><span><span style=color:#007020>print</span>(res)
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># (101, 10)</span>
-</span></span></code></pre></div><p><strong>Closure: Function that extends the scope</strong></p><ul><li><p>If a function is defined in the scope of another function and references a variable in the outer function, then this function is called a closure</p></li><li><p>A closure is an entity composed of a function and its related reference environment (i.e., closure = function + reference environment)</p></li><li><p>Once a variable with the same name is redefined inside the inner function, it becomes a local variable</p></li></ul><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>outer</span>():
-</span></span><span style=display:flex><span>    x <span style=color:#666>=</span> <span style=color:#40a070>1</span>
+</span></span><span style=display:flex><span><span style=color:green>print</span>(res)
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># (101, 10)</span>
+</span></span></code></pre></div><p><strong>Closure: Function that extends the scope</strong></p><ul><li><p>If a function is defined in the scope of another function and references a variable in the outer function, then this function is called a closure</p></li><li><p>A closure is an entity composed of a function and its related reference environment (i.e., closure = function + reference environment)</p></li><li><p>Once a variable with the same name is redefined inside the inner function, it becomes a local variable</p></li></ul><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>outer</span>():
+</span></span><span style=display:flex><span>    x <span style=color:#666>=</span> <span style=color:#666>1</span>
 </span></span><span style=display:flex><span>    
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>inner</span>():
-</span></span><span style=display:flex><span>        x <span style=color:#666>=</span> x<span style=color:#666>+</span><span style=color:#40a070>100</span>
-</span></span><span style=display:flex><span>        <span style=color:#007020;font-weight:700>return</span> x
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>def</span> <span style=color:#00f>inner</span>():
+</span></span><span style=display:flex><span>        x <span style=color:#666>=</span> x<span style=color:#666>+</span><span style=color:#666>100</span>
+</span></span><span style=display:flex><span>        <span style=color:green;font-weight:700>return</span> x
 </span></span><span style=display:flex><span>        
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>return</span> inner
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>return</span> inner
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>f <span style=color:#666>=</span> outer()             
 </span></span><span style=display:flex><span>f()
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic>#     &lt;ipython-input-87-d2da1048af8b&gt; in inner()</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic>#          3 </span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic>#          4     def inner():</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic>#     ----&gt; 5         x = x+100</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic>#          6         return x</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># UnboundLocalError: local variable &#39;x&#39; referenced before assignment</span>
-</span></span></code></pre></div><p><code>nonlocal</code> allows the inner function to modify the closure variable, indicating that it is not an internal variable, and uses the variable of the outer function.</p><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>outer</span>():
-</span></span><span style=display:flex><span>    x <span style=color:#666>=</span> <span style=color:#40a070>1</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic>#     &lt;ipython-input-87-d2da1048af8b&gt; in inner()</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic>#          3 </span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic>#          4     def inner():</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic>#     ----&gt; 5         x = x+100</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic>#          6         return x</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># UnboundLocalError: local variable &#39;x&#39; referenced before assignment</span>
+</span></span></code></pre></div><p><code>nonlocal</code> allows the inner function to modify the closure variable, indicating that it is not an internal variable, and uses the variable of the outer function.</p><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>outer</span>():
+</span></span><span style=display:flex><span>    x <span style=color:#666>=</span> <span style=color:#666>1</span>
 </span></span><span style=display:flex><span>    
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>inner</span>():
-</span></span><span style=display:flex><span>        <span style=color:#007020;font-weight:700>nonlocal</span> x
-</span></span><span style=display:flex><span>        x <span style=color:#666>=</span> x<span style=color:#666>+</span><span style=color:#40a070>100</span>
-</span></span><span style=display:flex><span>        <span style=color:#007020;font-weight:700>return</span> x  
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>return</span> inner
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>def</span> <span style=color:#00f>inner</span>():
+</span></span><span style=display:flex><span>        <span style=color:green;font-weight:700>nonlocal</span> x
+</span></span><span style=display:flex><span>        x <span style=color:#666>=</span> x<span style=color:#666>+</span><span style=color:#666>100</span>
+</span></span><span style=display:flex><span>        <span style=color:green;font-weight:700>return</span> x  
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>return</span> inner
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>f <span style=color:#666>=</span> outer()             
 </span></span><span style=display:flex><span>f()
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># 1</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># 101</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># 1</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># 101</span>
 </span></span></code></pre></div><h3 id=a-simple-decorator>A Simple Decorator
-<a class=anchor href=#a-simple-decorator>#</a></h3><p><strong>Implemented with nested functions</strong></p><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>time</span>
+<a class=anchor href=#a-simple-decorator>#</a></h3><p><strong>Implemented with nested functions</strong></p><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:green;font-weight:700>import</span> <span style=color:#00f;font-weight:700>time</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>timer</span>(func):
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>timer</span>(func):
 </span></span><span style=display:flex><span>    
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>inner</span>():
-</span></span><span style=display:flex><span>        <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;inner run&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>def</span> <span style=color:#00f>inner</span>():
+</span></span><span style=display:flex><span>        <span style=color:green>print</span>(<span style=color:#ba2121>&#34;inner run&#34;</span>)
 </span></span><span style=display:flex><span>        start <span style=color:#666>=</span> time<span style=color:#666>.</span>time()
 </span></span><span style=display:flex><span>        func()
 </span></span><span style=display:flex><span>        end <span style=color:#666>=</span> time<span style=color:#666>.</span>time()
-</span></span><span style=display:flex><span>        <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;</span><span style=color:#70a0d0>{}</span><span style=color:#4070a0> function running time: </span><span style=color:#70a0d0>{:.2f}</span><span style=color:#4070a0> seconds&#34;</span><span style=color:#666>.</span>format(func<span style=color:#666>.</span>__name__, (end<span style=color:#666>-</span>start)))
+</span></span><span style=display:flex><span>        <span style=color:green>print</span>(<span style=color:#ba2121>&#34;</span><span style=color:#b68;font-weight:700>{}</span><span style=color:#ba2121> function running time: </span><span style=color:#b68;font-weight:700>{:.2f}</span><span style=color:#ba2121> seconds&#34;</span><span style=color:#666>.</span>format(func<span style=color:#666>.</span>__name__, (end<span style=color:#666>-</span>start)))
 </span></span><span style=display:flex><span>    
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>return</span> inner
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>return</span> inner
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>f1</span>():
-</span></span><span style=display:flex><span>    <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;f1 run&#34;</span>)
-</span></span><span style=display:flex><span>    time<span style=color:#666>.</span>sleep(<span style=color:#40a070>1</span>)
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>f1</span>():
+</span></span><span style=display:flex><span>    <span style=color:green>print</span>(<span style=color:#ba2121>&#34;f1 run&#34;</span>)
+</span></span><span style=display:flex><span>    time<span style=color:#666>.</span>sleep(<span style=color:#666>1</span>)
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span>f1 <span style=color:#666>=</span> timer(f1) <span style=color:#60a0b0;font-style:italic># Contains inner() and the environment of timer, such as the passed parameter func</span>
+</span></span><span style=display:flex><span>f1 <span style=color:#666>=</span> timer(f1) <span style=color:#408080;font-style:italic># Contains inner() and the environment of timer, such as the passed parameter func</span>
 </span></span><span style=display:flex><span>f1()
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># inner run</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># f1 run</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># f1 function running time: 1.00 seconds</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># inner run</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># f1 run</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># f1 function running time: 1.00 seconds</span>
 </span></span></code></pre></div><h3 id=syntax-sugar>Syntax Sugar
-<a class=anchor href=#syntax-sugar>#</a></h3><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>time</span>
+<a class=anchor href=#syntax-sugar>#</a></h3><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:green;font-weight:700>import</span> <span style=color:#00f;font-weight:700>time</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>timer</span>(func):
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>timer</span>(func):
 </span></span><span style=display:flex><span>    
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>inner</span>():
-</span></span><span style=display:flex><span>        <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;inner run&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>def</span> <span style=color:#00f>inner</span>():
+</span></span><span style=display:flex><span>        <span style=color:green>print</span>(<span style=color:#ba2121>&#34;inner run&#34;</span>)
 </span></span><span style=display:flex><span>        start <span style=color:#666>=</span> time<span style=color:#666>.</span>time()
 </span></span><span style=display:flex><span>        func()
 </span></span><span style=display:flex><span>        end <span style=color:#666>=</span> time<span style=color:#666>.</span>time()
-</span></span><span style=display:flex><span>        <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;</span><span style=color:#70a0d0>{}</span><span style=color:#4070a0> function running time: </span><span style=color:#70a0d0>{:.2f}</span><span style=color:#4070a0> seconds&#34;</span><span style=color:#666>.</span>format(func<span style=color:#666>.</span>__name__, (end<span style=color:#666>-</span>start)))
+</span></span><span style=display:flex><span>        <span style=color:green>print</span>(<span style=color:#ba2121>&#34;</span><span style=color:#b68;font-weight:700>{}</span><span style=color:#ba2121> function running time: </span><span style=color:#b68;font-weight:700>{:.2f}</span><span style=color:#ba2121> seconds&#34;</span><span style=color:#666>.</span>format(func<span style=color:#666>.</span>__name__, (end<span style=color:#666>-</span>start)))
 </span></span><span style=display:flex><span>    
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>return</span> inner
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>return</span> inner
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#555;font-weight:700>@timer</span>     <span style=color:#60a0b0;font-style:italic># Equivalent to implementing f1 = timer(f1)</span>
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>f1</span>():
-</span></span><span style=display:flex><span>    <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;f1 run&#34;</span>)
-</span></span><span style=display:flex><span>    time<span style=color:#666>.</span>sleep(<span style=color:#40a070>1</span>)
+</span></span><span style=display:flex><span><span style=color:#a2f>@timer</span>     <span style=color:#408080;font-style:italic># Equivalent to implementing f1 = timer(f1)</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>f1</span>():
+</span></span><span style=display:flex><span>    <span style=color:green>print</span>(<span style=color:#ba2121>&#34;f1 run&#34;</span>)
+</span></span><span style=display:flex><span>    time<span style=color:#666>.</span>sleep(<span style=color:#666>1</span>)
 </span></span></code></pre></div><h3 id=decorate-function-with-parameters>Decorate Function with Parameters
-<a class=anchor href=#decorate-function-with-parameters>#</a></h3><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>time</span>
+<a class=anchor href=#decorate-function-with-parameters>#</a></h3><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:green;font-weight:700>import</span> <span style=color:#00f;font-weight:700>time</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>timer</span>(func):
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>timer</span>(func):
 </span></span><span style=display:flex><span>    
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>inner</span>(<span style=color:#666>*</span>args, <span style=color:#666>**</span>kwargs):
-</span></span><span style=display:flex><span>        <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;inner run&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>def</span> <span style=color:#00f>inner</span>(<span style=color:#666>*</span>args, <span style=color:#666>**</span>kwargs):
+</span></span><span style=display:flex><span>        <span style=color:green>print</span>(<span style=color:#ba2121>&#34;inner run&#34;</span>)
 </span></span><span style=display:flex><span>        start <span style=color:#666>=</span> time<span style=color:#666>.</span>time()
 </span></span><span style=display:flex><span>        func(<span style=color:#666>*</span>args, <span style=color:#666>**</span>kwargs)
 </span></span><span style=display:flex><span>        end <span style=color:#666>=</span> time<span style=color:#666>.</span>time()
-</span></span><span style=display:flex><span>        <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;</span><span style=color:#70a0d0>{}</span><span style=color:#4070a0> function running time: </span><span style=color:#70a0d0>{:.2f}</span><span style=color:#4070a0> seconds&#34;</span><span style=color:#666>.</span>format(func<span style=color:#666>.</span>__name__, (end<span style=color:#666>-</span>start)))
+</span></span><span style=display:flex><span>        <span style=color:green>print</span>(<span style=color:#ba2121>&#34;</span><span style=color:#b68;font-weight:700>{}</span><span style=color:#ba2121> function running time: </span><span style=color:#b68;font-weight:700>{:.2f}</span><span style=color:#ba2121> seconds&#34;</span><span style=color:#666>.</span>format(func<span style=color:#666>.</span>__name__, (end<span style=color:#666>-</span>start)))
 </span></span><span style=display:flex><span>    
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>return</span> inner
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>return</span> inner
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#555;font-weight:700>@timer</span>       <span style=color:#60a0b0;font-style:italic># Equivalent to implementing f1 = timer(f1)</span>
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>f1</span>(n):
-</span></span><span style=display:flex><span>    <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;f1 run&#34;</span>)
+</span></span><span style=display:flex><span><span style=color:#a2f>@timer</span>       <span style=color:#408080;font-style:italic># Equivalent to implementing f1 = timer(f1)</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>f1</span>(n):
+</span></span><span style=display:flex><span>    <span style=color:green>print</span>(<span style=color:#ba2121>&#34;f1 run&#34;</span>)
 </span></span><span style=display:flex><span>    time<span style=color:#666>.</span>sleep(n)
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>    
-</span></span><span style=display:flex><span>f1(<span style=color:#40a070>2</span>)
-</span></span></code></pre></div><p>Function decorated with return value</p><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>time</span>
+</span></span><span style=display:flex><span>f1(<span style=color:#666>2</span>)
+</span></span></code></pre></div><p>Function decorated with return value</p><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:green;font-weight:700>import</span> <span style=color:#00f;font-weight:700>time</span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>timer</span>(func):
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>timer</span>(func):
 </span></span><span style=display:flex><span>    
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>inner</span>(<span style=color:#666>*</span>args, <span style=color:#666>**</span>kwargs):
-</span></span><span style=display:flex><span>        <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;inner run&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>def</span> <span style=color:#00f>inner</span>(<span style=color:#666>*</span>args, <span style=color:#666>**</span>kwargs):
+</span></span><span style=display:flex><span>        <span style=color:green>print</span>(<span style=color:#ba2121>&#34;inner run&#34;</span>)
 </span></span><span style=display:flex><span>        start <span style=color:#666>=</span> time<span style=color:#666>.</span>time()
 </span></span><span style=display:flex><span>        res <span style=color:#666>=</span> func(<span style=color:#666>*</span>args, <span style=color:#666>**</span>kwargs)
 </span></span><span style=display:flex><span>        end <span style=color:#666>=</span> time<span style=color:#666>.</span>time()
-</span></span><span style=display:flex><span>        <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;</span><span style=color:#70a0d0>{}</span><span style=color:#4070a0> function running time: </span><span style=color:#70a0d0>{:.2f}</span><span style=color:#4070a0> seconds&#34;</span><span style=color:#666>.</span>format(func<span style=color:#666>.</span>__name__, (end<span style=color:#666>-</span>start)))
-</span></span><span style=display:flex><span>        <span style=color:#007020;font-weight:700>return</span> res
+</span></span><span style=display:flex><span>        <span style=color:green>print</span>(<span style=color:#ba2121>&#34;</span><span style=color:#b68;font-weight:700>{}</span><span style=color:#ba2121> function running time: </span><span style=color:#b68;font-weight:700>{:.2f}</span><span style=color:#ba2121> seconds&#34;</span><span style=color:#666>.</span>format(func<span style=color:#666>.</span>__name__, (end<span style=color:#666>-</span>start)))
+</span></span><span style=display:flex><span>        <span style=color:green;font-weight:700>return</span> res
 </span></span><span style=display:flex><span>    
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>return</span> inner
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>return</span> inner
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#555;font-weight:700>@timer</span>     <span style=color:#60a0b0;font-style:italic># Equivalent to implementing f1 = timer(f1)</span>
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>f1</span>(n):
-</span></span><span style=display:flex><span>    <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;f1 run&#34;</span>)
+</span></span><span style=display:flex><span><span style=color:#a2f>@timer</span>     <span style=color:#408080;font-style:italic># Equivalent to implementing f1 = timer(f1)</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>f1</span>(n):
+</span></span><span style=display:flex><span>    <span style=color:green>print</span>(<span style=color:#ba2121>&#34;f1 run&#34;</span>)
 </span></span><span style=display:flex><span>    time<span style=color:#666>.</span>sleep(n)
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>return</span> <span style=color:#4070a0>&#34;wake up&#34;</span>
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>return</span> <span style=color:#ba2121>&#34;wake up&#34;</span>
 </span></span><span style=display:flex><span>    
-</span></span><span style=display:flex><span>res <span style=color:#666>=</span> f1(<span style=color:#40a070>2</span>)
-</span></span><span style=display:flex><span><span style=color:#007020>print</span>(res)
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># inner run</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># f1 run</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># f1 function running time: 2.00 seconds</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># wake up</span>
+</span></span><span style=display:flex><span>res <span style=color:#666>=</span> f1(<span style=color:#666>2</span>)
+</span></span><span style=display:flex><span><span style=color:green>print</span>(res)
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># inner run</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># f1 run</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># f1 function running time: 2.00 seconds</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># wake up</span>
 </span></span></code></pre></div><h3 id=decorator-with-parameters>Decorator with Parameters
-<a class=anchor href=#decorator-with-parameters>#</a></h3><p>Decorators themselves need to pass some additional parameters</p><ul><li>Requirement: Sometimes you need to count the absolute time, sometimes you need to count the absolute time twice</li></ul><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>timer</span>(method):
+<a class=anchor href=#decorator-with-parameters>#</a></h3><p>Decorators themselves need to pass some additional parameters</p><ul><li>Requirement: Sometimes you need to count the absolute time, sometimes you need to count the absolute time twice</li></ul><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>timer</span>(method):
 </span></span><span style=display:flex><span>    
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>outer</span>(func):
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>def</span> <span style=color:#00f>outer</span>(func):
 </span></span><span style=display:flex><span>    
-</span></span><span style=display:flex><span>        <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>inner</span>(<span style=color:#666>*</span>args, <span style=color:#666>**</span>kwargs):
-</span></span><span style=display:flex><span>            <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;inner run&#34;</span>)
-</span></span><span style=display:flex><span>            <span style=color:#007020;font-weight:700>if</span> method <span style=color:#666>==</span> <span style=color:#4070a0>&#34;origin&#34;</span>:
-</span></span><span style=display:flex><span>                <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;origin_inner run&#34;</span>)
+</span></span><span style=display:flex><span>        <span style=color:green;font-weight:700>def</span> <span style=color:#00f>inner</span>(<span style=color:#666>*</span>args, <span style=color:#666>**</span>kwargs):
+</span></span><span style=display:flex><span>            <span style=color:green>print</span>(<span style=color:#ba2121>&#34;inner run&#34;</span>)
+</span></span><span style=display:flex><span>            <span style=color:green;font-weight:700>if</span> method <span style=color:#666>==</span> <span style=color:#ba2121>&#34;origin&#34;</span>:
+</span></span><span style=display:flex><span>                <span style=color:green>print</span>(<span style=color:#ba2121>&#34;origin_inner run&#34;</span>)
 </span></span><span style=display:flex><span>                start <span style=color:#666>=</span> time<span style=color:#666>.</span>time()
 </span></span><span style=display:flex><span>                res <span style=color:#666>=</span> func(<span style=color:#666>*</span>args, <span style=color:#666>**</span>kwargs)
 </span></span><span style=display:flex><span>                end <span style=color:#666>=</span> time<span style=color:#666>.</span>time()
-</span></span><span style=display:flex><span>                <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;</span><span style=color:#70a0d0>{}</span><span style=color:#4070a0> function running time: </span><span style=color:#70a0d0>{:.2f}</span><span style=color:#4070a0> seconds&#34;</span><span style=color:#666>.</span>format(func<span style=color:#666>.</span>__name__, (end<span style=color:#666>-</span>start)))
-</span></span><span style=display:flex><span>            <span style=color:#007020;font-weight:700>elif</span> method <span style=color:#666>==</span> <span style=color:#4070a0>&#34;double&#34;</span>:
-</span></span><span style=display:flex><span>                <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;double_inner run&#34;</span>)
+</span></span><span style=display:flex><span>                <span style=color:green>print</span>(<span style=color:#ba2121>&#34;</span><span style=color:#b68;font-weight:700>{}</span><span style=color:#ba2121> function running time: </span><span style=color:#b68;font-weight:700>{:.2f}</span><span style=color:#ba2121> seconds&#34;</span><span style=color:#666>.</span>format(func<span style=color:#666>.</span>__name__, (end<span style=color:#666>-</span>start)))
+</span></span><span style=display:flex><span>            <span style=color:green;font-weight:700>elif</span> method <span style=color:#666>==</span> <span style=color:#ba2121>&#34;double&#34;</span>:
+</span></span><span style=display:flex><span>                <span style=color:green>print</span>(<span style=color:#ba2121>&#34;double_inner run&#34;</span>)
 </span></span><span style=display:flex><span>                start <span style=color:#666>=</span> time<span style=color:#666>.</span>time()
 </span></span><span style=display:flex><span>                res <span style=color:#666>=</span> func(<span style=color:#666>*</span>args, <span style=color:#666>**</span>kwargs)
 </span></span><span style=display:flex><span>                end <span style=color:#666>=</span> time<span style=color:#666>.</span>time()
-</span></span><span style=display:flex><span>                <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;</span><span style=color:#70a0d0>{}</span><span style=color:#4070a0> function running time: </span><span style=color:#70a0d0>{:.2f}</span><span style=color:#4070a0> seconds&#34;</span><span style=color:#666>.</span>format(func<span style=color:#666>.</span>__name__, <span style=color:#40a070>2</span><span style=color:#666>*</span>(end<span style=color:#666>-</span>start)))
-</span></span><span style=display:flex><span>            <span style=color:#007020;font-weight:700>return</span> res
+</span></span><span style=display:flex><span>                <span style=color:green>print</span>(<span style=color:#ba2121>&#34;</span><span style=color:#b68;font-weight:700>{}</span><span style=color:#ba2121> function running time: </span><span style=color:#b68;font-weight:700>{:.2f}</span><span style=color:#ba2121> seconds&#34;</span><span style=color:#666>.</span>format(func<span style=color:#666>.</span>__name__, <span style=color:#666>2</span><span style=color:#666>*</span>(end<span style=color:#666>-</span>start)))
+</span></span><span style=display:flex><span>            <span style=color:green;font-weight:700>return</span> res
 </span></span><span style=display:flex><span>    
-</span></span><span style=display:flex><span>        <span style=color:#007020;font-weight:700>return</span> inner
+</span></span><span style=display:flex><span>        <span style=color:green;font-weight:700>return</span> inner
 </span></span><span style=display:flex><span>    
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>return</span> outer
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>return</span> outer
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#555;font-weight:700>@timer</span>(method<span style=color:#666>=</span><span style=color:#4070a0>&#34;origin&#34;</span>)  <span style=color:#60a0b0;font-style:italic># Equivalent to timer = timer(method = &#34;origin&#34;)   f1 = timer(f1)</span>
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>f1</span>():
-</span></span><span style=display:flex><span>    <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;f1 run&#34;</span>)
-</span></span><span style=display:flex><span>    time<span style=color:#666>.</span>sleep(<span style=color:#40a070>1</span>)
+</span></span><span style=display:flex><span><span style=color:#a2f>@timer</span>(method<span style=color:#666>=</span><span style=color:#ba2121>&#34;origin&#34;</span>)  <span style=color:#408080;font-style:italic># Equivalent to timer = timer(method = &#34;origin&#34;)   f1 = timer(f1)</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>f1</span>():
+</span></span><span style=display:flex><span>    <span style=color:green>print</span>(<span style=color:#ba2121>&#34;f1 run&#34;</span>)
+</span></span><span style=display:flex><span>    time<span style=color:#666>.</span>sleep(<span style=color:#666>1</span>)
 </span></span><span style=display:flex><span>    
 </span></span><span style=display:flex><span>    
-</span></span><span style=display:flex><span><span style=color:#555;font-weight:700>@timer</span>(method<span style=color:#666>=</span><span style=color:#4070a0>&#34;double&#34;</span>)
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>f2</span>():
-</span></span><span style=display:flex><span>    <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;f2 run&#34;</span>)
-</span></span><span style=display:flex><span>    time<span style=color:#666>.</span>sleep(<span style=color:#40a070>1</span>)
+</span></span><span style=display:flex><span><span style=color:#a2f>@timer</span>(method<span style=color:#666>=</span><span style=color:#ba2121>&#34;double&#34;</span>)
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>f2</span>():
+</span></span><span style=display:flex><span>    <span style=color:green>print</span>(<span style=color:#ba2121>&#34;f2 run&#34;</span>)
+</span></span><span style=display:flex><span>    time<span style=color:#666>.</span>sleep(<span style=color:#666>1</span>)
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>f1()
-</span></span><span style=display:flex><span><span style=color:#007020>print</span>()
+</span></span><span style=display:flex><span><span style=color:green>print</span>()
 </span></span><span style=display:flex><span>f2()
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># inner run</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># origin_inner run</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># f1 run</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># f1 function running time: 1.00 seconds</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># inner run</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># origin_inner run</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># f1 run</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># f1 function running time: 1.00 seconds</span>
 </span></span><span style=display:flex><span>    
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># inner run</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># double_inner run</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># f2 run</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># f2 function running time: 2.00 seconds</span>
-</span></span></code></pre></div><p><strong>Understanding closures is key!</strong></p><p><strong>9、When does the decorator execute</strong></p><ul><li>Execute immediately when decorated, no need to wait for the call</li></ul><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>func_names<span style=color:#666>=</span>[]
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>find_function</span>(func):
-</span></span><span style=display:flex><span>    <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;run&#34;</span>)
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># inner run</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># double_inner run</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># f2 run</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># f2 function running time: 2.00 seconds</span>
+</span></span></code></pre></div><p><strong>Understanding closures is key!</strong></p><p><strong>9、When does the decorator execute</strong></p><ul><li>Execute immediately when decorated, no need to wait for the call</li></ul><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span>func_names<span style=color:#666>=</span>[]
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>find_function</span>(func):
+</span></span><span style=display:flex><span>    <span style=color:green>print</span>(<span style=color:#ba2121>&#34;run&#34;</span>)
 </span></span><span style=display:flex><span>    func_names<span style=color:#666>.</span>append(func)
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>return</span> func
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>return</span> func
 </span></span><span style=display:flex><span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#555;font-weight:700>@find_function</span>
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>f1</span>():
-</span></span><span style=display:flex><span>    <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;f1 run&#34;</span>)
+</span></span><span style=display:flex><span><span style=color:#a2f>@find_function</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>f1</span>():
+</span></span><span style=display:flex><span>    <span style=color:green>print</span>(<span style=color:#ba2121>&#34;f1 run&#34;</span>)
 </span></span><span style=display:flex><span>    
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#555;font-weight:700>@find_function</span>
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>f2</span>():
-</span></span><span style=display:flex><span>    <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;f2 run&#34;</span>)
+</span></span><span style=display:flex><span><span style=color:#a2f>@find_function</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>f2</span>():
+</span></span><span style=display:flex><span>    <span style=color:green>print</span>(<span style=color:#ba2121>&#34;f2 run&#34;</span>)
 </span></span><span style=display:flex><span>    
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># run</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># run</span>
-</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#007020;font-weight:700>for</span> func <span style=color:#007020;font-weight:700>in</span> func_names:
-</span></span><span style=display:flex><span>    <span style=color:#007020>print</span>(func<span style=color:#666>.</span>__name__)
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># run</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># run</span>
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:green;font-weight:700>for</span> func <span style=color:#a2f;font-weight:700>in</span> func_names:
+</span></span><span style=display:flex><span>    <span style=color:green>print</span>(func<span style=color:#666>.</span>__name__)
 </span></span><span style=display:flex><span>    func()
-</span></span><span style=display:flex><span>    <span style=color:#007020>print</span>()
+</span></span><span style=display:flex><span>    <span style=color:green>print</span>()
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># f1</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># f1 run</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># f2</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># f2 run</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># f1</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># f1 run</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># f2</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># f2 run</span>
 </span></span></code></pre></div><h3 id=return-to-the-source>Return to the Source
-<a class=anchor href=#return-to-the-source>#</a></h3><ul><li>The properties of the original function are hidden</li></ul><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>time</span>
+<a class=anchor href=#return-to-the-source>#</a></h3><ul><li>The properties of the original function are hidden</li></ul><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:green;font-weight:700>import</span> <span style=color:#00f;font-weight:700>time</span>
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>timer</span>(func):
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>inner</span>():
-</span></span><span style=display:flex><span>        <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;inner run&#34;</span>)
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>timer</span>(func):
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>def</span> <span style=color:#00f>inner</span>():
+</span></span><span style=display:flex><span>        <span style=color:green>print</span>(<span style=color:#ba2121>&#34;inner run&#34;</span>)
 </span></span><span style=display:flex><span>        start <span style=color:#666>=</span> time<span style=color:#666>.</span>time()
 </span></span><span style=display:flex><span>        func()
 </span></span><span style=display:flex><span>        end <span style=color:#666>=</span> time<span style=color:#666>.</span>time()
-</span></span><span style=display:flex><span>        <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;</span><span style=color:#70a0d0>{}</span><span style=color:#4070a0> function running time: </span><span style=color:#70a0d0>{:.2f}</span><span style=color:#4070a0> seconds&#34;</span><span style=color:#666>.</span>format(func<span style=color:#666>.</span>__name__, (end<span style=color:#666>-</span>start)))
+</span></span><span style=display:flex><span>        <span style=color:green>print</span>(<span style=color:#ba2121>&#34;</span><span style=color:#b68;font-weight:700>{}</span><span style=color:#ba2121> function running time: </span><span style=color:#b68;font-weight:700>{:.2f}</span><span style=color:#ba2121> seconds&#34;</span><span style=color:#666>.</span>format(func<span style=color:#666>.</span>__name__, (end<span style=color:#666>-</span>start)))
 </span></span><span style=display:flex><span>    
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>return</span> inner
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>return</span> inner
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#555;font-weight:700>@timer</span>                <span style=color:#60a0b0;font-style:italic># Equivalent to implementing f1 = timer(f1)</span>
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>f1</span>():
-</span></span><span style=display:flex><span>    time<span style=color:#666>.</span>sleep(<span style=color:#40a070>1</span>)
-</span></span><span style=display:flex><span>    <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;f1 run&#34;</span>)
+</span></span><span style=display:flex><span><span style=color:#a2f>@timer</span>                <span style=color:#408080;font-style:italic># Equivalent to implementing f1 = timer(f1)</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>f1</span>():
+</span></span><span style=display:flex><span>    time<span style=color:#666>.</span>sleep(<span style=color:#666>1</span>)
+</span></span><span style=display:flex><span>    <span style=color:green>print</span>(<span style=color:#ba2121>&#34;f1 run&#34;</span>)
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#007020>print</span>(f1<span style=color:#666>.</span>__name__)
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># inner</span>
-</span></span></code></pre></div><ul><li>Return to the source</li></ul><div class=highlight><pre tabindex=0 style=background-color:#f0f0f0;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:#007020;font-weight:700>import</span> <span style=color:#0e84b5;font-weight:700>time</span>
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>from</span> <span style=color:#0e84b5;font-weight:700>functools</span> <span style=color:#007020;font-weight:700>import</span> wraps
+</span></span><span style=display:flex><span><span style=color:green>print</span>(f1<span style=color:#666>.</span>__name__)
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># inner</span>
+</span></span></code></pre></div><ul><li>Return to the source</li></ul><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-python data-lang=python><span style=display:flex><span><span style=color:green;font-weight:700>import</span> <span style=color:#00f;font-weight:700>time</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>from</span> <span style=color:#00f;font-weight:700>functools</span> <span style=color:green;font-weight:700>import</span> wraps
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>timer</span>(func):
-</span></span><span style=display:flex><span>    <span style=color:#555;font-weight:700>@wraps</span>(func)
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>inner</span>():
-</span></span><span style=display:flex><span>        <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;inner run&#34;</span>)
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>timer</span>(func):
+</span></span><span style=display:flex><span>    <span style=color:#a2f>@wraps</span>(func)
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>def</span> <span style=color:#00f>inner</span>():
+</span></span><span style=display:flex><span>        <span style=color:green>print</span>(<span style=color:#ba2121>&#34;inner run&#34;</span>)
 </span></span><span style=display:flex><span>        start <span style=color:#666>=</span> time<span style=color:#666>.</span>time()
 </span></span><span style=display:flex><span>        func()
 </span></span><span style=display:flex><span>        end <span style=color:#666>=</span> time<span style=color:#666>.</span>time()
-</span></span><span style=display:flex><span>        <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;</span><span style=color:#70a0d0>{}</span><span style=color:#4070a0> function running time: </span><span style=color:#70a0d0>{:.2f}</span><span style=color:#4070a0> seconds&#34;</span><span style=color:#666>.</span>format(func<span style=color:#666>.</span>__name__, (end<span style=color:#666>-</span>start)))
+</span></span><span style=display:flex><span>        <span style=color:green>print</span>(<span style=color:#ba2121>&#34;</span><span style=color:#b68;font-weight:700>{}</span><span style=color:#ba2121> function running time: </span><span style=color:#b68;font-weight:700>{:.2f}</span><span style=color:#ba2121> seconds&#34;</span><span style=color:#666>.</span>format(func<span style=color:#666>.</span>__name__, (end<span style=color:#666>-</span>start)))
 </span></span><span style=display:flex><span>    
-</span></span><span style=display:flex><span>    <span style=color:#007020;font-weight:700>return</span> inner
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>return</span> inner
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#555;font-weight:700>@timer</span>  <span style=color:#60a0b0;font-style:italic># Equivalent to implementing f1 = timer(f1)</span>
-</span></span><span style=display:flex><span><span style=color:#007020;font-weight:700>def</span> <span style=color:#06287e>f1</span>():
-</span></span><span style=display:flex><span>    time<span style=color:#666>.</span>sleep(<span style=color:#40a070>1</span>)
-</span></span><span style=display:flex><span>    <span style=color:#007020>print</span>(<span style=color:#4070a0>&#34;f1 run&#34;</span>)
+</span></span><span style=display:flex><span><span style=color:#a2f>@timer</span>  <span style=color:#408080;font-style:italic># Equivalent to implementing f1 = timer(f1)</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>def</span> <span style=color:#00f>f1</span>():
+</span></span><span style=display:flex><span>    time<span style=color:#666>.</span>sleep(<span style=color:#666>1</span>)
+</span></span><span style=display:flex><span>    <span style=color:green>print</span>(<span style=color:#ba2121>&#34;f1 run&#34;</span>)
 </span></span><span style=display:flex><span>
-</span></span><span style=display:flex><span><span style=color:#007020>print</span>(f1<span style=color:#666>.</span>__name__) 
+</span></span><span style=display:flex><span><span style=color:green>print</span>(f1<span style=color:#666>.</span>__name__) 
 </span></span><span style=display:flex><span>f1()
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># f1</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># inner run</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># f1 run</span>
-</span></span><span style=display:flex><span><span style=color:#60a0b0;font-style:italic># f1 function running time: 1.00 seconds</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># f1</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># inner run</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># f1 run</span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic># f1 function running time: 1.00 seconds</span>
 </span></span></code></pre></div><h2>Related readings</h2><ul><li><a href="/blog/posts/2024/python-underlying-mechanism/?utm_source=related">Python Underlying Mechanism</a></li><li><a href="/blog/posts/2024/python-files-exceptions-and-modules/?utm_source=related">Python Files Exceptions and Modules</a></li><li><a href="/blog/posts/2024/python-object-oriented-programming/?utm_source=related">Python Object Oriented Programming</a></li><li><a href="/blog/posts/2024/python-function-parameter/?utm_source=related">Python Function Parameter</a></li><li><a href="/blog/posts/2024/python-control-structure/?utm_source=related">Python Control Structure</a></li></ul><hr><div class=post-nav><a href="https://timerring.com/blog/posts/2024/python-underlying-mechanism/?utm_source=nav">&lt;&lt; prev | Python...</a>
 <a onclick=goToRandomPost() style=cursor:pointer>Continue strolling</a>
 <a href="https://timerring.com/blog/posts/2024/real-computer-network/?utm_source=nav">Real Computer... ｜ next >></a></div><hr><blockquote class="book-hint info">If you find this blog useful and want to support my blog, need my skill for something, or have a coffee chat with me, feel free to:</blockquote><hr><div class=support><a href="https://www.patreon.com/bePatron?u=46962965" class=book-btn target=_blank>Subscribe Patreon to participate in blog topics and custom services</a>
