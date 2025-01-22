@@ -1,0 +1,490 @@
+<!doctype html><html lang=en dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content><meta name=theme-color content="#FFFFFF"><meta name=color-scheme content="light dark"><meta property="og:title" content="Go Cheatsheet"><meta property="og:description" content><meta property="og:type" content="article"><meta property="og:url" content="https://blog.timerring.com/posts/go-cheatsheet/"><meta property="article:section" content="posts"><meta property="article:published_time" content="2025-01-21T18:30:07+08:00"><meta property="article:modified_time" content="2025-01-21T18:30:07+08:00"><title>Go Cheatsheet | timerring</title><link rel=manifest href=/manifest.json><link rel=icon href=/favicon.png type=image/x-icon><link rel=stylesheet href=/book.min.e5c400e9a39f7eafc90351230108cdc038497f3b6478689fe605ab3dd006274d.css integrity="sha256-5cQA6aOffq/JA1EjAQjNwDhJfztkeGif5gWrPdAGJ00=" crossorigin=anonymous><script defer src=/flexsearch.min.js></script>
+<script defer src=/en.search.min.b1cdcff13b76d2c6df01f42a141f8199cc5691915595454b86884daf1e01517b.js integrity="sha256-sc3P8Tt20sbfAfQqFB+BmcxWkZFVlUVLhohNrx4BUXs=" crossorigin=anonymous></script>
+<script async src=//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js></script><meta name=referrer content="no-referrer-when-downgrade"></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><img src=/favicon.png alt=Logo><span>timerring</span></a></h2><hr><p>Rhythmic trend.</p><div class=book-search><div class=gcse-search></div></div><script async src="https://cse.google.com/cse.js?cx=40782701766144f96"></script><ul><li><a href=/>Dashboard</a></li><li><a href=/posts/>Blogs</a></li><li><a href=/categories/weekly/>Newsletter</a></li><li><a href=/index.xml>RSS</a></li><li><a href=/friends/>Friends</a></li><li><a href=/about/>About</a></li></ul><script>function goToRandomPost(){const e=["/posts/go-common-test/?utm_source=random","/posts/go-concurrency-and-parallelism/?utm_source=random","/posts/go-cheatsheet/?utm_source=random","/posts/video-technology-101/?utm_source=random","/posts/the-main-kind-of-message-queue/?utm_source=random","/posts/the-method-to-manage-traffic/?utm_source=random","/posts/the-different-kind-of-api-design/?utm_source=random","/posts/the-encode-and-decode-in-python/?utm_source=random","/posts/about-the-systemd/?utm_source=random","/posts/docker-cheatsheet/?utm_source=random","/posts/docker-101/?utm_source=random","/posts/the-instance-class-static-magic-method-in-python/?utm_source=random","/posts/the-overview-of-security/?utm_source=random","/posts/how-to-publish-your-code-as-a-pip-module/?utm_source=random","/posts/some-good-things-to-share-about-the-packages/?utm_source=random","/posts/introduction-to-the-http-and-https-protocol/?utm_source=random","/posts/mail-service-and-protocol/?utm_source=random","/posts/thinking-about-advertisement-from-an-open-source-perspective/?utm_source=random","/posts/understanding-clash-through-configuration/?utm_source=random","/posts/a-brief-introduction-to-dns/?utm_source=random","/posts/real-computer-network/?utm_source=random","/posts/python-generator-iterator-and-decorator/?utm_source=random","/posts/python-underlying-mechanism/?utm_source=random","/posts/python-files-exceptions-and-modules/?utm_source=random","/posts/python-object-oriented-programming/?utm_source=random","/posts/python-cheatsheet/?utm_source=random","/posts/python-function-parameter/?utm_source=random","/posts/python-control-structure/?utm_source=random","/posts/python-composite-data-type/?utm_source=random","/posts/python-basic-data-type/?utm_source=random","/posts/python-basic-syntax-elements/?utm_source=random","/posts/deploy-github-pages-with-gpg-signing/?utm_source=random","/posts/gpg-101/?utm_source=random","/posts/housewarming-2024/?utm_source=random"],t=Math.floor(Math.random()*e.length);window.location.href=e[t]}</script><a class=random onclick=goToRandomPost()>Stroll</a></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu></label>
+<strong>timerring</strong>
+<label for=toc-control><img src=/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><ul><li><a href=#syntax>syntax</a></li><li><a href=#dependency>dependency</a><ul><li><a href=#go-get>go get</a></li><li><a href=#go-vendor>go vendor</a></li><li><a href=#go-module>go module</a></li><li><a href=#denpendency-distribution>denpendency distribution</a></li></ul></li><li><a href=#data-type>data type</a></li><li><a href=#var>var</a></li><li><a href=#const>const</a></li><li><a href=#iota>iota</a></li><li><a href=#operator>operator</a></li><li><a href=#if>if</a></li><li><a href=#switch>switch</a></li><li><a href=#select>select</a></li><li><a href=#for>for</a></li><li><a href=#array>array</a></li><li><a href=#slice>slice</a></li><li><a href=#map>map</a></li><li><a href=#range>range</a></li><li><a href=#func>func</a></li><li><a href=#pointer>pointer</a></li><li><a href=#struct>struct</a></li><li><a href=#error>error</a></li><li><a href=#string>string</a></li><li><a href=#fmt>fmt</a></li><li><a href=#json>json</a></li><li><a href=#time>time</a></li><li><a href=#strconv>strconv</a></li><li><a href=#os>os</a></li></ul></li></ul></nav><style>.book-toc .book-toc-content a{color:var(--body-font-color)}</style></aside></header><article class=markdown><h1>Go Cheatsheet</h1><h5>January 21, 2025
+·
+10 min read
+<span id=busuanzi_container_page_pv>· Page View: <span id=busuanzi_value_page_pv></span></span></h5><blockquote class="book-hint info">If you have any questions, feel free to comment below.</blockquote><hr><h3 id=syntax>syntax
+<a class=anchor href=#syntax>#</a></h3><ol><li>The uppercase of the first letter of const, var, func, type is exported. And the lowercase is private.</li><li>The <code>{</code> cannot be as a separate line.</li><li>Not need to use <code>;</code> to end the statement.(Not recommend)</li><li><code>//</code> or <code>/* */</code> can be used to comment.</li><li>the string can be connected by <code>+</code></li><li><code>fmt.Printf</code> is used to print the string format.</li></ol><h3 id=dependency>dependency
+<a class=anchor href=#dependency>#</a></h3><h4 id=go-get>go get
+<a class=anchor href=#go-get>#</a></h4><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>go</span> env
+</span></span><span style=display:flex><span><span>#</span> GOROOT=<span>&#39;</span><span style=color:#666>/</span>usr<span style=color:#666>/</span>local<span style=color:#666>/</span><span style=color:green;font-weight:700>go</span><span>&#39;</span> <span style=color:#408080;font-style:italic>// the standard library
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span><span>#</span> GOPATH=<span>&#39;</span><span style=color:#666>/</span>Users<span style=color:#666>/</span>username<span style=color:#666>/</span><span style=color:green;font-weight:700>go</span><span>&#39;</span> <span style=color:#408080;font-style:italic>// the project lib or three-party lib
+</span></span></span></code></pre></div><p>go get will download the three-party lib to the <code>GOPATH/src</code> directory. The go search GOROOT first, then search GOPATH. But the denpendency only can keep one version, which will cause some conflict.</p><h4 id=go-vendor>go vendor
+<a class=anchor href=#go-vendor>#</a></h4><p>Save all the denpendency in the <code>vendor</code> directory of the project, which make the project more redundant. The go will search the vendor first. This still cannot solve the problem of version.</p><h4 id=go-module>go module
+<a class=anchor href=#go-module>#</a></h4><p>It was introduced in go1.11, which can manage the denpendency more flexibly.</p><ol><li><code>go mod init</code> first initialize the project denpendency.</li><li><code>go mod tidy</code> write the using denpendency to the <code>go.mod</code> file and remove the unused denpendency in the file.</li><li><code>go mod download</code> or <code>go build</code> or <code>go test</code>, the three-party lib will be downloaded to the <code>GOPATH/pkg/mod</code> directory.</li></ol><p><code>indirect</code> means the sub-denpendency.
+<code>+incompatible</code> means compatible with the old version without the go.mod file.</p><p>If the project different package needs the same denpendency&rsquo;s different version, it will choose the minimum compatible version.</p><h4 id=denpendency-distribution>denpendency distribution
+<a class=anchor href=#denpendency-distribution>#</a></h4><p>Normally use the <code>GOPROXY='https://proxy.golang.org,direct'</code> search the proxy first, if not found, then search the original source.</p><h3 id=data-type>data type
+<a class=anchor href=#data-type>#</a></h3><ol><li><code>Int float..</code>: default is <code>0</code></li><li><code>String</code>: default is <code>""</code></li><li><code>Bool</code>: default is <code>false</code></li></ol><p>Below are all nil.</p><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>var</span> a <span style=color:#666>*</span><span style=color:#b00040>int</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>var</span> a []<span style=color:#b00040>int</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>var</span> a <span style=color:green;font-weight:700>map</span>[<span style=color:#b00040>string</span>] <span style=color:#b00040>int</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>var</span> a <span style=color:green;font-weight:700>chan</span> <span style=color:#b00040>int</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>var</span> a <span style=color:green;font-weight:700>func</span>(<span style=color:#b00040>string</span>) <span style=color:#b00040>int</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>var</span> a <span style=color:#b00040>error</span>
+</span></span></code></pre></div><h3 id=var>var
+<a class=anchor href=#var>#</a></h3><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#408080;font-style:italic>// case1
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span><span style=color:green;font-weight:700>var</span> identifier1, identifier2 <span style=color:green;font-weight:700>type</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic>// usually used in global variable
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span><span style=color:green;font-weight:700>var</span> (
+</span></span><span style=display:flex><span>    vname1 v_type1
+</span></span><span style=display:flex><span>    vname2 v_type2
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic>// case2 only can be used in function
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>intVal <span style=color:#666>:=</span> <span style=color:#666>1</span> <span style=color:#408080;font-style:italic>// you cannot declare the variable twice
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic>// which is equivalent to var intVal int = 1
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span><span style=color:green;font-weight:700>var</span> intVal <span style=color:#b00040>int</span>
+</span></span><span style=display:flex><span>intVal =<span style=color:#666>1</span> 
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic>// case3 auto
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span><span style=color:green;font-weight:700>var</span> v1name, v2name = value1, value2
+</span></span></code></pre></div><p>The int, float, bool and string are basic <strong>value type</strong>, using these types of variables directly save the <strong>value</strong> in memory, if use such as <code>i = j</code>, then actually copy the value of <code>j</code> to <code>i</code> in memory. <code>&i</code> is used to get the address of <code>i</code> in memory. When the i is local variable, the address is in the stack, when the i is global variable, the address is in the heap.</p><p>The complex type is a pointer, slice, map, channel, function, interface, struct, they are usually used as <strong>reference type</strong>. The reference type usually <strong>save the address</strong> of the value in memory, if use such as <code>i = j</code>, then actually copy the address of <code>j</code> to <code>i</code> in memory. So if j changes reference value, i will also change.</p><p><strong>You cannot declare a var but not use it in function. Except the global variable.</strong></p><p>You can use <code>a, b = b, a</code> to swap the value of a and b.(Must be the same type)</p><p>Use <code>_</code> to drop value, such as <code>_, b = a, b</code></p><h3 id=const>const
+<a class=anchor href=#const>#</a></h3><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#408080;font-style:italic>// type only boolen, string, number
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span><span style=color:green;font-weight:700>const</span> identifier [<span style=color:green;font-weight:700>type</span>] = value
+</span></span></code></pre></div><p>You can use the build-in function to operate the const.</p><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>import</span> <span style=color:#ba2121>&#34;unsafe&#34;</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>const</span> (
+</span></span><span style=display:flex><span>    a = <span style=color:#ba2121>&#34;abc&#34;</span>
+</span></span><span style=display:flex><span>    b = <span style=color:green>len</span>(a)
+</span></span><span style=display:flex><span>    c = unsafe.<span style=color:#00f>Sizeof</span>(a)
+</span></span><span style=display:flex><span>)
+</span></span></code></pre></div><h3 id=iota>iota
+<a class=anchor href=#iota>#</a></h3><p>special const, default is 0, every time add one const, the iota will add one.</p><p>And in the const block, if you don&rsquo;t assign the value obviously, it will inherit the last value.</p><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>const</span> (
+</span></span><span style=display:flex><span>            a = <span style=color:green;font-weight:700>iota</span>   <span style=color:#408080;font-style:italic>//0
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>            b          <span style=color:#408080;font-style:italic>//1
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>            c          <span style=color:#408080;font-style:italic>//2
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>            d = <span style=color:#ba2121>&#34;ha&#34;</span>   <span style=color:#408080;font-style:italic>//&#34;ha&#34; iota += 1
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>            e          <span style=color:#408080;font-style:italic>//&#34;ha&#34; iota += 1
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>            f = <span style=color:#666>100</span>    <span style=color:#408080;font-style:italic>//100 iota +=1
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>            g          <span style=color:#408080;font-style:italic>//100 iota +=1
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>            h = <span style=color:green;font-weight:700>iota</span>   <span style=color:#408080;font-style:italic>//7
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>            i          <span style=color:#408080;font-style:italic>//8
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>    )
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=operator>operator
+<a class=anchor href=#operator>#</a></h3><p>&: get the address of the variable.</p><ul><li>pointer variable: get the value of the address.</li></ul><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>package</span> main
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>import</span> <span style=color:#ba2121>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>   <span style=color:green;font-weight:700>var</span> a <span style=color:#b00040>int</span> = <span style=color:#666>4</span>
+</span></span><span style=display:flex><span>   <span style=color:green;font-weight:700>var</span> b <span style=color:#b00040>int32</span>
+</span></span><span style=display:flex><span>   <span style=color:green;font-weight:700>var</span> c <span style=color:#b00040>float32</span>
+</span></span><span style=display:flex><span>   <span style=color:green;font-weight:700>var</span> ptr <span style=color:#666>*</span><span style=color:#b00040>int</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>   ptr = <span style=color:#666>&amp;</span>a
+</span></span><span style=display:flex><span>   fmt.<span style=color:#00f>Printf</span>(<span style=color:#ba2121>&#34;a is %d\n&#34;</span>, a); <span style=color:#408080;font-style:italic>// a is 4
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>   fmt.<span style=color:#00f>Printf</span>(<span style=color:#ba2121>&#34;*ptr is %d\n&#34;</span>, <span style=color:#666>*</span>ptr); <span style=color:#408080;font-style:italic>// *ptr is 4
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>}
+</span></span></code></pre></div><h3 id=if>if
+<a class=anchor href=#if>#</a></h3><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> num <span style=color:#666>:=</span> <span style=color:#666>9</span>; num &lt; <span style=color:#666>0</span> {
+</span></span><span style=display:flex><span>		fmt.<span style=color:#00f>Println</span>(num, <span style=color:#ba2121>&#34;is negative&#34;</span>)
+</span></span><span style=display:flex><span>	} <span style=color:green;font-weight:700>else</span> <span style=color:green;font-weight:700>if</span> num &lt; <span style=color:#666>10</span> {
+</span></span><span style=display:flex><span>		fmt.<span style=color:#00f>Println</span>(num, <span style=color:#ba2121>&#34;has 1 digit&#34;</span>)
+</span></span><span style=display:flex><span>	} <span style=color:green;font-weight:700>else</span> {
+</span></span><span style=display:flex><span>		fmt.<span style=color:#00f>Println</span>(num, <span style=color:#ba2121>&#34;has multiple digits&#34;</span>)
+</span></span><span style=display:flex><span>	}
+</span></span></code></pre></div><h3 id=switch>switch
+<a class=anchor href=#switch>#</a></h3><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>switch</span> var1 {
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>case</span> val1:
+</span></span><span style=display:flex><span>  <span style=color:#408080;font-style:italic>// do something
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span><span style=color:green;font-weight:700>case</span> val2:
+</span></span><span style=display:flex><span>  <span style=color:#408080;font-style:italic>// do something
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span><span style=color:green;font-weight:700>default</span>:
+</span></span><span style=display:flex><span>  <span style=color:#408080;font-style:italic>// do something
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>switch</span> x.(<span style=color:green;font-weight:700>type</span>){
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>case</span> <span style=color:green;font-weight:700>type</span>:
+</span></span><span style=display:flex><span>       <span style=color:#00f>statement</span>(s);      
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>case</span> <span style=color:green;font-weight:700>type</span>:
+</span></span><span style=display:flex><span>       <span style=color:#00f>statement</span>(s); 
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>default</span>: <span style=color:#408080;font-style:italic>// optional
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>       <span style=color:#00f>statement</span>(s);
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic>// the fallthrough will execute the next case forcefully.
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>switch</span> {
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>case</span> <span style=color:green;font-weight:700>false</span>:
+</span></span><span style=display:flex><span>            fmt.<span style=color:#00f>Println</span>(<span style=color:#ba2121>&#34;1&#34;</span>)
+</span></span><span style=display:flex><span>            <span style=color:green;font-weight:700>fallthrough</span>
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>case</span> <span style=color:green;font-weight:700>true</span>:
+</span></span><span style=display:flex><span>            fmt.<span style=color:#00f>Println</span>(<span style=color:#ba2121>&#34;2&#34;</span>)
+</span></span><span style=display:flex><span>            <span style=color:green;font-weight:700>fallthrough</span>
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>case</span> <span style=color:green;font-weight:700>false</span>:
+</span></span><span style=display:flex><span>            fmt.<span style=color:#00f>Println</span>(<span style=color:#ba2121>&#34;3&#34;</span>)
+</span></span><span style=display:flex><span>            <span style=color:green;font-weight:700>fallthrough</span>
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>case</span> <span style=color:green;font-weight:700>true</span>:
+</span></span><span style=display:flex><span>            fmt.<span style=color:#00f>Println</span>(<span style=color:#ba2121>&#34;4&#34;</span>)
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>case</span> <span style=color:green;font-weight:700>false</span>:
+</span></span><span style=display:flex><span>            fmt.<span style=color:#00f>Println</span>(<span style=color:#ba2121>&#34;5&#34;</span>)
+</span></span><span style=display:flex><span>            <span style=color:green;font-weight:700>fallthrough</span>
+</span></span><span style=display:flex><span>    <span style=color:green;font-weight:700>default</span>:
+</span></span><span style=display:flex><span>            fmt.<span style=color:#00f>Println</span>(<span style=color:#ba2121>&#34;6&#34;</span>)
+</span></span><span style=display:flex><span>    }
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic>// 2 3 4
+</span></span></span></code></pre></div><h3 id=select>select
+<a class=anchor href=#select>#</a></h3><p>select only can be used in channel, each case must be a channel operation, either send or receive.</p><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>select</span> {
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>case</span> <span style=color:#666>&lt;-</span>ch1:
+</span></span><span style=display:flex><span>  <span style=color:#408080;font-style:italic>// do something
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span><span style=color:green;font-weight:700>case</span> value <span style=color:#666>:=</span> <span style=color:#666>&lt;-</span> channel2:
+</span></span><span style=display:flex><span>  <span style=color:#408080;font-style:italic>// do something
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span><span style=color:green;font-weight:700>case</span> channel3 <span style=color:#666>&lt;-</span> value:
+</span></span><span style=display:flex><span>  <span style=color:#408080;font-style:italic>// do something
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span><span style=color:green;font-weight:700>default</span>:
+</span></span><span style=display:flex><span>  <span style=color:#408080;font-style:italic>// do something
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>}
+</span></span></code></pre></div><p>select statement will <strong>listen to all the channel operations</strong>, once one channel is ready, then execute the corresponding code block. If multiple channels are ready, then the select statement will <strong>randomly</strong> select one channel to execute. If all channels are not ready, then execute the code in the default block. if there is no default, select will block until one channel is ready. Go will not re-evaluate the channel or value.</p><h3 id=for>for
+<a class=anchor href=#for>#</a></h3><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span>	<span style=color:green;font-weight:700>for</span> n <span style=color:#666>:=</span> <span style=color:#666>0</span>; n &lt; <span style=color:#666>5</span>; n<span style=color:#666>++</span> {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>if</span> n<span style=color:#666>%</span><span style=color:#666>2</span> <span style=color:#666>==</span> <span style=color:#666>0</span> {
+</span></span><span style=display:flex><span>			<span style=color:green;font-weight:700>continue</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		fmt.<span style=color:#00f>Println</span>(n)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>  <span style=color:#408080;font-style:italic>// infinite loop
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>  <span style=color:green;font-weight:700>for</span> {
+</span></span><span style=display:flex><span>		fmt.<span style=color:#00f>Println</span>(<span style=color:#ba2121>&#34;loop&#34;</span>)
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>break</span>
+</span></span><span style=display:flex><span>	}
+</span></span></code></pre></div><h3 id=array>array
+<a class=anchor href=#array>#</a></h3><p>It is fixed length, which is not common used.</p><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span>	<span style=color:green;font-weight:700>var</span> twoD [<span style=color:#666>2</span>][<span style=color:#666>3</span>]<span style=color:#b00040>int</span>
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>for</span> i <span style=color:#666>:=</span> <span style=color:#666>0</span>; i &lt; <span style=color:#666>2</span>; i<span style=color:#666>++</span> {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>for</span> j <span style=color:#666>:=</span> <span style=color:#666>0</span>; j &lt; <span style=color:#666>3</span>; j<span style=color:#666>++</span> {
+</span></span><span style=display:flex><span>			twoD[i][j] = i <span style=color:#666>+</span> j
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>	}
+</span></span></code></pre></div><h3 id=slice>slice
+<a class=anchor href=#slice>#</a></h3><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	s <span style=color:#666>:=</span> <span style=color:green>make</span>([]<span style=color:#b00040>string</span>, <span style=color:#666>3</span>)
+</span></span><span style=display:flex><span>	s[<span style=color:#666>0</span>] = <span style=color:#ba2121>&#34;a&#34;</span>
+</span></span><span style=display:flex><span>	s[<span style=color:#666>1</span>] = <span style=color:#ba2121>&#34;b&#34;</span>
+</span></span><span style=display:flex><span>	s[<span style=color:#666>2</span>] = <span style=color:#ba2121>&#34;c&#34;</span>
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(<span style=color:#ba2121>&#34;get:&#34;</span>, s[<span style=color:#666>2</span>])   <span style=color:#408080;font-style:italic>// c
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(<span style=color:#ba2121>&#34;len:&#34;</span>, <span style=color:green>len</span>(s)) <span style=color:#408080;font-style:italic>// 3
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>
+</span></span><span style=display:flex><span>	s = <span style=color:green>append</span>(s, <span style=color:#ba2121>&#34;d&#34;</span>) <span style=color:#408080;font-style:italic>// must be received back
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	s = <span style=color:green>append</span>(s, <span style=color:#ba2121>&#34;e&#34;</span>, <span style=color:#ba2121>&#34;f&#34;</span>)
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(s) <span style=color:#408080;font-style:italic>// [a b c d e f]
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>
+</span></span><span style=display:flex><span>	c <span style=color:#666>:=</span> <span style=color:green>make</span>([]<span style=color:#b00040>string</span>, <span style=color:green>len</span>(s))
+</span></span><span style=display:flex><span>	<span style=color:green>copy</span>(c, s)
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(c) <span style=color:#408080;font-style:italic>// [a b c d e f]
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(s[<span style=color:#666>2</span>:<span style=color:#666>5</span>]) <span style=color:#408080;font-style:italic>// [c d e]
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(s[:<span style=color:#666>5</span>])  <span style=color:#408080;font-style:italic>// [a b c d e]
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(s[<span style=color:#666>2</span>:])  <span style=color:#408080;font-style:italic>// [c d e f]
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>
+</span></span><span style=display:flex><span>	good <span style=color:#666>:=</span> []<span style=color:#b00040>string</span>{<span style=color:#ba2121>&#34;g&#34;</span>, <span style=color:#ba2121>&#34;o&#34;</span>, <span style=color:#ba2121>&#34;o&#34;</span>, <span style=color:#ba2121>&#34;d&#34;</span>}
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(good) <span style=color:#408080;font-style:italic>// [g o o d]
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>}
+</span></span></code></pre></div><h3 id=map>map
+<a class=anchor href=#map>#</a></h3><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>	m <span style=color:#666>:=</span> <span style=color:green>make</span>(<span style=color:green;font-weight:700>map</span>[<span style=color:#b00040>string</span>]<span style=color:#b00040>int</span>)
+</span></span><span style=display:flex><span>	m[<span style=color:#ba2121>&#34;one&#34;</span>] = <span style=color:#666>1</span>
+</span></span><span style=display:flex><span>	m[<span style=color:#ba2121>&#34;two&#34;</span>] = <span style=color:#666>2</span>
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(m)           <span style=color:#408080;font-style:italic>// map[one:1 two:2]
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(<span style=color:green>len</span>(m))      <span style=color:#408080;font-style:italic>// 2
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(m[<span style=color:#ba2121>&#34;one&#34;</span>])    <span style=color:#408080;font-style:italic>// 1
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(m[<span style=color:#ba2121>&#34;unknow&#34;</span>]) <span style=color:#408080;font-style:italic>// 0
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>
+</span></span><span style=display:flex><span>	r, ok <span style=color:#666>:=</span> m[<span style=color:#ba2121>&#34;unknow&#34;</span>]
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(r, ok) <span style=color:#408080;font-style:italic>// 0 false
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>
+</span></span><span style=display:flex><span>	<span style=color:green>delete</span>(m, <span style=color:#ba2121>&#34;one&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	m2 <span style=color:#666>:=</span> <span style=color:green;font-weight:700>map</span>[<span style=color:#b00040>string</span>]<span style=color:#b00040>int</span>{<span style=color:#ba2121>&#34;one&#34;</span>: <span style=color:#666>1</span>, <span style=color:#ba2121>&#34;two&#34;</span>: <span style=color:#666>2</span>}
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>var</span> m3 = <span style=color:green;font-weight:700>map</span>[<span style=color:#b00040>string</span>]<span style=color:#b00040>int</span>{<span style=color:#ba2121>&#34;one&#34;</span>: <span style=color:#666>1</span>, <span style=color:#ba2121>&#34;two&#34;</span>: <span style=color:#666>2</span>}
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(m2, m3)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=range>range
+<a class=anchor href=#range>#</a></h3><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>	nums <span style=color:#666>:=</span> []<span style=color:#b00040>int</span>{<span style=color:#666>2</span>, <span style=color:#666>3</span>, <span style=color:#666>4</span>}
+</span></span><span style=display:flex><span>	sum <span style=color:#666>:=</span> <span style=color:#666>0</span>
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>for</span> i, num <span style=color:#666>:=</span> <span style=color:green;font-weight:700>range</span> nums {
+</span></span><span style=display:flex><span>		sum <span style=color:#666>+=</span> num
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>if</span> num <span style=color:#666>==</span> <span style=color:#666>2</span> {
+</span></span><span style=display:flex><span>			fmt.<span style=color:#00f>Println</span>(<span style=color:#ba2121>&#34;index:&#34;</span>, i, <span style=color:#ba2121>&#34;num:&#34;</span>, num) <span style=color:#408080;font-style:italic>// index: 0 num: 2
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>		}
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(sum) <span style=color:#408080;font-style:italic>// 9
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>
+</span></span><span style=display:flex><span>	m <span style=color:#666>:=</span> <span style=color:green;font-weight:700>map</span>[<span style=color:#b00040>string</span>]<span style=color:#b00040>string</span>{<span style=color:#ba2121>&#34;a&#34;</span>: <span style=color:#ba2121>&#34;A&#34;</span>, <span style=color:#ba2121>&#34;b&#34;</span>: <span style=color:#ba2121>&#34;B&#34;</span>}
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>for</span> k, v <span style=color:#666>:=</span> <span style=color:green;font-weight:700>range</span> m {
+</span></span><span style=display:flex><span>		fmt.<span style=color:#00f>Println</span>(k, v) <span style=color:#408080;font-style:italic>// b 8; a A
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	}
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>for</span> k <span style=color:#666>:=</span> <span style=color:green;font-weight:700>range</span> m {
+</span></span><span style=display:flex><span>		fmt.<span style=color:#00f>Println</span>(<span style=color:#ba2121>&#34;key&#34;</span>, k) <span style=color:#408080;font-style:italic>// key a; key b
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	}
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=func>func
+<a class=anchor href=#func>#</a></h3><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#408080;font-style:italic>// func name(parameter-list) (return-list)
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>add</span>(a <span style=color:#b00040>int</span>, b <span style=color:#b00040>int</span>) <span style=color:#b00040>int</span> {
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>return</span> a <span style=color:#666>+</span> b
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>add2</span>(a, b <span style=color:#b00040>int</span>) <span style=color:#b00040>int</span> {
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>return</span> a <span style=color:#666>+</span> b
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>exists</span>(m <span style=color:green;font-weight:700>map</span>[<span style=color:#b00040>string</span>]<span style=color:#b00040>string</span>, k <span style=color:#b00040>string</span>) (v <span style=color:#b00040>string</span>, ok <span style=color:#b00040>bool</span>) {
+</span></span><span style=display:flex><span>	v, ok = m[k]
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>return</span> v, ok
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>	res <span style=color:#666>:=</span> <span style=color:#00f>add</span>(<span style=color:#666>1</span>, <span style=color:#666>2</span>)
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(res) <span style=color:#408080;font-style:italic>// 3
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>
+</span></span><span style=display:flex><span>	v, ok <span style=color:#666>:=</span> <span style=color:#00f>exists</span>(<span style=color:green;font-weight:700>map</span>[<span style=color:#b00040>string</span>]<span style=color:#b00040>string</span>{<span style=color:#ba2121>&#34;a&#34;</span>: <span style=color:#ba2121>&#34;A&#34;</span>}, <span style=color:#ba2121>&#34;a&#34;</span>)
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(v, ok) <span style=color:#408080;font-style:italic>// A True
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>}
+</span></span></code></pre></div><h3 id=pointer>pointer
+<a class=anchor href=#pointer>#</a></h3><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>add2</span>(n <span style=color:#b00040>int</span>) {
+</span></span><span style=display:flex><span>	n <span style=color:#666>+=</span> <span style=color:#666>2</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>add2ptr</span>(n <span style=color:#666>*</span><span style=color:#b00040>int</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#666>*</span>n <span style=color:#666>+=</span> <span style=color:#666>2</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>	n <span style=color:#666>:=</span> <span style=color:#666>5</span>
+</span></span><span style=display:flex><span>	<span style=color:#00f>add2</span>(n)
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(n) <span style=color:#408080;font-style:italic>// 5
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#00f>add2ptr</span>(<span style=color:#666>&amp;</span>n)
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(n) <span style=color:#408080;font-style:italic>// 7
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>}
+</span></span></code></pre></div><h3 id=struct>struct
+<a class=anchor href=#struct>#</a></h3><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>type</span> user <span style=color:green;font-weight:700>struct</span> {
+</span></span><span style=display:flex><span>	name     <span style=color:#b00040>string</span>
+</span></span><span style=display:flex><span>	password <span style=color:#b00040>string</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>  <span style=color:#408080;font-style:italic>// 1
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	a <span style=color:#666>:=</span> user{name: <span style=color:#ba2121>&#34;wang&#34;</span>, password: <span style=color:#ba2121>&#34;1024&#34;</span>}
+</span></span><span style=display:flex><span>  <span style=color:#408080;font-style:italic>// 2
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	b <span style=color:#666>:=</span> user{<span style=color:#ba2121>&#34;wang&#34;</span>, <span style=color:#ba2121>&#34;1024&#34;</span>}
+</span></span><span style=display:flex><span>  <span style=color:#408080;font-style:italic>// 3
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	c <span style=color:#666>:=</span> user{name: <span style=color:#ba2121>&#34;wang&#34;</span>}
+</span></span><span style=display:flex><span>	c.password = <span style=color:#ba2121>&#34;1024&#34;</span>
+</span></span><span style=display:flex><span>  <span style=color:#408080;font-style:italic>// 4
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:green;font-weight:700>var</span> d user
+</span></span><span style=display:flex><span>	d.name = <span style=color:#ba2121>&#34;wang&#34;</span>
+</span></span><span style=display:flex><span>	d.password = <span style=color:#ba2121>&#34;1024&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(a, b, c, d)                 <span style=color:#408080;font-style:italic>// {wang 1024} {wang 1024} {wang 1024} {wang 1024}
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(<span style=color:#00f>checkPassword</span>(a, <span style=color:#ba2121>&#34;haha&#34;</span>))   <span style=color:#408080;font-style:italic>// false
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(<span style=color:#00f>checkPassword2</span>(<span style=color:#666>&amp;</span>a, <span style=color:#ba2121>&#34;haha&#34;</span>)) <span style=color:#408080;font-style:italic>// false
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>checkPassword</span>(u user, password <span style=color:#b00040>string</span>) <span style=color:#b00040>bool</span> {
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>return</span> u.password <span style=color:#666>==</span> password
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic>// if use pointer, you can make some changes and avoid some big structure cost
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>checkPassword2</span>(u <span style=color:#666>*</span>user, password <span style=color:#b00040>string</span>) <span style=color:#b00040>bool</span> {
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>return</span> u.password <span style=color:#666>==</span> password
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic>// the structure method
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span><span style=color:green;font-weight:700>func</span> (u user) <span style=color:#00f>checkPassword</span>(password <span style=color:#b00040>string</span>) <span style=color:#b00040>bool</span> {
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>return</span> u.password <span style=color:#666>==</span> password
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic>// You can change the value via pointer
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span><span style=color:green;font-weight:700>func</span> (u <span style=color:#666>*</span>user) <span style=color:#00f>resetPassword</span>(password <span style=color:#b00040>string</span>) {
+</span></span><span style=display:flex><span>	u.password = password
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>	a <span style=color:#666>:=</span> user{name: <span style=color:#ba2121>&#34;wang&#34;</span>, password: <span style=color:#ba2121>&#34;1024&#34;</span>}
+</span></span><span style=display:flex><span>	a.<span style=color:#00f>resetPassword</span>(<span style=color:#ba2121>&#34;2048&#34;</span>)
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(a.<span style=color:#00f>checkPassword</span>(<span style=color:#ba2121>&#34;2048&#34;</span>)) <span style=color:#408080;font-style:italic>// true
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>}
+</span></span></code></pre></div><h3 id=error>error
+<a class=anchor href=#error>#</a></h3><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;errors&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>type</span> user <span style=color:green;font-weight:700>struct</span> {
+</span></span><span style=display:flex><span>	name     <span style=color:#b00040>string</span>
+</span></span><span style=display:flex><span>	password <span style=color:#b00040>string</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>findUser</span>(users []user, name <span style=color:#b00040>string</span>) (v <span style=color:#666>*</span>user, err <span style=color:#b00040>error</span>) {
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>for</span> _, u <span style=color:#666>:=</span> <span style=color:green;font-weight:700>range</span> users {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>if</span> u.name <span style=color:#666>==</span> name {
+</span></span><span style=display:flex><span>			<span style=color:green;font-weight:700>return</span> <span style=color:#666>&amp;</span>u, <span style=color:green;font-weight:700>nil</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>return</span> <span style=color:green;font-weight:700>nil</span>, errors.<span style=color:#00f>New</span>(<span style=color:#ba2121>&#34;not found&#34;</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> u, err <span style=color:#666>:=</span> <span style=color:#00f>findUser</span>([]user{{<span style=color:#ba2121>&#34;wang&#34;</span>, <span style=color:#ba2121>&#34;1024&#34;</span>}}, <span style=color:#ba2121>&#34;li&#34;</span>); err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		fmt.<span style=color:#00f>Println</span>(err) <span style=color:#408080;font-style:italic>// not found
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>		<span style=color:green;font-weight:700>return</span>
+</span></span><span style=display:flex><span>	} <span style=color:green;font-weight:700>else</span> {
+</span></span><span style=display:flex><span>		fmt.<span style=color:#00f>Println</span>(u.name)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=string>string
+<a class=anchor href=#string>#</a></h3><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;strings&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>	a <span style=color:#666>:=</span> <span style=color:#ba2121>&#34;hello&#34;</span>
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(strings.<span style=color:#00f>Contains</span>(a, <span style=color:#ba2121>&#34;ll&#34;</span>))                <span style=color:#408080;font-style:italic>// true
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(strings.<span style=color:#00f>Count</span>(a, <span style=color:#ba2121>&#34;l&#34;</span>))                    <span style=color:#408080;font-style:italic>// 2
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(strings.<span style=color:#00f>HasPrefix</span>(a, <span style=color:#ba2121>&#34;he&#34;</span>))               <span style=color:#408080;font-style:italic>// true
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(strings.<span style=color:#00f>HasSuffix</span>(a, <span style=color:#ba2121>&#34;llo&#34;</span>))              <span style=color:#408080;font-style:italic>// true
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(strings.<span style=color:#00f>Index</span>(a, <span style=color:#ba2121>&#34;ll&#34;</span>))                   <span style=color:#408080;font-style:italic>// 2
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(strings.<span style=color:#00f>Join</span>([]<span style=color:#b00040>string</span>{<span style=color:#ba2121>&#34;he&#34;</span>, <span style=color:#ba2121>&#34;llo&#34;</span>}, <span style=color:#ba2121>&#34;-&#34;</span>)) <span style=color:#408080;font-style:italic>// he-llo
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(strings.<span style=color:#00f>Repeat</span>(a, <span style=color:#666>2</span>))                     <span style=color:#408080;font-style:italic>// hellohello
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(strings.<span style=color:#00f>Replace</span>(a, <span style=color:#ba2121>&#34;e&#34;</span>, <span style=color:#ba2121>&#34;E&#34;</span>, <span style=color:#666>-</span><span style=color:#666>1</span>))         <span style=color:#408080;font-style:italic>// hEllo
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(strings.<span style=color:#00f>Split</span>(<span style=color:#ba2121>&#34;a-b-c&#34;</span>, <span style=color:#ba2121>&#34;-&#34;</span>))              <span style=color:#408080;font-style:italic>// [a b c]
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(strings.<span style=color:#00f>ToLower</span>(a))                       <span style=color:#408080;font-style:italic>// hello
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(strings.<span style=color:#00f>ToUpper</span>(a))                       <span style=color:#408080;font-style:italic>// HELLO
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(<span style=color:green>len</span>(a))                                   <span style=color:#408080;font-style:italic>// 5
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	b <span style=color:#666>:=</span> <span style=color:#ba2121>&#34;你好&#34;</span>
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(<span style=color:green>len</span>(b)) <span style=color:#408080;font-style:italic>// 6
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>}
+</span></span></code></pre></div><h3 id=fmt>fmt
+<a class=anchor href=#fmt>#</a></h3><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>type</span> point <span style=color:green;font-weight:700>struct</span> {
+</span></span><span style=display:flex><span>	x, y <span style=color:#b00040>int</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>	s <span style=color:#666>:=</span> <span style=color:#ba2121>&#34;hello&#34;</span>
+</span></span><span style=display:flex><span>	n <span style=color:#666>:=</span> <span style=color:#666>123</span>
+</span></span><span style=display:flex><span>	p <span style=color:#666>:=</span> point{<span style=color:#666>1</span>, <span style=color:#666>2</span>}
+</span></span><span style=display:flex><span>  <span style=color:#408080;font-style:italic>// %v: value
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Printf</span>(<span style=color:#ba2121>&#34;s=%v\n&#34;</span>, s)  <span style=color:#408080;font-style:italic>// s=hello
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Printf</span>(<span style=color:#ba2121>&#34;n=%v\n&#34;</span>, n)  <span style=color:#408080;font-style:italic>// n=123
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Printf</span>(<span style=color:#ba2121>&#34;p=%v\n&#34;</span>, p)  <span style=color:#408080;font-style:italic>// p={1 2}
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>  <span style=color:#408080;font-style:italic>// %+v: value with field name
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Printf</span>(<span style=color:#ba2121>&#34;p=%+v\n&#34;</span>, p) <span style=color:#408080;font-style:italic>// p={x:1 y:2}
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>  <span style=color:#408080;font-style:italic>// more detail
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Printf</span>(<span style=color:#ba2121>&#34;p=%#v\n&#34;</span>, p) <span style=color:#408080;font-style:italic>// p=main.point{x:1, y:2}
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>
+</span></span><span style=display:flex><span>	f <span style=color:#666>:=</span> <span style=color:#666>3.141592653</span>
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(f)          <span style=color:#408080;font-style:italic>// 3.141592653
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Printf</span>(<span style=color:#ba2121>&#34;%.2f\n&#34;</span>, f) <span style=color:#408080;font-style:italic>// 3.14
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>}
+</span></span></code></pre></div><h3 id=json>json
+<a class=anchor href=#json>#</a></h3><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;encoding/json&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>type</span> userInfo <span style=color:green;font-weight:700>struct</span> {
+</span></span><span style=display:flex><span>  <span style=color:#408080;font-style:italic>// you should make sure the uppercase of field name
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	Name  <span style=color:#b00040>string</span>
+</span></span><span style=display:flex><span>	Age   <span style=color:#b00040>int</span> <span style=color:#ba2121>`json:&#34;age&#34;`</span>
+</span></span><span style=display:flex><span>	Hobby []<span style=color:#b00040>string</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>	a <span style=color:#666>:=</span> userInfo{Name: <span style=color:#ba2121>&#34;wang&#34;</span>, Age: <span style=color:#666>18</span>, Hobby: []<span style=color:#b00040>string</span>{<span style=color:#ba2121>&#34;Golang&#34;</span>, <span style=color:#ba2121>&#34;TypeScript&#34;</span>}}
+</span></span><span style=display:flex><span>  <span style=color:#408080;font-style:italic>// Marshal: convert struct to json
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	buf, err <span style=color:#666>:=</span> json.<span style=color:#00f>Marshal</span>(a)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green>panic</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>  <span style=color:#408080;font-style:italic>// hex code
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(buf)         <span style=color:#408080;font-style:italic>// [123 34 78 97...]
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>  <span style=color:#408080;font-style:italic>// convert to string
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(<span style=color:green>string</span>(buf)) <span style=color:#408080;font-style:italic>// {&#34;Name&#34;:&#34;wang&#34;,&#34;age&#34;:18,&#34;Hobby&#34;:[&#34;Golang&#34;,&#34;TypeScript&#34;]}
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>
+</span></span><span style=display:flex><span>	buf, err = json.<span style=color:#00f>MarshalIndent</span>(a, <span style=color:#ba2121>&#34;&#34;</span>, <span style=color:#ba2121>&#34;\t&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green>panic</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(<span style=color:green>string</span>(buf))
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>var</span> b userInfo
+</span></span><span style=display:flex><span>	err = json.<span style=color:#00f>Unmarshal</span>(buf, <span style=color:#666>&amp;</span>b)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green>panic</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Printf</span>(<span style=color:#ba2121>&#34;%#v\n&#34;</span>, b) <span style=color:#408080;font-style:italic>// main.userInfo{Name:&#34;wang&#34;, Age:18, Hobby:[]string{&#34;Golang&#34;, &#34;TypeScript&#34;}}
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>}
+</span></span></code></pre></div><h3 id=time>time
+<a class=anchor href=#time>#</a></h3><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;time&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>	now <span style=color:#666>:=</span> time.<span style=color:#00f>Now</span>()
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(now) <span style=color:#408080;font-style:italic>// 2022-03-27 18:04:59.433297 +0800 CST m=+0.000087933
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	t <span style=color:#666>:=</span> time.<span style=color:#00f>Date</span>(<span style=color:#666>2022</span>, <span style=color:#666>3</span>, <span style=color:#666>27</span>, <span style=color:#666>1</span>, <span style=color:#666>25</span>, <span style=color:#666>36</span>, <span style=color:#666>0</span>, time.UTC)
+</span></span><span style=display:flex><span>	t2 <span style=color:#666>:=</span> time.<span style=color:#00f>Date</span>(<span style=color:#666>2022</span>, <span style=color:#666>3</span>, <span style=color:#666>27</span>, <span style=color:#666>2</span>, <span style=color:#666>30</span>, <span style=color:#666>36</span>, <span style=color:#666>0</span>, time.UTC)
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(t)                                                  <span style=color:#408080;font-style:italic>// 2022-03-27 01:25:36 +0000 UTC
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(t.<span style=color:#00f>Year</span>(), t.<span style=color:#00f>Month</span>(), t.<span style=color:#00f>Day</span>(), t.<span style=color:#00f>Hour</span>(), t.<span style=color:#00f>Minute</span>()) <span style=color:#408080;font-style:italic>// 2022 March 27 1 25
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(t.<span style=color:#00f>Format</span>(<span style=color:#ba2121>&#34;2006-01-02 15:04:05&#34;</span>))                    <span style=color:#408080;font-style:italic>// 2022-03-27 01:25:36
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	diff <span style=color:#666>:=</span> t2.<span style=color:#00f>Sub</span>(t)
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(diff)                           <span style=color:#408080;font-style:italic>// 1h5m0s
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(diff.<span style=color:#00f>Minutes</span>(), diff.<span style=color:#00f>Seconds</span>()) <span style=color:#408080;font-style:italic>// 65 3900
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	t3, err <span style=color:#666>:=</span> time.<span style=color:#00f>Parse</span>(<span style=color:#ba2121>&#34;2006-01-02 15:04:05&#34;</span>, <span style=color:#ba2121>&#34;2022-03-27 01:25:36&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green>panic</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(t3 <span style=color:#666>==</span> t)    <span style=color:#408080;font-style:italic>// true
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(now.<span style=color:#00f>Unix</span>()) <span style=color:#408080;font-style:italic>// 1648738080
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>}
+</span></span></code></pre></div><h3 id=strconv>strconv
+<a class=anchor href=#strconv>#</a></h3><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;strconv&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>	f, _ <span style=color:#666>:=</span> strconv.<span style=color:#00f>ParseFloat</span>(<span style=color:#ba2121>&#34;1.234&#34;</span>, <span style=color:#666>64</span>)
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(f) <span style=color:#408080;font-style:italic>// 1.234
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>  <span style=color:#408080;font-style:italic>// str base precision
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	n, _ <span style=color:#666>:=</span> strconv.<span style=color:#00f>ParseInt</span>(<span style=color:#ba2121>&#34;111&#34;</span>, <span style=color:#666>10</span>, <span style=color:#666>64</span>)
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(n) <span style=color:#408080;font-style:italic>// 111
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>
+</span></span><span style=display:flex><span>	n, _ = strconv.<span style=color:#00f>ParseInt</span>(<span style=color:#ba2121>&#34;0x1000&#34;</span>, <span style=color:#666>0</span>, <span style=color:#666>64</span>)
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(n) <span style=color:#408080;font-style:italic>// 4096
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>  <span style=color:#408080;font-style:italic>// convert quickly
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	n2, _ <span style=color:#666>:=</span> strconv.<span style=color:#00f>Atoi</span>(<span style=color:#ba2121>&#34;123&#34;</span>)
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(n2) <span style=color:#408080;font-style:italic>// 123
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>
+</span></span><span style=display:flex><span>	n2, err <span style=color:#666>:=</span> strconv.<span style=color:#00f>Atoi</span>(<span style=color:#ba2121>&#34;AAA&#34;</span>) <span style=color:#408080;font-style:italic>// invalid
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(n2, err) <span style=color:#408080;font-style:italic>// 0 strconv.Atoi: parsing &#34;AAA&#34;: invalid syntax
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>}
+</span></span></code></pre></div><h3 id=os>os
+<a class=anchor href=#os>#</a></h3><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;os&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;os/exec&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// go run example/20-env/main.go a b c d
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(os.Args)           <span style=color:#408080;font-style:italic>// [/var/folders/8p/n34xxfnx38dg8bv_x8l62t_m0000gn/T/go-build3406981276/b001/exe/main a b c d]
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(os.<span style=color:#00f>Getenv</span>(<span style=color:#ba2121>&#34;PATH&#34;</span>)) <span style=color:#408080;font-style:italic>// /usr/local/go/bin...
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Println</span>(os.<span style=color:#00f>Setenv</span>(<span style=color:#ba2121>&#34;AA&#34;</span>, <span style=color:#ba2121>&#34;BB&#34;</span>))
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	buf, err <span style=color:#666>:=</span> exec.<span style=color:#00f>Command</span>(<span style=color:#ba2121>&#34;grep&#34;</span>, <span style=color:#ba2121>&#34;127.0.0.1&#34;</span>, <span style=color:#ba2121>&#34;/etc/hosts&#34;</span>).<span style=color:#00f>CombinedOutput</span>()
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green>panic</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(<span style=color:green>string</span>(buf)) <span style=color:#408080;font-style:italic>// 127.0.0.1       localhost
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>}
+</span></span></code></pre></div><hr><div class=post-nav><a href="https://blog.timerring.com/posts/video-technology-101/?utm_source=nav">&lt;&lt; prev | Video...</a>
+<a onclick=goToRandomPost() style=cursor:pointer>Continue strolling</a>
+<a href="https://blog.timerring.com/posts/go-concurrency-and-parallelism/?utm_source=nav">Go Concurrency... ｜ next >></a></div><hr>If you find this blog useful and want to support my blog, need my skill for something, or have a coffee chat with me, feel free to:<div class=support><a href="https://www.patreon.com/bePatron?u=46962965" class=book-btn target=_blank>Subscribe Patreon to participate in blog topics and custom services</a>
+<a href=https://ko-fi.com/S6S130C16 class=book-btn target=_blank>Buy me a coffee</a></div><div style=margin-bottom:8px></div><script>function goToRandomPost(){const e=["/posts/go-common-test/?utm_source=random","/posts/go-concurrency-and-parallelism/?utm_source=random","/posts/go-cheatsheet/?utm_source=random","/posts/video-technology-101/?utm_source=random","/posts/the-main-kind-of-message-queue/?utm_source=random","/posts/the-method-to-manage-traffic/?utm_source=random","/posts/the-different-kind-of-api-design/?utm_source=random","/posts/the-encode-and-decode-in-python/?utm_source=random","/posts/about-the-systemd/?utm_source=random","/posts/docker-cheatsheet/?utm_source=random","/posts/docker-101/?utm_source=random","/posts/the-instance-class-static-magic-method-in-python/?utm_source=random","/posts/the-overview-of-security/?utm_source=random","/posts/how-to-publish-your-code-as-a-pip-module/?utm_source=random","/posts/some-good-things-to-share-about-the-packages/?utm_source=random","/posts/introduction-to-the-http-and-https-protocol/?utm_source=random","/posts/mail-service-and-protocol/?utm_source=random","/posts/thinking-about-advertisement-from-an-open-source-perspective/?utm_source=random","/posts/understanding-clash-through-configuration/?utm_source=random","/posts/a-brief-introduction-to-dns/?utm_source=random","/posts/real-computer-network/?utm_source=random","/posts/python-generator-iterator-and-decorator/?utm_source=random","/posts/python-underlying-mechanism/?utm_source=random","/posts/python-files-exceptions-and-modules/?utm_source=random","/posts/python-object-oriented-programming/?utm_source=random","/posts/python-cheatsheet/?utm_source=random","/posts/python-function-parameter/?utm_source=random","/posts/python-control-structure/?utm_source=random","/posts/python-composite-data-type/?utm_source=random","/posts/python-basic-data-type/?utm_source=random","/posts/python-basic-syntax-elements/?utm_source=random","/posts/deploy-github-pages-with-gpg-signing/?utm_source=random","/posts/gpg-101/?utm_source=random","/posts/housewarming-2024/?utm_source=random"],t=Math.floor(Math.random()*e.length);window.location.href=e[t]}</script></article><div class=book-comments><div class="book-tabs-content markdown-inner"><div id=tcomment></div><script src=https://giscus.app/client.js data-repo=timerring/blog data-repo-id=R_kgDONeZYZg data-category=Announcements data-category-id=DIC_kwDONeZYZs4ClRWs data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=bottom data-theme=preferred_color_scheme data-lang=en crossorigin=anonymous async></script></div></div><footer class=book-footer><div class="flex flex-wrap justify-between"></div><script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script><div class=busuanzi-footer><p style=text-align:center>&copy; 2022 - present <a href=https://github.com/timerring>timerring</a> | PV: <span id=busuanzi_value_site_pv></span> | UV: <span id=busuanzi_value_site_uv></span></p></div></footer><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav id=TableOfContents><ul><li><ul><li><a href=#syntax>syntax</a></li><li><a href=#dependency>dependency</a><ul><li><a href=#go-get>go get</a></li><li><a href=#go-vendor>go vendor</a></li><li><a href=#go-module>go module</a></li><li><a href=#denpendency-distribution>denpendency distribution</a></li></ul></li><li><a href=#data-type>data type</a></li><li><a href=#var>var</a></li><li><a href=#const>const</a></li><li><a href=#iota>iota</a></li><li><a href=#operator>operator</a></li><li><a href=#if>if</a></li><li><a href=#switch>switch</a></li><li><a href=#select>select</a></li><li><a href=#for>for</a></li><li><a href=#array>array</a></li><li><a href=#slice>slice</a></li><li><a href=#map>map</a></li><li><a href=#range>range</a></li><li><a href=#func>func</a></li><li><a href=#pointer>pointer</a></li><li><a href=#struct>struct</a></li><li><a href=#error>error</a></li><li><a href=#string>string</a></li><li><a href=#fmt>fmt</a></li><li><a href=#json>json</a></li><li><a href=#time>time</a></li><li><a href=#strconv>strconv</a></li><li><a href=#os>os</a></li></ul></li></ul></nav><style>.book-toc .book-toc-content a{color:var(--body-font-color)}</style></div></aside></main></body></html>
