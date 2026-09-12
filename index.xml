@@ -76,7 +76,112 @@ The content of this review is as follows: &lt;code>number type&lt;/code>, &lt;co
 &lt;a href="https://ko-fi.com/timerring" target="_blank" rel="noopener" class="book-btn">
  buy me a coffee
 &lt;/a>
-&lt;/p></description></item><item><title>Device Archive</title><link>https://blogs.timerring.com/devices/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://blogs.timerring.com/devices/</guid><description>&lt;section class="device-archive" aria-labelledby="device-archive-title">
+&lt;/p></description></item><item><title>Bookmarks</title><link>https://blogs.timerring.com/bookmarks/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://blogs.timerring.com/bookmarks/</guid><description>&lt;section class="bookmark-index" data-bookmark-index>
+ &lt;header class="bookmark-header">
+ &lt;h1>Bookmarks&lt;/h1>
+ &lt;p class="bookmark-intro">No need to copy someone else’s collection. The best things are the ones that stay with you.&lt;/p>
+ &lt;/header>
+
+ &lt;div class="bookmark-toolbar">
+ &lt;div class="bookmark-search">
+ &lt;label class="bookmark-search-label" for="bookmark-search">Search bookmarks&lt;/label>
+ &lt;input id="bookmark-search" type="search" inputmode="search" autocomplete="off" placeholder="Search title, domain, notes, or tags…" data-bookmark-search>
+ &lt;button type="button" data-bookmark-clear aria-label="Clear bookmark search" hidden>Clear&lt;/button>
+ &lt;/div>
+ &lt;div class="bookmark-toolbar-actions">
+ &lt;div class="bookmark-date-range-mount" data-bookmark-date-range data-min="2026-09-09" data-max="2026-09-12">
+ &lt;/div>
+ &lt;/div>
+ &lt;/div>
+
+ &lt;div class="bookmark-filters" aria-label="Bookmark collections">
+ &lt;button class="bookmark-filter is-active" type="button" data-bookmark-filter="all" aria-pressed="true">All &lt;span>4&lt;/span>&lt;/button>&lt;button class="bookmark-filter" type="button" data-bookmark-filter="product" aria-pressed="false">Product &lt;span>1&lt;/span>&lt;/button>&lt;button class="bookmark-filter" type="button" data-bookmark-filter="research" aria-pressed="false">Research &lt;span>1&lt;/span>&lt;/button>&lt;button class="bookmark-filter" type="button" data-bookmark-filter="skills" aria-pressed="false">Skills &lt;span>2&lt;/span>&lt;/button>
+ &lt;/div>
+
+ &lt;div class="bookmark-list" aria-live="polite">&lt;article class="bookmark-item" data-bookmark-item data-collection="skills" data-search="stop slop github.com a reusable skill for detecting and removing common ai-writing patterns from prose. skills skills writing ai 2026-09-12" data-added="2026-09-12" data-year="2026" data-month="09">
+ &lt;div class="bookmark-item-content">
+ &lt;div class="bookmark-heading">
+ &lt;h2>Stop Slop&lt;/h2>
+ &lt;div class="bookmark-actions" aria-label="Actions for Stop Slop">
+ &lt;a class="bookmark-action is-website" href="https://github.com/hardikpandya/stop-slop/tree/main" target="_blank" rel="noopener noreferrer" title="Visit github.com" aria-label="Visit github.com">
+ &lt;i class="bi bi-display" aria-hidden="true">&lt;/i>
+ &lt;/a>
+ &lt;a class="bookmark-action is-x" href="https://x.com/timerringX/status/2098682730452263399" target="_blank" rel="noopener noreferrer" title="Open @timerringX on X" aria-label="X for Stop Slop">
+ &lt;i class="bi bi-twitter-x" aria-hidden="true">&lt;/i>
+ &lt;/a>
+ &lt;/div>
+ &lt;/div>
+ &lt;div class="bookmark-item-meta">
+ &lt;time class="bookmark-added" datetime="2026-09-12">Sep 12, 2026&lt;/time>
+ &lt;span aria-hidden="true">·&lt;/span>
+ &lt;span class="bookmark-topic">Skills&lt;/span>
+ &lt;/div>
+ &lt;/div>
+ &lt;/article>&lt;article class="bookmark-item" data-bookmark-item data-collection="skills" data-search="human writing github.com a chinese writing and revision skill for making ai-assisted prose sound specific, natural, and human. skills skills writing ai 2026-09-12" data-added="2026-09-12" data-year="2026" data-month="09">
+ &lt;div class="bookmark-item-content">
+ &lt;div class="bookmark-heading">
+ &lt;h2>Human Writing&lt;/h2>
+ &lt;div class="bookmark-actions" aria-label="Actions for Human Writing">
+ &lt;a class="bookmark-action is-website" href="https://github.com/KKKKhazix/human-writing" target="_blank" rel="noopener noreferrer" title="Visit github.com" aria-label="Visit github.com">
+ &lt;i class="bi bi-display" aria-hidden="true">&lt;/i>
+ &lt;/a>
+ &lt;a class="bookmark-action is-x" href="https://x.com/timerringX/status/2098684688110067993" target="_blank" rel="noopener noreferrer" title="Open @timerringX on X" aria-label="X for Human Writing">
+ &lt;i class="bi bi-twitter-x" aria-hidden="true">&lt;/i>
+ &lt;/a>
+ &lt;/div>
+ &lt;/div>
+ &lt;div class="bookmark-item-meta">
+ &lt;time class="bookmark-added" datetime="2026-09-12">Sep 12, 2026&lt;/time>
+ &lt;span aria-hidden="true">·&lt;/span>
+ &lt;span class="bookmark-topic">Skills&lt;/span>
+ &lt;/div>
+ &lt;/div>
+ &lt;/article>&lt;article class="bookmark-item" data-bookmark-item data-collection="product" data-search="openai developers developers.openai.com developer articles, product updates, and engineering practices from openai. product ai openai 2026-09-09" data-added="2026-09-09" data-year="2026" data-month="09">
+ &lt;div class="bookmark-item-content">
+ &lt;div class="bookmark-heading">
+ &lt;h2>OpenAI Developers&lt;/h2>
+ &lt;div class="bookmark-actions" aria-label="Actions for OpenAI Developers">
+ &lt;a class="bookmark-action is-website" href="https://developers.openai.com/blog/" target="_blank" rel="noopener noreferrer" title="Visit openai.com" aria-label="Visit openai.com">
+ &lt;i class="bi bi-display" aria-hidden="true">&lt;/i>
+ &lt;/a>
+ &lt;a class="bookmark-action is-x" href="https://x.com/timerringX" target="_blank" rel="noopener noreferrer" title="Open @timerringX on X" aria-label="X for OpenAI Developers">
+ &lt;i class="bi bi-twitter-x" aria-hidden="true">&lt;/i>
+ &lt;/a>
+ &lt;/div>
+ &lt;/div>
+ &lt;div class="bookmark-item-meta">
+ &lt;time class="bookmark-added" datetime="2026-09-09">Sep 9, 2026&lt;/time>
+ &lt;span aria-hidden="true">·&lt;/span>
+ &lt;span class="bookmark-topic">Product&lt;/span>
+ &lt;/div>
+ &lt;/div>
+ &lt;/article>&lt;article class="bookmark-item" data-bookmark-item data-collection="research" data-search="google research research.google research progress across artificial intelligence and computer science. research ai google 2026-09-09" data-added="2026-09-09" data-year="2026" data-month="09">
+ &lt;div class="bookmark-item-content">
+ &lt;div class="bookmark-heading">
+ &lt;h2>Google Research&lt;/h2>
+ &lt;div class="bookmark-actions" aria-label="Actions for Google Research">
+ &lt;a class="bookmark-action is-website" href="https://research.google/blog/" target="_blank" rel="noopener noreferrer" title="Visit research.google" aria-label="Visit research.google">
+ &lt;i class="bi bi-display" aria-hidden="true">&lt;/i>
+ &lt;/a>
+ &lt;a class="bookmark-action is-x" href="https://x.com/timerringX" target="_blank" rel="noopener noreferrer" title="Open @timerringX on X" aria-label="X for Google Research">
+ &lt;i class="bi bi-twitter-x" aria-hidden="true">&lt;/i>
+ &lt;/a>
+ &lt;a class="bookmark-action is-blog" href="https://blogs.timerring.com/tags/google/" title="Related writing tagged Google" aria-label="Blog for Google Research">
+ &lt;i class="bi bi-journal-text" aria-hidden="true">&lt;/i>
+ &lt;/a>
+ &lt;/div>
+ &lt;/div>
+ &lt;div class="bookmark-item-meta">
+ &lt;time class="bookmark-added" datetime="2026-09-09">Sep 9, 2026&lt;/time>
+ &lt;span aria-hidden="true">·&lt;/span>
+ &lt;span class="bookmark-topic">Research&lt;/span>
+ &lt;/div>
+ &lt;/div>
+ &lt;/article>
+ &lt;/div>
+
+ &lt;div class="bookmark-empty" data-bookmark-empty hidden>
+ &lt;p>No bookmarks match this search.&lt;/p></description></item><item><title>Device Archive</title><link>https://blogs.timerring.com/devices/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://blogs.timerring.com/devices/</guid><description>&lt;section class="device-archive" aria-labelledby="device-archive-title">
  &lt;header class="device-hero">
  &lt;h1 id="device-archive-title">Device Archive&lt;/h1>
  &lt;div class="device-view-switch" role="group" aria-label="Switch archive view">
