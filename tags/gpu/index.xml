@@ -1,4 +1,21 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GPU on timerring</title><link>https://blogs.timerring.com/tags/gpu/</link><description>Recent content in GPU on timerring</description><generator>Hugo</generator><language>en</language><lastBuildDate>Tue, 18 Mar 2025 12:21:21 +0800</lastBuildDate><atom:link href="https://blogs.timerring.com/tags/gpu/index.xml" rel="self" type="application/rss+xml"/><item><title>Docker With GPU</title><link>https://blogs.timerring.com/posts/docker-with-gpu/</link><pubDate>Tue, 18 Mar 2025 12:21:21 +0800</pubDate><guid>https://blogs.timerring.com/posts/docker-with-gpu/</guid><description>&lt;p>This post is to introduce how to use gpu in docker, which also covers the basic usage of gpu on the host machine.&lt;/p></description></item><item><title>Overview of the AI Development Software Environment</title><link>https://blogs.timerring.com/posts/ai-development-software-environment/</link><pubDate>Tue, 14 Mar 2023 16:47:12 +0800</pubDate><guid>https://blogs.timerring.com/posts/ai-development-software-environment/</guid><description>&lt;h1 id="overview-of-the-ai-development-software-environment">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>GPU on timerring</title><link>https://blogs.timerring.com/tags/gpu/</link><description>Recent content in GPU on timerring</description><generator>Hugo</generator><language>en</language><lastBuildDate>Tue, 18 Mar 2025 12:21:21 +0800</lastBuildDate><atom:link href="https://blogs.timerring.com/tags/gpu/index.xml" rel="self" type="application/rss+xml"/><item><title>Docker With GPU</title><link>https://blogs.timerring.com/posts/docker-with-gpu/</link><pubDate>Tue, 18 Mar 2025 12:21:21 +0800</pubDate><guid>https://blogs.timerring.com/posts/docker-with-gpu/</guid><description>&lt;p>This post is to introduce how to use gpu in docker, which also covers the basic usage of gpu on the host machine.&lt;/p></description></item><item><title>AI开发硬件环境综述</title><link>https://blogs.timerring.com/posts/ai-development-hardware-environment/</link><pubDate>Tue, 14 Mar 2023 17:55:58 +0800</pubDate><guid>https://blogs.timerring.com/posts/ai-development-hardware-environment/</guid><description>&lt;h1 id="ai开发硬件环境综述">
+ AI开发硬件环境综述
+ &lt;a class="anchor" href="#ai%e5%bc%80%e5%8f%91%e7%a1%ac%e4%bb%b6%e7%8e%af%e5%a2%83%e7%bb%bc%e8%bf%b0">#&lt;/a>
+&lt;/h1>
+&lt;h2 id="笔记本选配">
+ 笔记本选配
+ &lt;a class="anchor" href="#%e7%ac%94%e8%ae%b0%e6%9c%ac%e9%80%89%e9%85%8d">#&lt;/a>
+&lt;/h2>
+&lt;p>出于通勤等因素，建议型号&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>MacBook Air M1 16+ 256&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>MacBook Pro M1 16 + 256&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;p>M1芯片的mbp非常强大，发热不严重，甚至在Air版没风扇.&lt;/p></description></item><item><title>Overview of the AI Development Software Environment</title><link>https://blogs.timerring.com/posts/ai-development-software-environment/</link><pubDate>Tue, 14 Mar 2023 16:47:12 +0800</pubDate><guid>https://blogs.timerring.com/posts/ai-development-software-environment/</guid><description>&lt;h1 id="overview-of-the-ai-development-software-environment">
  Overview of the AI Development Software Environment
  &lt;a class="anchor" href="#overview-of-the-ai-development-software-environment">#&lt;/a>
 &lt;/h1>
