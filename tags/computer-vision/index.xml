@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Computer Vision on timerring</title><link>https://blogs.timerring.com/tags/computer-vision/</link><description>Recent content in Computer Vision on timerring</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 07 Mar 2022 16:42:54 +0800</lastBuildDate><atom:link href="https://blogs.timerring.com/tags/computer-vision/index.xml" rel="self" type="application/rss+xml"/><item><title>Image Classification and Foundational Vision Models</title><link>https://blogs.timerring.com/posts/image-classification-and-foundational-vision-models/</link><pubDate>Mon, 07 Mar 2022 16:42:54 +0800</pubDate><guid>https://blogs.timerring.com/posts/image-classification-and-foundational-vision-models/</guid><description>&lt;h2 id="process">
+ Process
+ &lt;a class="anchor" href="#process">#&lt;/a>
+&lt;/h2>
+&lt;ol>
+&lt;li>
+&lt;p>Collect data&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Define the model&lt;/p>
+&lt;p>Usually a function containing parameter variables: \(y=F_{\Theta}(X)\)&lt;/p>
+&lt;p>Example: \(y=\sigma\left(\Theta^{T} X\right)\)&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Train
+Find the optimal parameters \(\Theta^{*}\) so that the model \(y=F_{\Theta^{*}}(X)\) achieves the highest accuracy on the training set&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>Predict
+For a new image \(\hat{X}\) , use the trained model to predict its class, namely \(\hat{y}=F_{\Theta^{*}}(\hat{X})\)&lt;/p>
+&lt;/li>
+&lt;/ol></description></item></channel></rss>
