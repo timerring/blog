@@ -39,11 +39,7 @@ The content of this review is as follows: &lt;code>number type&lt;/code>, &lt;co
 &lt;p>MacBook Pro M1 16 + 256&lt;/p>
 &lt;/li>
 &lt;/ul>
-&lt;p>M1芯片的mbp非常强大，发热不严重，甚至在Air版没风扇.&lt;/p></description></item><item><title>Overview of the AI Development Software Environment</title><link>https://blogs.timerring.com/posts/ai-development-software-environment/</link><pubDate>Tue, 14 Mar 2023 16:47:12 +0800</pubDate><guid>https://blogs.timerring.com/posts/ai-development-software-environment/</guid><description>&lt;h1 id="overview-of-the-ai-development-software-environment">
- Overview of the AI Development Software Environment
- &lt;a class="anchor" href="#overview-of-the-ai-development-software-environment">#&lt;/a>
-&lt;/h1>
-&lt;p>Regarding software:&lt;/p>
+&lt;p>M1芯片的mbp非常强大，发热不严重，甚至在Air版没风扇.&lt;/p></description></item><item><title>Overview of the AI Development Software Environment</title><link>https://blogs.timerring.com/posts/ai-development-software-environment/</link><pubDate>Tue, 14 Mar 2023 16:47:12 +0800</pubDate><guid>https://blogs.timerring.com/posts/ai-development-software-environment/</guid><description>&lt;p>Regarding software:&lt;/p>
 &lt;ol>
 &lt;li>Installation of the ubuntu operating system&lt;/li>
 &lt;li>Abandon bash, embrace zsh&lt;/li>
