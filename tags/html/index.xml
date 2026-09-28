@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>HTML on timerring</title><link>https://blogs.timerring.com/tags/html/</link><description>Recent content in HTML on timerring</description><generator>Hugo</generator><language>en</language><lastBuildDate>Mon, 28 Sep 2026 12:00:00 +0800</lastBuildDate><atom:link href="https://blogs.timerring.com/tags/html/index.xml" rel="self" type="application/rss+xml"/><item><title>HTML iframe 与 B 站视频嵌入</title><link>https://blogs.timerring.com/posts/iframe/</link><pubDate>Mon, 28 Sep 2026 12:00:00 +0800</pubDate><guid>https://blogs.timerring.com/posts/iframe/</guid><description>&lt;p>b 站视频嵌入代码：
+参数解析：&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>autoplay&lt;/code> 自动播放：0: 不自动播放 1: 自动播放&lt;/li>
+&lt;li>&lt;code>danmaku&lt;/code> 弹幕开关(默认开启)&lt;/li>
+&lt;li>&lt;code>t=xx&lt;/code> 指定 xx 秒的位置开始播放（分钟换算成秒）&lt;/li>
+&lt;li>&lt;code>muted&lt;/code> 静音播放&lt;/li>
+&lt;li>一键静音按钮是否显示 (默认不显示)：hasMuteButton&lt;/li>
+&lt;li>width=&amp;ldquo;65%&amp;quot;&amp;amp;height=&amp;ldquo;360&amp;rdquo;&lt;/li>
+&lt;/ul>
+&lt;p>示例：&lt;/p></description></item><item><title>HTML 基础</title><link>https://blogs.timerring.com/posts/html-basics/</link><pubDate>Mon, 28 Sep 2026 12:00:00 +0800</pubDate><guid>https://blogs.timerring.com/posts/html-basics/</guid><description>&lt;h1 id="网页的结构">
+ 网页的结构
+ &lt;a class="anchor" href="#%e7%bd%91%e9%a1%b5%e7%9a%84%e7%bb%93%e6%9e%84">#&lt;/a>
+&lt;/h1>
+&lt;p>一个网页有三个部分组成：&lt;/p>
+&lt;ol>
+&lt;li>结构：使用 HTML 来编写&lt;/li>
+&lt;li>表现：使用 CSS 来设置页面中元素的样式&lt;/li>
+&lt;li>行为：使用 JavaScript 来设置页面的行为
+其中 HTML 就是超文本标记语言，负责页面中的结构，定义出页面中的各个组成部分。HTML 是采用纯文本的形式的编写，采用 HTML 标签来标识出页面中的不同部分。&lt;/li>
+&lt;/ol>
+&lt;h2 id="标签">
+ 标签
+ &lt;a class="anchor" href="#%e6%a0%87%e7%ad%be">#&lt;/a>
+&lt;/h2>
+&lt;ul>
+&lt;li>成对出现：&lt;code>&amp;lt;标签名&amp;gt;&amp;lt;/标签名&amp;gt;&lt;/code>&lt;/li>
+&lt;li>自结束标签：&lt;code>&amp;lt;标签名 /&amp;gt;&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;h2 id="属性">
+ 属性
+ &lt;a class="anchor" href="#%e5%b1%9e%e6%80%a7">#&lt;/a>
+&lt;/h2>
+&lt;p>通过属性可以设置标签的效果。属性需要定义在开始标签中或这自结束标签中，属性实际上是一组一组名值对结构。&lt;/p></description></item></channel></rss>
