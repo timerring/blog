@@ -9,4 +9,12 @@
 &lt;li>Software installation: ssh&lt;/li>
 &lt;li>Software installation:Git&lt;/li>
 &lt;li>Installation of other productivity software&lt;/li>
-&lt;/ol></description></item></channel></rss>
+&lt;/ol></description></item><item><title>Nginx Installation and Deployment</title><link>https://blogs.timerring.com/posts/nginx-installation-and-deployment/</link><pubDate>Tue, 28 Feb 2023 21:57:27 +0800</pubDate><guid>https://blogs.timerring.com/posts/nginx-installation-and-deployment/</guid><description>&lt;p>Virtual machine: VMware Workstation 16
+Operating system: CentOS 7.4
+Download URL: &lt;a href="https://vault.centos.org/centos/7.4.1708/isos/x86_64/CentOS-7-x86_64-Minimal-1708.iso" target="_blank" rel="nofollow noopener">https://vault.centos.org/centos/7.4.1708/isos/x86_64/CentOS-7-x86_64-Minimal-1708.iso&lt;/a>&lt;sup>&lt;a href="#ref-link-1" class="footnote-ref" id="ref-link-back-1">[1]&lt;/a>&lt;/sup>&lt;/p>
+&lt;p>Recommended computer configuration:&lt;/p>
+&lt;ul>
+&lt;li>Memory: 8 GB or more is recommended&lt;/li>
+&lt;li>Disk: An SSD is recommended&lt;/li>
+&lt;li>CPU: Any mainstream CPU with four or more cores will suffice&lt;/li>
+&lt;/ul></description></item></channel></rss>
