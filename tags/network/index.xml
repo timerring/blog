@@ -4,7 +4,16 @@
  Directory Structure
  &lt;a class="anchor" href="#directory-structure">#&lt;/a>
 &lt;/h2>
-&lt;p>The Nginx root directory contains the following folders:&lt;/p></description></item><item><title>Nginx Installation and Deployment</title><link>https://blogs.timerring.com/posts/nginx-installation-and-deployment/</link><pubDate>Tue, 28 Feb 2023 21:57:27 +0800</pubDate><guid>https://blogs.timerring.com/posts/nginx-installation-and-deployment/</guid><description>&lt;p>Virtual machine: VMware Workstation 16
+&lt;p>The Nginx root directory contains the following folders:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>client_body_temp conf fastcgi_temp html logs proxy_temp sbin scgi_temp uwsgi_temp
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Folders ending in &lt;code>_temp&lt;/code> are used to store temporary files generated during operation.&lt;/p>
+&lt;p>The other main folders are:&lt;/p>
+&lt;ul>
+&lt;li>conf: stores configuration-related files&lt;/li>
+&lt;li>html: the default directory for static files such as HTML and CSS files&lt;/li>
+&lt;li>sbin: the main Nginx executable&lt;/li>
+&lt;li>logs: stores various logs. For example, &lt;code>access&lt;/code> records access-related information, &lt;code>error&lt;/code> records errors, and &lt;code>nginx.pid&lt;/code> records the service&amp;rsquo;s PID, that is, its process ID.&lt;/li>
+&lt;/ul></description></item><item><title>Nginx Installation and Deployment</title><link>https://blogs.timerring.com/posts/nginx-installation-and-deployment/</link><pubDate>Tue, 28 Feb 2023 21:57:27 +0800</pubDate><guid>https://blogs.timerring.com/posts/nginx-installation-and-deployment/</guid><description>&lt;p>Virtual machine: VMware Workstation 16
 Operating system: CentOS 7.4
 Download URL: &lt;a href="https://vault.centos.org/centos/7.4.1708/isos/x86_64/CentOS-7-x86_64-Minimal-1708.iso" target="_blank" rel="nofollow noopener">https://vault.centos.org/centos/7.4.1708/isos/x86_64/CentOS-7-x86_64-Minimal-1708.iso&lt;/a>&lt;sup>&lt;a href="#ref-link-1" class="footnote-ref" id="ref-link-back-1">[1]&lt;/a>&lt;/sup>&lt;/p>
 &lt;p>Recommended computer configuration:&lt;/p>
