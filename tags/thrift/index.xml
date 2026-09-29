@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Thrift on timerring</title><link>https://blogs.timerring.com/tags/thrift/</link><description>Recent content in Thrift on timerring</description><generator>Hugo</generator><language>en</language><lastBuildDate>Tue, 08 Aug 2023 21:11:31 +0800</lastBuildDate><atom:link href="https://blogs.timerring.com/tags/thrift/index.xml" rel="self" type="application/rss+xml"/><item><title>Apache Thrift RPC and Matchmaking Service</title><link>https://blogs.timerring.com/posts/apache-thrift-rpc-and-matchmaking-service/</link><pubDate>Tue, 08 Aug 2023 21:11:31 +0800</pubDate><guid>https://blogs.timerring.com/posts/apache-thrift-rpc-and-matchmaking-service/</guid><description>&lt;p>&lt;code>thrift&lt;/code> 是一种接口描述语言和二进制通讯协议，它被用来定义和创建跨语言的服务。&lt;/p>
+&lt;p>&lt;code>Thrift&lt;/code> 是 &lt;code>Facebook&lt;/code> 于 &lt;code>2007&lt;/code> 年开发的跨语言的 &lt;code>RPC&lt;/code>（Remote Procedure Call，远程过程调用）服务框架，提供&lt;strong>多语言&lt;/strong>的编译功能，并提供多种服务器工作模式；用户通过 &lt;code>Thrift&lt;/code> 的 &lt;code>IDL&lt;/code>（接口定义语言）来描述接口函数及数据类型，然后通过 &lt;code>Thrift&lt;/code> 的编译环境生成各种语言类型的接口文件，用户可以根据自己的需要采用不同的语言开发客户端代码和服务器端代码,让不同语言构建的服务可以做到远程调用无缝对接。（它们的目的都是提供本地调用远程服务的能力）&lt;/p>
+&lt;blockquote>
+&lt;p>&lt;code>RPC&lt;/code>（Remote Procedure Call，远程过程调用）是一个计算机通信协议，此协议允许进程间通信。简单来说，当机器 A 上的进程调用机器 B 上的进程时，A 上的调用进程被挂起，而 B 上的被调用进程开始执行。调用方可以通过参数将信息传送给被调用方，然后可以通过被调用方传回的结果得到返回&lt;br>
+大部分的&lt;code>RPC&lt;/code>框架都遵循如下三个开发步骤：&lt;/p>
+&lt;ol>
+&lt;li>&lt;strong>定义一个接口说明文件：描述了对象(结构体)、对象成员、接口方法等一系列信息；&lt;/strong>&lt;/li>
+&lt;li>&lt;strong>通过&lt;code>RPC&lt;/code>框架所提供的编译器，将接口说明文件编译成具体的语言文件；&lt;/strong>&lt;/li>
+&lt;li>&lt;strong>在客户端和服务器端分别引入&lt;code>RPC&lt;/code>编译器所生成的文件，即可像调用本地方法一样调用服务端代码；&lt;/strong>&lt;br>
+&lt;code>RPC&lt;/code>是一种&lt;code>C/S&lt;/code>架构的服务模型，&lt;code>server&lt;/code>端提供接口供&lt;code>client&lt;/code>调用，&lt;code>client&lt;/code>端向&lt;code>server&lt;/code>端发送数据，&lt;code>server&lt;/code>端接收&lt;code>client&lt;/code>端的数据进行相关计算并将结果返回给&lt;code>client&lt;/code>端。&lt;/li>
+&lt;/ol>
+&lt;/blockquote></description></item></channel></rss>
