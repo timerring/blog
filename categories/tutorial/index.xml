@@ -92,7 +92,21 @@ Cosine.&lt;/p>
 &lt;div class="highlight">&lt;pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-R" data-lang="R">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#00f">library&lt;/span>(epiDisplay)
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#00f">data&lt;/span>(&lt;span style="color:#ba2121">&amp;#34;Familydata&amp;#34;&lt;/span>)
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Data Acquisition</title><link>https://blogs.timerring.com/posts/03-data-acquisition/</link><pubDate>Thu, 17 Aug 2023 21:27:32 +0800</pubDate><guid>https://blogs.timerring.com/posts/03-data-acquisition/</guid><description>&lt;p>In fact, R has a large number of built-in datasets available for analysis and practice, and we can also create data in R that simulate specific distributions. In actual work, however, data analysts more often face external data from various data sources, namely data files with all kinds of extensions, such as .txt, .csv, .xlsx, .xls, and so on. Files with different extensions represent different file formats, which often causes trouble for analysts.&lt;/p>
-&lt;p>R provides data import tools with a wide range of applications.&lt;/p></description></item><item><title>Data Structures and Conversion</title><link>https://blogs.timerring.com/posts/02-data-structures-and-conversion/</link><pubDate>Wed, 16 Aug 2023 20:08:02 +0800</pubDate><guid>https://blogs.timerring.com/posts/02-data-structures-and-conversion/</guid><description>&lt;p>The first step in any data analysis is to create a dataset in the required format. In R, this task consists of two steps: first select a data structure to store the data, and then enter or import the data into this data structure. The following introduces the various data structures used to store data in R.&lt;/p></description></item><item><title>Introduction to R</title><link>https://blogs.timerring.com/posts/01-introduction-to-r/</link><pubDate>Tue, 15 Aug 2023 22:19:41 +0800</pubDate><guid>https://blogs.timerring.com/posts/01-introduction-to-r/</guid><description>&lt;h2 id="common-arithmetic-operators">
+&lt;p>R provides data import tools with a wide range of applications.&lt;/p></description></item><item><title>Organizing Code with Design Patterns</title><link>https://blogs.timerring.com/posts/organizing-code-with-design-patterns/</link><pubDate>Thu, 17 Aug 2023 20:00:00 +0800</pubDate><guid>https://blogs.timerring.com/posts/organizing-code-with-design-patterns/</guid><description>&lt;p>好的设计模式方便对代码进行功能扩展/修改，降低耦合性，提高复用性。&lt;/p>
+&lt;pre tabindex="0">&lt;code>from abc import abstractmethod, ABC
+from typing import Callable, final, Tuple, List, Sequence, Dict
+from random import choices, randrange
+from functools import wraps
+from numpy import ndarray
+from pandas import DataFrame
+from time import perf_counter, sleep
+from datetime import datetime, timedelta
+&lt;/code>&lt;/pre></description></item><item><title>Data Structures and Conversion</title><link>https://blogs.timerring.com/posts/02-data-structures-and-conversion/</link><pubDate>Wed, 16 Aug 2023 20:08:02 +0800</pubDate><guid>https://blogs.timerring.com/posts/02-data-structures-and-conversion/</guid><description>&lt;p>The first step in any data analysis is to create a dataset in the required format. In R, this task consists of two steps: first select a data structure to store the data, and then enter or import the data into this data structure. The following introduces the various data structures used to store data in R.&lt;/p></description></item><item><title>Dividing Functionality with Classes</title><link>https://blogs.timerring.com/posts/dividing-functionality-with-classes/</link><pubDate>Wed, 16 Aug 2023 17:15:09 +0800</pubDate><guid>https://blogs.timerring.com/posts/dividing-functionality-with-classes/</guid><description>&lt;p>理解类是运用设计模式的前提；运用类本身也能更好的组织代码，提升扩展性、可读性、复用性。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#008000;font-weight:bold">from&lt;/span> &lt;span style="color:#00f;font-weight:bold">typing&lt;/span> &lt;span style="color:#008000;font-weight:bold">import&lt;/span> Callable, Tuple, List, Sequence
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#008000;font-weight:bold">from&lt;/span> &lt;span style="color:#00f;font-weight:bold">pandas&lt;/span> &lt;span style="color:#008000;font-weight:bold">import&lt;/span> DataFrame
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>Writing Maintainable Code</title><link>https://blogs.timerring.com/posts/writing-maintainable-code/</link><pubDate>Wed, 16 Aug 2023 16:00:00 +0800</pubDate><guid>https://blogs.timerring.com/posts/writing-maintainable-code/</guid><description>&lt;pre tabindex="0">&lt;code>from typing import Callable, Tuple, List
+from pandas import DataFrame
+&lt;/code>&lt;/pre>&lt;p>项目结构定好了，就开始着手写代码了；那编写代码有哪些注意点呢？&lt;/p></description></item><item><title>Introduction to R</title><link>https://blogs.timerring.com/posts/01-introduction-to-r/</link><pubDate>Tue, 15 Aug 2023 22:19:41 +0800</pubDate><guid>https://blogs.timerring.com/posts/01-introduction-to-r/</guid><description>&lt;h2 id="common-arithmetic-operators">
  Common Arithmetic Operators
  &lt;a class="anchor" href="#common-arithmetic-operators">#&lt;/a>
 &lt;/h2>
@@ -134,7 +148,18 @@ Cosine.&lt;/p>
  &lt;/tr>
  &lt;/tbody>
 &lt;/table>
-&lt;p>Note that R is case-sensitive.&lt;/p></description></item><item><title>LaTex basic concepts</title><link>https://blogs.timerring.com/posts/latex-basic-concepts/</link><pubDate>Wed, 02 Aug 2023 16:50:13 +0800</pubDate><guid>https://blogs.timerring.com/posts/latex-basic-concepts/</guid><description>&lt;h2 id="tex">
+&lt;p>Note that R is case-sensitive.&lt;/p></description></item><item><title>Building a Project Structure</title><link>https://blogs.timerring.com/posts/project-structure/</link><pubDate>Tue, 15 Aug 2023 20:00:00 +0800</pubDate><guid>https://blogs.timerring.com/posts/project-structure/</guid><description>&lt;p>在具体的数据科学场景下，按照项目结构→代码编写→功能划分→组织代码的顺序，组织高质量的代码。&lt;/p>
+&lt;p>项目结构也可认为是目录结构，例如 &lt;br>
+
+ 
+ &lt;div class="image-desc">
+ &lt;img src="https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/rr8gfq6wcx.png" alt="Image Name" />
+ &lt;i>Image Name&lt;/i>
+ &lt;/div>&lt;/p>
+&lt;p>我们将项目代码拆分成多个功能模块，固化成函数/类并写到不同的文件中，存放在不同的路径里，python 将每个 py 文件视作为一个模块，可以用 import 调用；例如在 &lt;code>main.py&lt;/code> 里调用 &lt;code>/db/db.py&lt;/code> 里的函数 &lt;code>create_conn&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-python" data-lang="python">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#008000;font-weight:bold">from&lt;/span> &lt;span style="color:#00f;font-weight:bold">db.db&lt;/span> &lt;span style="color:#008000;font-weight:bold">import&lt;/span> create_conn 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>conn &lt;span style="color:#666">=&lt;/span> create_conn() &lt;span style="color:#408080;font-style:italic"># create_conn创建了一个数据库的链接对象 &lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>LaTex basic concepts</title><link>https://blogs.timerring.com/posts/latex-basic-concepts/</link><pubDate>Wed, 02 Aug 2023 16:50:13 +0800</pubDate><guid>https://blogs.timerring.com/posts/latex-basic-concepts/</guid><description>&lt;h2 id="tex">
  TEX
  &lt;a class="anchor" href="#tex">#&lt;/a>
 &lt;/h2>
