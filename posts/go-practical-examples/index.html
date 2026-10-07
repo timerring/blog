@@ -1,0 +1,955 @@
+<!doctype html><html lang=en dir=ltr><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="这篇文章完整整理自本地的 Go 语言实战入门笔记，依次练习猜数字、命令行词典和 SOCKS5 代理。保留原笔记的分步讲解、代码及外部图床图片。
+
+运行前注意：词典案例使用第三方接口，当前可用性及授权方式尚未验证。原笔记的浏览器令牌和 Cookie 已从代码中移除；运行前应从服务提供方取得合法凭据，并在本机环境变量 CAIYUN_DICT_TOKEN 中设置，切勿将凭据提交到仓库。SOCKS5 示例没有认证，仅用于本机学习，请勿作为公网代理部署。图片链接指向原笔记的外部图床，是否可长期访问取决于图床。
+"><meta name=theme-color content="#FFFFFF"><meta name=color-scheme content="light dark"><meta name=keywords content="生成 request body,解析 response body,Socks 5 代理,TCP echo server,auth"><meta property="og:url" content="https://blogs.timerring.com/posts/go-practical-examples/"><meta property="og:site_name" content="timerring"><meta property="og:title" content="Go Practical Examples: Guessing Game, CLI Dictionary, and SOCKS5 Proxy"><meta property="og:description" content="这篇文章完整整理自本地的 Go 语言实战入门笔记，依次练习猜数字、命令行词典和 SOCKS5 代理。保留原笔记的分步讲解、代码及外部图床图片。
+运行前注意：词典案例使用第三方接口，当前可用性及授权方式尚未验证。原笔记的浏览器令牌和 Cookie 已从代码中移除；运行前应从服务提供方取得合法凭据，并在本机环境变量 CAIYUN_DICT_TOKEN 中设置，切勿将凭据提交到仓库。SOCKS5 示例没有认证，仅用于本机学习，请勿作为公网代理部署。图片链接指向原笔记的外部图床，是否可长期访问取决于图床。"><meta property="og:locale" content="en"><meta property="og:type" content="article"><meta property="article:section" content="posts"><meta property="article:published_time" content="2026-10-07T00:00:00+08:00"><meta property="article:tag" content="Go"><meta itemprop=name content="Go Practical Examples: Guessing Game, CLI Dictionary, and SOCKS5 Proxy"><meta itemprop=description content="这篇文章完整整理自本地的 Go 语言实战入门笔记，依次练习猜数字、命令行词典和 SOCKS5 代理。保留原笔记的分步讲解、代码及外部图床图片。
+运行前注意：词典案例使用第三方接口，当前可用性及授权方式尚未验证。原笔记的浏览器令牌和 Cookie 已从代码中移除；运行前应从服务提供方取得合法凭据，并在本机环境变量 CAIYUN_DICT_TOKEN 中设置，切勿将凭据提交到仓库。SOCKS5 示例没有认证，仅用于本机学习，请勿作为公网代理部署。图片链接指向原笔记的外部图床，是否可长期访问取决于图床。"><meta itemprop=datePublished content="2026-10-07T00:00:00+08:00"><meta itemprop=dateModified content="2026-10-07T00:00:00+08:00"><meta itemprop=wordCount content="9553"><meta itemprop=image content="https://blogs.timerring.com/favicon.png"><meta itemprop=keywords content="Go"><meta name=twitter:image content="https://blogs.timerring.com/favicon.png"><meta name=twitter:card content="summary"><meta name=twitter:title content="Go Practical Examples: Guessing Game, CLI Dictionary, and SOCKS5 Proxy"><meta name=twitter:description content="这篇文章完整整理自本地的 Go 语言实战入门笔记，依次练习猜数字、命令行词典和 SOCKS5 代理。保留原笔记的分步讲解、代码及外部图床图片。
+运行前注意：词典案例使用第三方接口，当前可用性及授权方式尚未验证。原笔记的浏览器令牌和 Cookie 已从代码中移除；运行前应从服务提供方取得合法凭据，并在本机环境变量 CAIYUN_DICT_TOKEN 中设置，切勿将凭据提交到仓库。SOCKS5 示例没有认证，仅用于本机学习，请勿作为公网代理部署。图片链接指向原笔记的外部图床，是否可长期访问取决于图床。"><meta name=twitter:site content="@timerringX"><link rel=canonical href=https://blogs.timerring.com/posts/go-practical-examples/><title>Go Practical Examples: Guessing Game, CLI Dictionary, and SOCKS5 Proxy | timerring</title>
+<link rel=manifest href=/manifest.json><link rel=icon href=/favicon.png type=image/x-icon><link rel=stylesheet href=/book.min.d37b0dd38e3dd8ef08eb733e919ffd0d275c718c689be01fc929ad3fc771ec70.css integrity="sha256-03sN04492O8I63M+kZ/9DSdccYxom+AfySmtP8dx7HA=" crossorigin=anonymous><script defer src=/flexsearch.min.js></script><script defer src=/en.search.min.4a813654a2581fcb6feb5e00b0d3c3cc99794b0fcda4e7f9ed75b3b7c7432bf3.js integrity="sha256-SoE2VKJYH8tv614AsNPDzJl5Sw/NpOf57XWzt8dDK/M=" crossorigin=anonymous></script><script async src="https://www.googletagmanager.com/gtag/js?id=G-H5Y60NE14Z"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag("js",new Date),gtag("config","G-H5Y60NE14Z")</script><script defer src=/live-photo.min.efe7b2a516404d0718a4c6f90d2eb2f9c0bd8c7bddd382958716bcb24b660970.js integrity="sha256-7+eypRZATQcYpMb5DS6y+cC9jHvd04KVhxa8sktmCXA=" crossorigin=anonymous></script><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.css integrity=sha384-vKruj+a13U8yHIkAyGgK1J3ArTLzrFGBbBc0tDp4ad/EyewESeXE/Iv67Aj8gKZ0 crossorigin=anonymous><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/katex.min.js integrity=sha384-PwRUT/YqbnEjkZO0zZxNqcxACrXe+j766U2amXcgMg5457rve2Y7I6ZJSm2A0mS4 crossorigin=anonymous></script><script defer src=https://cdn.jsdelivr.net/npm/katex@0.16.4/dist/contrib/auto-render.min.js integrity=sha384-+VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4+/RRE05 crossorigin=anonymous></script><script defer>document.addEventListener("DOMContentLoaded",function(){renderMathInElement(document.body,{delimiters:[{left:"$$",right:"$$",display:!0},{left:"\\[",right:"\\]",display:!0},{left:"\\(",right:"\\)",display:!1},{left:"$",right:"$",display:!1}]})})</script><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1347694832132708" crossorigin=anonymous></script><script defer src=https://static.cloudflareinsights.com/beacon.min.js data-cf-beacon='{"token": "1c9fd91e4f1e4b4c814990409a359c33"}'></script><script>var _hmt=_hmt||[];(function(){var e,t=document.createElement("script");t.src="https://hm.baidu.com/hm.js?593f393f7a592051b82491c0361d38a9",e=document.getElementsByTagName("script")[0],e.parentNode.insertBefore(t,e)})()</script><meta name=referrer content="no-referrer-when-downgrade"><link rel=stylesheet href=https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css><meta name=msvalidate.01 content="5A88C236DD66D6E12DE1CA70A1E7BFE4"></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><img src=/favicon.png alt=Logo><span>timerring</span></a></h2><hr><p>Rhythmic trend.</p><div class=book-search><div class=gcse-search></div></div><script async src="https://cse.google.com/cse.js?cx=40782701766144f96"></script><ul><li><a href=/>Dashboard</a></li><li><a href=/posts/>Blogs</a></li><li><a href=/categories/weekly/>Newsletter</a></li><li><a href=/devices/>Devices</a></li><li><a href=/bookmarks/>Bookmarks</a></li><li><a href=/index.xml>RSS</a></li><li><a href=/friends/>Friends</a></li><li><a href=/about/>About</a></li></ul><script>function goToRandomPost(){const e=["/posts/go-practical-examples/?utm_source=random","/posts/stop-slop/?utm_source=random","/posts/human-writing-chinese-writing-skill/?utm_source=random","/posts/how-to-subscribe-to-gemini-pro-outside-the-us/?utm_source=random","/posts/vim-cheatsheet/?utm_source=random","/posts/erc-8004-trustless-agents/?utm_source=random","/posts/fix-the-ghost-notification-of-github/?utm_source=random","/posts/disable-SIP-on-Macos/?utm_source=random","/posts/how-to-partially-clone/?utm_source=random","/posts/the-tips-of-macos-automator/?utm_source=random","/posts/mainland-network-circuits/?utm_source=random","/posts/cloudflare-warp/?utm_source=random","/posts/the-principle-of-cloudflare-saas-optimization/?utm_source=random","/posts/the-mitm-and-https-capturing/?utm_source=random","/posts/how-to-keep-your-mac-always-awake/?utm_source=random","/posts/the-way-to-get-cookie/?utm_source=random","/posts/how-to-choose-the-right-software-and-creative-license/?utm_source=random","/posts/0516-add-live-photo-effect-to-hugo/?utm_source=random","/posts/the-practice-of-resolving-domain/?utm_source=random","/posts/hidden-markov-models/?utm_source=random","/posts/markov-chains/?utm_source=random","/posts/markov-processes/?utm_source=random","/posts/0418-find-the-formula-rendering-issue-of-hugo/?utm_source=random","/posts/multi-platform-builds-docker/?utm_source=random","/posts/0404-The-invitation-only-mechanism-from-clubhouse-to-manus/?utm_source=random","/posts/how-to-use-git-submodule/?utm_source=random","/posts/live-streaming-infra-and-protocols/?utm_source=random","/posts/implement-danmaku-rendering-algorithm-from-scratch/?utm_source=random","/posts/is-there-an-rss-renaissance-in-the-ai-era/?utm_source=random","/posts/stock-prices/?utm_source=random","/posts/possion-processes/?utm_source=random","/posts/docker-with-gpu/?utm_source=random","/posts/stochastic-processes/?utm_source=random","/posts/some-useful-tools/?utm_source=random","/posts/a-shopping-experience-in-pangdonglai-supermarket/?utm_source=random","/posts/langchain-and-rag-best-practices/?utm_source=random","/posts/random-walks/?utm_source=random","/posts/sequences-of-random-variables/?utm_source=random","/posts/parameter-estimation/?utm_source=random","/posts/two-random-variables/?utm_source=random","/posts/further-understanding-of-proc/?utm_source=random","/posts/the-iftop/?utm_source=random","/posts/some-useful-commands-to-share/?utm_source=random","/posts/random-variables/?utm_source=random","/posts/repeated-trials/?utm_source=random","/posts/probability-and-its-axioms/?utm_source=random","/posts/reflections-on-trending-topics/?utm_source=random","/posts/cpu-can-only-see-the-threads/?utm_source=random","/posts/go-common-test/?utm_source=random","/posts/go-concurrency-and-parallelism/?utm_source=random","/posts/go-cheatsheet/?utm_source=random","/posts/video-technology-101/?utm_source=random","/posts/the-main-kind-of-message-queue/?utm_source=random","/posts/the-method-to-manage-traffic/?utm_source=random","/posts/the-different-kind-of-api-design/?utm_source=random","/posts/the-encode-and-decode-in-python/?utm_source=random","/posts/about-the-systemd/?utm_source=random","/posts/the-tips-about-dockerfile/?utm_source=random","/posts/docker-cheatsheet/?utm_source=random","/posts/docker-101/?utm_source=random","/posts/the-instance-class-static-magic-method-in-python/?utm_source=random","/posts/the-review-and-plan-for-bilive/?utm_source=random","/posts/the-overview-of-security/?utm_source=random","/posts/how-to-publish-your-code-as-a-pip-module/?utm_source=random","/posts/git-cheatsheet/?utm_source=random","/posts/some-good-things-to-share-about-the-packages/?utm_source=random","/posts/introduction-to-the-http-and-https-protocol/?utm_source=random","/posts/mail-service-and-protocol/?utm_source=random","/posts/how-to-add-commits-to-someone-elses-pull-request/?utm_source=random","/posts/how-to-merge-multiple-commit-to-the-one/?utm_source=random","/posts/understanding-clash-through-configuration/?utm_source=random","/posts/thinking-about-advertisement-from-an-open-source-perspective/?utm_source=random","/posts/a-brief-introduction-to-dns/?utm_source=random","/posts/real-computer-network/?utm_source=random","/posts/python-generator-iterator-and-decorator/?utm_source=random","/posts/python-underlying-mechanism/?utm_source=random","/posts/python-files-exceptions-and-modules/?utm_source=random","/posts/python-object-oriented-programming/?utm_source=random","/posts/python-cheatsheet/?utm_source=random","/posts/python-function-parameter/?utm_source=random","/posts/python-control-structure/?utm_source=random","/posts/python-composite-data-type/?utm_source=random","/posts/python-basic-data-type/?utm_source=random","/posts/python-basic-syntax-elements/?utm_source=random","/posts/deploy-github-pages-with-gpg-signing/?utm_source=random","/posts/gpg-101/?utm_source=random","/posts/housewarming-2024/?utm_source=random","/posts/python-d2l-linear-algebra/?utm_source=random","/posts/python-d2l-data-preprocessing/?utm_source=random","/posts/python-d2l-data-manipulation/?utm_source=random","/posts/my-must-haves-for-macos-memo/?utm_source=random","/posts/04-data-export/?utm_source=random","/posts/09-strategies-for-large-datasets/?utm_source=random","/posts/java-11-multithreading-and-locks/?utm_source=random","/posts/java-10-annotations-and-reflection/?utm_source=random","/posts/java-09-exception-handling/?utm_source=random","/posts/java-08-common-containers/?utm_source=random","/posts/java-07-classes-and-interfaces/?utm_source=random","/posts/java-06-functions/?utm_source=random","/posts/java-05-strings/?utm_source=random","/posts/java-04-arrays/?utm_source=random","/posts/java-03-loops/?utm_source=random","/posts/java-02-conditional-statements/?utm_source=random","/posts/java-01-variables-operators-expressions-input-output/?utm_source=random","/posts/density-plotting/?utm_source=random","/posts/univariate-plots-for-continuous-variables/?utm_source=random","/posts/scienceplots-basics-and-features/?utm_source=random","/posts/proplot-basics-and-features/?utm_source=random","/posts/seaborn-basics-and-features/?utm_source=random","/posts/foundations-of-scientific-figure-design-and-color/?utm_source=random","/posts/plotting-tools-and-key-features/?utm_source=random","/posts/12-numerical-descriptive-analysis/?utm_source=random","/posts/11-ggplot2-and-other-plots/?utm_source=random","/posts/10-plotting-with-base-r/?utm_source=random","/posts/08-handling-missing-values/?utm_source=random","/posts/07-merging-data-frames/?utm_source=random","/posts/06-using-dplyr/?utm_source=random","/posts/05-using-base-r/?utm_source=random","/posts/03-data-acquisition/?utm_source=random","/posts/organizing-code-with-design-patterns/?utm_source=random","/posts/02-data-structures-and-conversion/?utm_source=random","/posts/dividing-functionality-with-classes/?utm_source=random","/posts/writing-maintainable-code/?utm_source=random","/posts/01-introduction-to-r/?utm_source=random","/posts/project-structure/?utm_source=random","/posts/apache-thrift-rpc-and-matchmaking-service/?utm_source=random","/posts/latex-basic-concepts/?utm_source=random","/posts/ai-development-hardware-environment/?utm_source=random","/posts/ai-development-software-environment/?utm_source=random","/posts/nginx-basics-and-minimal-configuration/?utm_source=random","/posts/nginx-installation-and-deployment/?utm_source=random","/posts/pipes-environment-variables-and-common-commands/?utm_source=random","/posts/tmux-common-commands/?utm_source=random","/posts/shell-scripting-fundamentals/?utm_source=random","/posts/image-classification-and-foundational-vision-models/?utm_source=random","/posts/ssh-remote-access-and-file-transfer/?utm_source=random","/posts/web-apis-introduction/?utm_source=random","/posts/javascript-data-types/?utm_source=random","/posts/javascript-objects/?utm_source=random","/posts/javascript-functions/?utm_source=random","/posts/javascript-arrays/?utm_source=random","/posts/javascript-operators-and-control-flow/?utm_source=random","/posts/javascript-introduction/?utm_source=random","/posts/html-basics/?utm_source=random"],t=Math.floor(Math.random()*e.length);window.location.href=e[t]}</script><a class=random onclick=goToRandomPost()>Stroll</a></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu>
+</label><strong>timerring</strong>
+<label for=toc-control><img src=/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><h3>Table of Contents</h3><nav id=TableOfContents><ul><li><a href=#猜数字>猜数字</a></li><li><a href=#命令行排版的词典>命令行排版的词典</a><ul><li><a href=#生成-request-body>生成 request body</a></li><li><a href=#解析-response-body>解析 response body</a></li><li><a href=#打印结果>打印结果</a></li><li><a href=#结构完善>结构完善</a></li></ul></li><li><a href=#socks-5-代理>Socks 5 代理</a><ul><li><a href=#介绍>介绍</a></li><li><a href=#原理>原理</a></li><li><a href=#tcp-echo-server>TCP echo server</a></li><li><a href=#auth>auth</a></li><li><a href=#请求阶段>请求阶段</a></li><li><a href=#完整代码>完整代码</a></li></ul></li><li><a href=#学习路线推荐>学习路线推荐</a></li></ul></nav><style>.book-toc .book-toc-content a{color:var(--body-font-color)}</style></aside></header><article class=markdown><h1>Go Practical Examples: Guessing Game, CLI Dictionary, and SOCKS5 Proxy</h1><h5>October 7, 2026
+·
+47 min read</h5><div><a href=/categories/tutorial/ style=color:#000>Tutorial</a></div><div><a href=/tags/go/ style=color:#000>Go</a></div><blockquote class="book-hint info">If you have any questions, feel free to comment below. Click the block can copy the code.<br>And if you think it's helpful to you, just click on the ads which can support this site. Thanks!</blockquote><hr><p>这篇文章完整整理自本地的 Go 语言实战入门笔记，依次练习猜数字、命令行词典和 SOCKS5 代理。保留原笔记的分步讲解、代码及外部图床图片。</p><blockquote><p><strong>运行前注意</strong>：词典案例使用第三方接口，当前可用性及授权方式尚未验证。原笔记的浏览器令牌和 Cookie 已从代码中移除；运行前应从服务提供方取得合法凭据，并在本机环境变量 <code>CAIYUN_DICT_TOKEN</code> 中设置，切勿将凭据提交到仓库。SOCKS5 示例没有认证，仅用于本机学习，请勿作为公网代理部署。图片链接指向原笔记的外部图床，是否可长期访问取决于图床。</p></blockquote><h2 id=猜数字>猜数字
+<a class=anchor href=#%e7%8c%9c%e6%95%b0%e5%ad%97>#</a></h2><p>第一个例子里面，我们会使用 Golang 来构建一个猜数字游戏。</p><blockquote><p>在这个游戏里面，程序首先会生成一个介于 1 到 100 之间的随机整数，然后提示玩家进行猜测。玩家每次输入一个数字，程序会告诉玩家这个猜测的值是高于还是低于那个秘密的随机数，并且让玩家再次猜测。如果猜对了，就告诉玩家胜利并且退出程序。</p></blockquote><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230802213633.png alt></p><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>package</span> main
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;math/rand&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>	maxNum <span style=color:#666>:=</span> <span style=color:#666>100</span>
+</span></span><span style=display:flex><span>	secretNumber <span style=color:#666>:=</span> rand.<span style=color:#00f>Intn</span>(maxNum)
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(<span style=color:#ba2121>&#34;The secret number is &#34;</span>, secretNumber)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>通过尝试可以发现，每次生成的随机数都是一样的。</p><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230802215051.png alt></p><p>通过查看文档，可知随机数的生成会使用到一个随机种子。</p><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230802215128.png alt></p><p>否则每一次都会生成相同的随机数序列。一般用启动的时间戳来初始化随机数种子。这里使用 <code>time.now.unix</code> 来初始化随机种子。</p><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>package</span> main
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;math/rand&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;time&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>	maxNum <span style=color:#666>:=</span> <span style=color:#666>100</span>
+</span></span><span style=display:flex><span>	rand.<span style=color:#00f>Seed</span>(time.<span style=color:#00f>Now</span>().<span style=color:#00f>UnixNano</span>())
+</span></span><span style=display:flex><span>	secretNumber <span style=color:#666>:=</span> rand.<span style=color:#00f>Intn</span>(maxNum)
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(<span style=color:#ba2121>&#34;The secret number is &#34;</span>, secretNumber)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230802215254.png alt></p><p>然后实现用户输入输出，并理解析成数字。</p><p>每个程序执行的时候都会打开几个文件，<code>stdin stdout stderr</code> 等，<code>stdin</code> 文件可以用 <code>os.Stdin</code> 来得到。然后直接操作这个文件很不方便，我们会用 <code>bufio.NewReader </code>把一个文件转换成一个 <code>reader</code> 变量。</p><p><code>reader</code> 变量上有用来操作流的操作，可以用它的 <code>ReadString</code> 方法读取一行。如果失败会打印错误并能退出。<code>ReadString</code> 返回的结果包含结尾的换行符，把它去掉再转换成数字。如果转换失败，我们同样打印错误，退出。</p><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>package</span> main
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;bufio&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;math/rand&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;os&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;strconv&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;strings&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;time&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>	maxNum <span style=color:#666>:=</span> <span style=color:#666>100</span>
+</span></span><span style=display:flex><span>	rand.<span style=color:#00f>Seed</span>(time.<span style=color:#00f>Now</span>().<span style=color:#00f>UnixNano</span>())
+</span></span><span style=display:flex><span>	secretNumber <span style=color:#666>:=</span> rand.<span style=color:#00f>Intn</span>(maxNum)
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// fmt.Println(&#34;The secret number is &#34;, secretNumber)
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(<span style=color:#ba2121>&#34;Please input your guess&#34;</span>)
+</span></span><span style=display:flex><span>	reader <span style=color:#666>:=</span> bufio.<span style=color:#00f>NewReader</span>(os.Stdin)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>for</span> {
+</span></span><span style=display:flex><span>		<span style=color:#408080;font-style:italic>// `reader` 变量上有用来操作流的操作，可以用它的 `ReadString` 方法读取一行。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>		input, err <span style=color:#666>:=</span> reader.<span style=color:#00f>ReadString</span>(<span style=color:#ba2121>&#39;\n&#39;</span>)
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>			fmt.<span style=color:#00f>Println</span>(<span style=color:#ba2121>&#34;An error occured while reading input. Please try again&#34;</span>, err)
+</span></span><span style=display:flex><span>			<span style=color:green;font-weight:700>continue</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		<span style=color:#408080;font-style:italic>// `ReadString` 返回的结果包含结尾的换行符，把它去掉。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>		input = strings.<span style=color:#00f>Trim</span>(input, <span style=color:#ba2121>&#34;\r\n&#34;</span>)
+</span></span><span style=display:flex><span>		<span style=color:#408080;font-style:italic>// 再转换成数字
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>		guess, err <span style=color:#666>:=</span> strconv.<span style=color:#00f>Atoi</span>(input)
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>			fmt.<span style=color:#00f>Println</span>(<span style=color:#ba2121>&#34;Invalid input. Please enter an integer value&#34;</span>)
+</span></span><span style=display:flex><span>			<span style=color:green;font-weight:700>continue</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		fmt.<span style=color:#00f>Println</span>(<span style=color:#ba2121>&#34;You guess is&#34;</span>, guess)
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>if</span> guess &gt; secretNumber {
+</span></span><span style=display:flex><span>			fmt.<span style=color:#00f>Println</span>(<span style=color:#ba2121>&#34;Your guess is bigger than the secret number. Please try again&#34;</span>)
+</span></span><span style=display:flex><span>		} <span style=color:green;font-weight:700>else</span> <span style=color:green;font-weight:700>if</span> guess &lt; secretNumber {
+</span></span><span style=display:flex><span>			fmt.<span style=color:#00f>Println</span>(<span style=color:#ba2121>&#34;Your guess is smaller than the secret number. Please try again&#34;</span>)
+</span></span><span style=display:flex><span>		} <span style=color:green;font-weight:700>else</span> {
+</span></span><span style=display:flex><span>			fmt.<span style=color:#00f>Println</span>(<span style=color:#ba2121>&#34;Correct, you Legend!&#34;</span>)
+</span></span><span style=display:flex><span>			<span style=color:green;font-weight:700>break</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=命令行排版的词典>命令行排版的词典
+<a class=anchor href=#%e5%91%bd%e4%bb%a4%e8%a1%8c%e6%8e%92%e7%89%88%e7%9a%84%e8%af%8d%e5%85%b8>#</a></h2><p>先看一下用到的 API ，以彩云科技提供的在线翻译为例。请打开彩云翻译的网页，然后右键检查打开浏览器的开发者工具。</p><p>此时我们点一下翻译按钮，浏览器会发送一系列请求，我们能很轻松地找到那个用来查询单词的请求。这是一个 HTTP 的 post 的请求。</p><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230802223448.png alt></p><p>请求头是一个 json 里面有两个字段，一个是代表你要你是从什么语言转化成什么语言， source 就是你要查询的单词。</p><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230802223457.png alt></p><p>API 的返回结果里面会有 Wiki 和 dictionary 两个字段。我们需要用的结果主要在dictionary.Explanations 字段里面。其他有些字段里面还包括音标等信息。</p><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230802223514.png alt></p><p>我们需要在 Golang 里面去发送这个请求。因为这个请求比较复杂，用代码构造很麻烦，实际上我们有一种非常简单的方式来生成代码，我们可以右键浏览器里面的 copy as curl。</p><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230802231956.png alt></p><p>copy 完成之后大家可以在终端粘贴一下 curl 命令，应该可以成功返回一大串 json。</p><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230802232005.png alt></p><p>然后打开一个代码转换网站： <a href=https://curlconverter.com/go/ target=_blank rel="nofollow noopener">https://curlconverter.com/go/</a><sup><a href=#ref-link-1 class=footnote-ref id=ref-link-back-1>[1]</a></sup> 粘贴该 curl 请求，在右边的语言里面选 Golang 就能够看到一串很长的代码，我们直接把它 copy 到我们的编辑器里面。有几个 header 比较复杂，生成代码有转义导致的编译错误，删掉这几行即可。</p><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230802232243.png alt></p><p>我们来看一下这生成的代码。</p><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>package</span> main
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;os&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;io/ioutil&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;log&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;net/http&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;strings&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 首先我们创建了一个 HTTP client，创建的时候可以指定很多参数，包括比如请求的超时是否使用 cookie 等。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	client <span style=color:#666>:=</span> <span style=color:#666>&amp;</span>http.Client{}
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 我们用了 strings.NewReader 来把字符串转换成一个流。这样我们就成功构造了一个 HTTP request
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:green;font-weight:700>var</span> data = strings.<span style=color:#00f>NewReader</span>(<span style=color:#ba2121>`{&#34;trans_type&#34;:&#34;en2zh&#34;,&#34;source&#34;:&#34;good&#34;}`</span>)
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 接下来是构造一个 HTTP 请求，这是一个 post 请求，然后会用到 HTTP.NewRequest  ，第一个参数是 http 方法 POST，第二个参数是 URL，最后一个参数是 body ，body 因为可能很大，为了支持流式发送，是一个只读流。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	req, err <span style=color:#666>:=</span> http.<span style=color:#00f>NewRequest</span>(<span style=color:#ba2121>&#34;POST&#34;</span>, <span style=color:#ba2121>&#34;https://api.interpreter.caiyunai.com/v1/dict&#34;</span>, data)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		log.<span style=color:#00f>Fatal</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 接下来我们需要对这个 HTTP request 来设置一堆 header。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Connection&#34;</span>, <span style=color:#ba2121>&#34;keep-alive&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;DNT&#34;</span>, <span style=color:#ba2121>&#34;1&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;os-version&#34;</span>, <span style=color:#ba2121>&#34;&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;sec-ch-ua-mobile&#34;</span>, <span style=color:#ba2121>&#34;?0&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;User-Agent&#34;</span>, <span style=color:#ba2121>&#34;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;app-name&#34;</span>, <span style=color:#ba2121>&#34;xy&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Content-Type&#34;</span>, <span style=color:#ba2121>&#34;application/json;charset=UTF-8&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Accept&#34;</span>, <span style=color:#ba2121>&#34;application/json, text/plain, */*&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;device-id&#34;</span>, <span style=color:#ba2121>&#34;&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;os-type&#34;</span>, <span style=color:#ba2121>&#34;web&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;X-Authorization&#34;</span>, os.<span style=color:#00f>Getenv</span>(<span style=color:#ba2121>&#34;CAIYUN_DICT_TOKEN&#34;</span>))
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Origin&#34;</span>, <span style=color:#ba2121>&#34;https://fanyi.caiyunapp.com&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Sec-Fetch-Site&#34;</span>, <span style=color:#ba2121>&#34;cross-site&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Sec-Fetch-Mode&#34;</span>, <span style=color:#ba2121>&#34;cors&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Sec-Fetch-Dest&#34;</span>, <span style=color:#ba2121>&#34;empty&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Referer&#34;</span>, <span style=color:#ba2121>&#34;https://fanyi.caiyunapp.com/&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Accept-Language&#34;</span>, <span style=color:#ba2121>&#34;zh-CN,zh;q=0.9&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 接下来我们把我们调用 client.do request ，就能得到 response
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	resp, err <span style=color:#666>:=</span> client.<span style=color:#00f>Do</span>(req)
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 如果请求失败的话，那么这个 error 会返回非 nil，会打印错误并且退出进程
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		log.<span style=color:#00f>Fatal</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 在golang里面，为了避免资源泄露，你需要加一个 defer 来手动关闭这个流，这个 defer 会在这个函数运行结束之后去执行。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:green;font-weight:700>defer</span> resp.Body.<span style=color:#00f>Close</span>()
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 接下来我们是用 ioutil.ReadAll 来读取这个流，能得到整个body。我们再用 print 打印出来。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	bodyText, err <span style=color:#666>:=</span> ioutil.<span style=color:#00f>ReadAll</span>(resp.Body)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		log.<span style=color:#00f>Fatal</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Printf</span>(<span style=color:#ba2121>&#34;%s\n&#34;</span>, bodyText)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><blockquote><p>首先第 12 行我们创建了一个 HTTP client，创建的时候可以指定很多参数，包括比如请求的超时是否使用 cookie 等。接下来是构造一个 HTTP 请求，这是一个 post 请求，然后会用到 HTTP .NewRequest ，第一个参数是 http 方法 POST，第二个参数是 URL，最后一个参数是 body ，body 因为可能很大，为了支持流式发送，是一个只读流。我们用了 strings. NewReader 来把字符串转换成一个流。这样我们就成功构造了一个 HTTP request ，接下来我们需要对这个 HTTP request 来设置一堆 header。接下来我们把我们调用 client. Do request ，就能得到 response 如果请求失败的话，那么这个 error 会返回非 nil，会打印错误并且退出进程。Response 有它的 HTTP 状态码， response header 和 body。 Body 同样是一个流，在 golang 里面，为了避免资源泄露，你需要加一个 defer 来手动关闭这个流，这个 defer 会在这个函数运行结束之后去执行。接下来我们是用 ioutil. ReadAll 来读取这个流，能得到整个 body。我们再用 print 打印出来。</p></blockquote><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230802232852.png alt></p><p>我们来运行生成的代码，能看到我们已经能够成功地发出请求，把返回的 JSON 打印出来。但是现在那个输入是固定的，我们是要从一个变量来输入，我们需要用到 JSON 序列化。</p><h3 id=生成-request-body>生成 request body
+<a class=anchor href=#%e7%94%9f%e6%88%90-request-body>#</a></h3><p>在 Golang 里面。我们需要生成一段 JSON ，常用的方式是我们先构造出来一个结构体，这个结构体和我们需要生成的 JSON 的结构是一一对应的</p><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230802235428.png alt></p><p>在这个case里面， 这个结构体会是这样子的，包含三个字段。我们再来定义一个变量，初始化每个结构体成员，再调用 <code>JSON.marshaler</code> 来得到这个序列化之后的字符串。
+不同于之前这里是个字符串，我们这里是个字节数组。所以我们把 strings.newReader 改成 bytes 点 new ready 然后来构造那个 request 上的 body 接下来代码不变。然后我们就能成功地进入一个变量来发送 HTTP 请求。</p><p>这一步完成之后，可以再执行一遍，应该结果是完全不变的。</p><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>package</span> main
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;os&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;bytes&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;encoding/json&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;io/ioutil&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;log&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;net/http&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic>// 在这个case里面， 这个结构体会是这样子的，包含三个字段。再来定义一个变量，初始化每个结构体成员。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span><span style=color:green;font-weight:700>type</span> DictRequest <span style=color:green;font-weight:700>struct</span> {
+</span></span><span style=display:flex><span>	TransType <span style=color:#b00040>string</span> <span style=color:#ba2121>`json:&#34;trans_type&#34;`</span>
+</span></span><span style=display:flex><span>	Source    <span style=color:#b00040>string</span> <span style=color:#ba2121>`json:&#34;source&#34;`</span>
+</span></span><span style=display:flex><span>	UserID    <span style=color:#b00040>string</span> <span style=color:#ba2121>`json:&#34;user_id&#34;`</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>	client <span style=color:#666>:=</span> <span style=color:#666>&amp;</span>http.Client{}
+</span></span><span style=display:flex><span>	request <span style=color:#666>:=</span> DictRequest{TransType: <span style=color:#ba2121>&#34;en2zh&#34;</span>, Source: <span style=color:#ba2121>&#34;good&#34;</span>}
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 再调用 `JSON.marshaler` 来得到这个序列化之后的字符串
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	buf, err <span style=color:#666>:=</span> json.<span style=color:#00f>Marshal</span>(request)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		log.<span style=color:#00f>Fatal</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 不同于之前这里是个字符串，我们这里是个字节数组，把 strings.newReader 改成 bytes.NewReader 然后来构造那个 request 上的 body 接下来代码不变
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:green;font-weight:700>var</span> data = bytes.<span style=color:#00f>NewReader</span>(buf)
+</span></span><span style=display:flex><span>	req, err <span style=color:#666>:=</span> http.<span style=color:#00f>NewRequest</span>(<span style=color:#ba2121>&#34;POST&#34;</span>, <span style=color:#ba2121>&#34;https://api.interpreter.caiyunai.com/v1/dict&#34;</span>, data)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		log.<span style=color:#00f>Fatal</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Connection&#34;</span>, <span style=color:#ba2121>&#34;keep-alive&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;DNT&#34;</span>, <span style=color:#ba2121>&#34;1&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;os-version&#34;</span>, <span style=color:#ba2121>&#34;&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;sec-ch-ua-mobile&#34;</span>, <span style=color:#ba2121>&#34;?0&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;User-Agent&#34;</span>, <span style=color:#ba2121>&#34;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;app-name&#34;</span>, <span style=color:#ba2121>&#34;xy&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Content-Type&#34;</span>, <span style=color:#ba2121>&#34;application/json;charset=UTF-8&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Accept&#34;</span>, <span style=color:#ba2121>&#34;application/json, text/plain, */*&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;device-id&#34;</span>, <span style=color:#ba2121>&#34;&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;os-type&#34;</span>, <span style=color:#ba2121>&#34;web&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;X-Authorization&#34;</span>, os.<span style=color:#00f>Getenv</span>(<span style=color:#ba2121>&#34;CAIYUN_DICT_TOKEN&#34;</span>))
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Origin&#34;</span>, <span style=color:#ba2121>&#34;https://fanyi.caiyunapp.com&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Sec-Fetch-Site&#34;</span>, <span style=color:#ba2121>&#34;cross-site&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Sec-Fetch-Mode&#34;</span>, <span style=color:#ba2121>&#34;cors&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Sec-Fetch-Dest&#34;</span>, <span style=color:#ba2121>&#34;empty&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Referer&#34;</span>, <span style=color:#ba2121>&#34;https://fanyi.caiyunapp.com/&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Accept-Language&#34;</span>, <span style=color:#ba2121>&#34;zh-CN,zh;q=0.9&#34;</span>)
+</span></span><span style=display:flex><span>	resp, err <span style=color:#666>:=</span> client.<span style=color:#00f>Do</span>(req)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		log.<span style=color:#00f>Fatal</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>defer</span> resp.Body.<span style=color:#00f>Close</span>()
+</span></span><span style=display:flex><span>	bodyText, err <span style=color:#666>:=</span> ioutil.<span style=color:#00f>ReadAll</span>(resp.Body)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		log.<span style=color:#00f>Fatal</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Printf</span>(<span style=color:#ba2121>&#34;%s\n&#34;</span>, bodyText)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h3 id=解析-response-body>解析 response body
+<a class=anchor href=#%e8%a7%a3%e6%9e%90-response-body>#</a></h3><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230802235942.png alt></p><p>接下来我们要做的是把这个 response body 来解析出来。在 js/Python 这些脚本语言里面，body 是一个字典或者 map 的结构， 可以直接从里面取值。 但是golang是个强类型语言，这种做法并不是最佳实践。</p><p>更常用的方式是和 request 的一样，写一个结构体，把返回的 JSON 反序列化到结构体里面。但是我们在浏览器里面可以看到这个 API 返回的结构非常复杂，如果要一一定义结构体字段，非常繁琐并且容易出错。</p><p>此时有一个小技巧的是，网上有对应的代码生成工具，我们可以打开如下网站，把 json 字符串粘贴进去，这样我们就能够生成对应结构体。</p><p><a href=https://oktools.net/json2go target=_blank rel="nofollow noopener">https://oktools.net/json2go</a><sup><a href=#ref-link-2 class=footnote-ref id=ref-link-back-2>[2]</a></sup></p><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230803000146.png alt></p><p>在某些时刻，我们如果不需要对这个返回结果，做很多精细的操作，我们可以选择转换嵌套，能让生成的代码更加紧凑。</p><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>package</span> main
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;os&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;bytes&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;encoding/json&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;io/ioutil&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;log&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;net/http&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>type</span> DictRequest <span style=color:green;font-weight:700>struct</span> {
+</span></span><span style=display:flex><span>	TransType <span style=color:#b00040>string</span> <span style=color:#ba2121>`json:&#34;trans_type&#34;`</span>
+</span></span><span style=display:flex><span>	Source    <span style=color:#b00040>string</span> <span style=color:#ba2121>`json:&#34;source&#34;`</span>
+</span></span><span style=display:flex><span>	UserID    <span style=color:#b00040>string</span> <span style=color:#ba2121>`json:&#34;user_id&#34;`</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>type</span> DictResponse <span style=color:green;font-weight:700>struct</span> {
+</span></span><span style=display:flex><span>	Rc   <span style=color:#b00040>int</span> <span style=color:#ba2121>`json:&#34;rc&#34;`</span>
+</span></span><span style=display:flex><span>	Wiki <span style=color:green;font-weight:700>struct</span> {
+</span></span><span style=display:flex><span>		KnownInLaguages <span style=color:#b00040>int</span> <span style=color:#ba2121>`json:&#34;known_in_laguages&#34;`</span>
+</span></span><span style=display:flex><span>		Description     <span style=color:green;font-weight:700>struct</span> {
+</span></span><span style=display:flex><span>			Source <span style=color:#b00040>string</span>      <span style=color:#ba2121>`json:&#34;source&#34;`</span>
+</span></span><span style=display:flex><span>			Target <span style=color:green;font-weight:700>interface</span>{} <span style=color:#ba2121>`json:&#34;target&#34;`</span>
+</span></span><span style=display:flex><span>		} <span style=color:#ba2121>`json:&#34;description&#34;`</span>
+</span></span><span style=display:flex><span>		ID   <span style=color:#b00040>string</span> <span style=color:#ba2121>`json:&#34;id&#34;`</span>
+</span></span><span style=display:flex><span>		Item <span style=color:green;font-weight:700>struct</span> {
+</span></span><span style=display:flex><span>			Source <span style=color:#b00040>string</span> <span style=color:#ba2121>`json:&#34;source&#34;`</span>
+</span></span><span style=display:flex><span>			Target <span style=color:#b00040>string</span> <span style=color:#ba2121>`json:&#34;target&#34;`</span>
+</span></span><span style=display:flex><span>		} <span style=color:#ba2121>`json:&#34;item&#34;`</span>
+</span></span><span style=display:flex><span>		ImageURL  <span style=color:#b00040>string</span> <span style=color:#ba2121>`json:&#34;image_url&#34;`</span>
+</span></span><span style=display:flex><span>		IsSubject <span style=color:#b00040>string</span> <span style=color:#ba2121>`json:&#34;is_subject&#34;`</span>
+</span></span><span style=display:flex><span>		Sitelink  <span style=color:#b00040>string</span> <span style=color:#ba2121>`json:&#34;sitelink&#34;`</span>
+</span></span><span style=display:flex><span>	} <span style=color:#ba2121>`json:&#34;wiki&#34;`</span>
+</span></span><span style=display:flex><span>	Dictionary <span style=color:green;font-weight:700>struct</span> {
+</span></span><span style=display:flex><span>		Prons <span style=color:green;font-weight:700>struct</span> {
+</span></span><span style=display:flex><span>			EnUs <span style=color:#b00040>string</span> <span style=color:#ba2121>`json:&#34;en-us&#34;`</span>
+</span></span><span style=display:flex><span>			En   <span style=color:#b00040>string</span> <span style=color:#ba2121>`json:&#34;en&#34;`</span>
+</span></span><span style=display:flex><span>		} <span style=color:#ba2121>`json:&#34;prons&#34;`</span>
+</span></span><span style=display:flex><span>		Explanations []<span style=color:#b00040>string</span>      <span style=color:#ba2121>`json:&#34;explanations&#34;`</span>
+</span></span><span style=display:flex><span>		Synonym      []<span style=color:#b00040>string</span>      <span style=color:#ba2121>`json:&#34;synonym&#34;`</span>
+</span></span><span style=display:flex><span>		Antonym      []<span style=color:#b00040>string</span>      <span style=color:#ba2121>`json:&#34;antonym&#34;`</span>
+</span></span><span style=display:flex><span>		WqxExample   [][]<span style=color:#b00040>string</span>    <span style=color:#ba2121>`json:&#34;wqx_example&#34;`</span>
+</span></span><span style=display:flex><span>		Entry        <span style=color:#b00040>string</span>        <span style=color:#ba2121>`json:&#34;entry&#34;`</span>
+</span></span><span style=display:flex><span>		Type         <span style=color:#b00040>string</span>        <span style=color:#ba2121>`json:&#34;type&#34;`</span>
+</span></span><span style=display:flex><span>		Related      []<span style=color:green;font-weight:700>interface</span>{} <span style=color:#ba2121>`json:&#34;related&#34;`</span>
+</span></span><span style=display:flex><span>		Source       <span style=color:#b00040>string</span>        <span style=color:#ba2121>`json:&#34;source&#34;`</span>
+</span></span><span style=display:flex><span>	} <span style=color:#ba2121>`json:&#34;dictionary&#34;`</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>	client <span style=color:#666>:=</span> <span style=color:#666>&amp;</span>http.Client{}
+</span></span><span style=display:flex><span>	request <span style=color:#666>:=</span> DictRequest{TransType: <span style=color:#ba2121>&#34;en2zh&#34;</span>, Source: <span style=color:#ba2121>&#34;good&#34;</span>}
+</span></span><span style=display:flex><span>	buf, err <span style=color:#666>:=</span> json.<span style=color:#00f>Marshal</span>(request)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		log.<span style=color:#00f>Fatal</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>var</span> data = bytes.<span style=color:#00f>NewReader</span>(buf)
+</span></span><span style=display:flex><span>	req, err <span style=color:#666>:=</span> http.<span style=color:#00f>NewRequest</span>(<span style=color:#ba2121>&#34;POST&#34;</span>, <span style=color:#ba2121>&#34;https://api.interpreter.caiyunai.com/v1/dict&#34;</span>, data)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		log.<span style=color:#00f>Fatal</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Connection&#34;</span>, <span style=color:#ba2121>&#34;keep-alive&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;DNT&#34;</span>, <span style=color:#ba2121>&#34;1&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;os-version&#34;</span>, <span style=color:#ba2121>&#34;&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;sec-ch-ua-mobile&#34;</span>, <span style=color:#ba2121>&#34;?0&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;User-Agent&#34;</span>, <span style=color:#ba2121>&#34;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;app-name&#34;</span>, <span style=color:#ba2121>&#34;xy&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Content-Type&#34;</span>, <span style=color:#ba2121>&#34;application/json;charset=UTF-8&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Accept&#34;</span>, <span style=color:#ba2121>&#34;application/json, text/plain, */*&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;device-id&#34;</span>, <span style=color:#ba2121>&#34;&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;os-type&#34;</span>, <span style=color:#ba2121>&#34;web&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;X-Authorization&#34;</span>, os.<span style=color:#00f>Getenv</span>(<span style=color:#ba2121>&#34;CAIYUN_DICT_TOKEN&#34;</span>))
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Origin&#34;</span>, <span style=color:#ba2121>&#34;https://fanyi.caiyunapp.com&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Sec-Fetch-Site&#34;</span>, <span style=color:#ba2121>&#34;cross-site&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Sec-Fetch-Mode&#34;</span>, <span style=color:#ba2121>&#34;cors&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Sec-Fetch-Dest&#34;</span>, <span style=color:#ba2121>&#34;empty&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Referer&#34;</span>, <span style=color:#ba2121>&#34;https://fanyi.caiyunapp.com/&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Accept-Language&#34;</span>, <span style=color:#ba2121>&#34;zh-CN,zh;q=0.9&#34;</span>)
+</span></span><span style=display:flex><span>	resp, err <span style=color:#666>:=</span> client.<span style=color:#00f>Do</span>(req)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		log.<span style=color:#00f>Fatal</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>defer</span> resp.Body.<span style=color:#00f>Close</span>()
+</span></span><span style=display:flex><span>	bodyText, err <span style=color:#666>:=</span> ioutil.<span style=color:#00f>ReadAll</span>(resp.Body)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		log.<span style=color:#00f>Fatal</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 先定一个 response 结构体的对象
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:green;font-weight:700>var</span> dictResponse DictResponse
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 用 JSON.unmarshal 把 body 反序列化到 这个结构体里面，再试图打印出来，注意这里要用&amp;
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	err = json.<span style=color:#00f>Unmarshal</span>(bodyText, <span style=color:#666>&amp;</span>dictResponse)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		log.<span style=color:#00f>Fatal</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 这里打印的时候使用了 `%#v` ，这样可以让打印出来的结果比较容易读
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	fmt.<span style=color:#00f>Printf</span>(<span style=color:#ba2121>&#34;%#v\n&#34;</span>, dictResponse)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>这样就得到了一个 response 结构体。接下来修改代码，先定一个 response 结构体的对象，然后用 JSON.unmarshal 把 body 反序列化到这个结构体里面，再试图打印出来。现在再运行一下，这里打印的时候使用了 <code>%#v</code> ，这样可以让打印出来的结果比较容易读。我们现在离最终版本已经很近了，接下来我们需要修改代码为打印 response 里面的特定字段。</p><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230803000940.png alt></p><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230803000458.png alt></p><h3 id=打印结果>打印结果
+<a class=anchor href=#%e6%89%93%e5%8d%b0%e7%bb%93%e6%9e%9c>#</a></h3><p>观察那个网页的 json 可以看出我们需要的结果是在 Dictionary.explanations. 我们用 for range 循环来迭代它，然后直接打印结构，参照一些词典的显示方式，我们可以在那个前面打印出这个单词和它的音标。这里有英式音标和美式音标。同时加一个 StatusCode 的反馈，否则如果出错的话，底下反序列化解析出来的就是空，不方便排查问题。</p><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230803000830.png alt></p><h3 id=结构完善>结构完善
+<a class=anchor href=#%e7%bb%93%e6%9e%84%e5%ae%8c%e5%96%84>#</a></h3><p>把代码的主体改成一个 query 函数，查询的单词作为参数传递进来。然后我们写一个简单的 main 函数，这个 main 函数首先判断一下命令和参数的个数，如果它不是两个，那么我们就打印出错误信息，退出程序。 否则就获取到用户输入的单词，然后执行 query 函数。</p><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230803001104.png alt>
+<img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230803001112.png alt>
+<img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230803001122.png alt></p><p>完整代码如下所示：</p><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>package</span> main
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;bytes&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;encoding/json&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;io/ioutil&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;log&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;net/http&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;os&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>type</span> DictRequest <span style=color:green;font-weight:700>struct</span> {
+</span></span><span style=display:flex><span>	TransType <span style=color:#b00040>string</span> <span style=color:#ba2121>`json:&#34;trans_type&#34;`</span>
+</span></span><span style=display:flex><span>	Source    <span style=color:#b00040>string</span> <span style=color:#ba2121>`json:&#34;source&#34;`</span>
+</span></span><span style=display:flex><span>	UserID    <span style=color:#b00040>string</span> <span style=color:#ba2121>`json:&#34;user_id&#34;`</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>type</span> DictResponse <span style=color:green;font-weight:700>struct</span> {
+</span></span><span style=display:flex><span>	Rc   <span style=color:#b00040>int</span> <span style=color:#ba2121>`json:&#34;rc&#34;`</span>
+</span></span><span style=display:flex><span>	Wiki <span style=color:green;font-weight:700>struct</span> {
+</span></span><span style=display:flex><span>		KnownInLaguages <span style=color:#b00040>int</span> <span style=color:#ba2121>`json:&#34;known_in_laguages&#34;`</span>
+</span></span><span style=display:flex><span>		Description     <span style=color:green;font-weight:700>struct</span> {
+</span></span><span style=display:flex><span>			Source <span style=color:#b00040>string</span>      <span style=color:#ba2121>`json:&#34;source&#34;`</span>
+</span></span><span style=display:flex><span>			Target <span style=color:green;font-weight:700>interface</span>{} <span style=color:#ba2121>`json:&#34;target&#34;`</span>
+</span></span><span style=display:flex><span>		} <span style=color:#ba2121>`json:&#34;description&#34;`</span>
+</span></span><span style=display:flex><span>		ID   <span style=color:#b00040>string</span> <span style=color:#ba2121>`json:&#34;id&#34;`</span>
+</span></span><span style=display:flex><span>		Item <span style=color:green;font-weight:700>struct</span> {
+</span></span><span style=display:flex><span>			Source <span style=color:#b00040>string</span> <span style=color:#ba2121>`json:&#34;source&#34;`</span>
+</span></span><span style=display:flex><span>			Target <span style=color:#b00040>string</span> <span style=color:#ba2121>`json:&#34;target&#34;`</span>
+</span></span><span style=display:flex><span>		} <span style=color:#ba2121>`json:&#34;item&#34;`</span>
+</span></span><span style=display:flex><span>		ImageURL  <span style=color:#b00040>string</span> <span style=color:#ba2121>`json:&#34;image_url&#34;`</span>
+</span></span><span style=display:flex><span>		IsSubject <span style=color:#b00040>string</span> <span style=color:#ba2121>`json:&#34;is_subject&#34;`</span>
+</span></span><span style=display:flex><span>		Sitelink  <span style=color:#b00040>string</span> <span style=color:#ba2121>`json:&#34;sitelink&#34;`</span>
+</span></span><span style=display:flex><span>	} <span style=color:#ba2121>`json:&#34;wiki&#34;`</span>
+</span></span><span style=display:flex><span>	Dictionary <span style=color:green;font-weight:700>struct</span> {
+</span></span><span style=display:flex><span>		Prons <span style=color:green;font-weight:700>struct</span> {
+</span></span><span style=display:flex><span>			EnUs <span style=color:#b00040>string</span> <span style=color:#ba2121>`json:&#34;en-us&#34;`</span>
+</span></span><span style=display:flex><span>			En   <span style=color:#b00040>string</span> <span style=color:#ba2121>`json:&#34;en&#34;`</span>
+</span></span><span style=display:flex><span>		} <span style=color:#ba2121>`json:&#34;prons&#34;`</span>
+</span></span><span style=display:flex><span>		Explanations []<span style=color:#b00040>string</span>      <span style=color:#ba2121>`json:&#34;explanations&#34;`</span>
+</span></span><span style=display:flex><span>		Synonym      []<span style=color:#b00040>string</span>      <span style=color:#ba2121>`json:&#34;synonym&#34;`</span>
+</span></span><span style=display:flex><span>		Antonym      []<span style=color:#b00040>string</span>      <span style=color:#ba2121>`json:&#34;antonym&#34;`</span>
+</span></span><span style=display:flex><span>		WqxExample   [][]<span style=color:#b00040>string</span>    <span style=color:#ba2121>`json:&#34;wqx_example&#34;`</span>
+</span></span><span style=display:flex><span>		Entry        <span style=color:#b00040>string</span>        <span style=color:#ba2121>`json:&#34;entry&#34;`</span>
+</span></span><span style=display:flex><span>		Type         <span style=color:#b00040>string</span>        <span style=color:#ba2121>`json:&#34;type&#34;`</span>
+</span></span><span style=display:flex><span>		Related      []<span style=color:green;font-weight:700>interface</span>{} <span style=color:#ba2121>`json:&#34;related&#34;`</span>
+</span></span><span style=display:flex><span>		Source       <span style=color:#b00040>string</span>        <span style=color:#ba2121>`json:&#34;source&#34;`</span>
+</span></span><span style=display:flex><span>	} <span style=color:#ba2121>`json:&#34;dictionary&#34;`</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>query</span>(word <span style=color:#b00040>string</span>) {
+</span></span><span style=display:flex><span>	client <span style=color:#666>:=</span> <span style=color:#666>&amp;</span>http.Client{}
+</span></span><span style=display:flex><span>	request <span style=color:#666>:=</span> DictRequest{TransType: <span style=color:#ba2121>&#34;en2zh&#34;</span>, Source: word}
+</span></span><span style=display:flex><span>	buf, err <span style=color:#666>:=</span> json.<span style=color:#00f>Marshal</span>(request)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		log.<span style=color:#00f>Fatal</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>var</span> data = bytes.<span style=color:#00f>NewReader</span>(buf)
+</span></span><span style=display:flex><span>	req, err <span style=color:#666>:=</span> http.<span style=color:#00f>NewRequest</span>(<span style=color:#ba2121>&#34;POST&#34;</span>, <span style=color:#ba2121>&#34;https://api.interpreter.caiyunai.com/v1/dict&#34;</span>, data)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		log.<span style=color:#00f>Fatal</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Connection&#34;</span>, <span style=color:#ba2121>&#34;keep-alive&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;DNT&#34;</span>, <span style=color:#ba2121>&#34;1&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;os-version&#34;</span>, <span style=color:#ba2121>&#34;&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;sec-ch-ua-mobile&#34;</span>, <span style=color:#ba2121>&#34;?0&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;User-Agent&#34;</span>, <span style=color:#ba2121>&#34;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/99.0.4844.51 Safari/537.36&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;app-name&#34;</span>, <span style=color:#ba2121>&#34;xy&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Content-Type&#34;</span>, <span style=color:#ba2121>&#34;application/json;charset=UTF-8&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Accept&#34;</span>, <span style=color:#ba2121>&#34;application/json, text/plain, */*&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;device-id&#34;</span>, <span style=color:#ba2121>&#34;&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;os-type&#34;</span>, <span style=color:#ba2121>&#34;web&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;X-Authorization&#34;</span>, os.<span style=color:#00f>Getenv</span>(<span style=color:#ba2121>&#34;CAIYUN_DICT_TOKEN&#34;</span>))
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Origin&#34;</span>, <span style=color:#ba2121>&#34;https://fanyi.caiyunapp.com&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Sec-Fetch-Site&#34;</span>, <span style=color:#ba2121>&#34;cross-site&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Sec-Fetch-Mode&#34;</span>, <span style=color:#ba2121>&#34;cors&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Sec-Fetch-Dest&#34;</span>, <span style=color:#ba2121>&#34;empty&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Referer&#34;</span>, <span style=color:#ba2121>&#34;https://fanyi.caiyunapp.com/&#34;</span>)
+</span></span><span style=display:flex><span>	req.Header.<span style=color:#00f>Set</span>(<span style=color:#ba2121>&#34;Accept-Language&#34;</span>, <span style=color:#ba2121>&#34;zh-CN,zh;q=0.9&#34;</span>)
+</span></span><span style=display:flex><span>	resp, err <span style=color:#666>:=</span> client.<span style=color:#00f>Do</span>(req)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		log.<span style=color:#00f>Fatal</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>defer</span> resp.Body.<span style=color:#00f>Close</span>()
+</span></span><span style=display:flex><span>	bodyText, err <span style=color:#666>:=</span> ioutil.<span style=color:#00f>ReadAll</span>(resp.Body)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		log.<span style=color:#00f>Fatal</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> resp.StatusCode <span style=color:#666>!=</span> <span style=color:#666>200</span> {
+</span></span><span style=display:flex><span>		log.<span style=color:#00f>Fatal</span>(<span style=color:#ba2121>&#34;bad StatusCode:&#34;</span>, resp.StatusCode, <span style=color:#ba2121>&#34;body&#34;</span>, <span style=color:green>string</span>(bodyText))
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>var</span> dictResponse DictResponse
+</span></span><span style=display:flex><span>	err = json.<span style=color:#00f>Unmarshal</span>(bodyText, <span style=color:#666>&amp;</span>dictResponse)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		log.<span style=color:#00f>Fatal</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	fmt.<span style=color:#00f>Println</span>(word, <span style=color:#ba2121>&#34;UK:&#34;</span>, dictResponse.Dictionary.Prons.En, <span style=color:#ba2121>&#34;US:&#34;</span>, dictResponse.Dictionary.Prons.EnUs)
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 观察那个网页的 json 可以看出我们需要的结果是在 Dictionary.explanations. 我们用 for range 循环来迭代它，然后直接打印结构
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:green;font-weight:700>for</span> _, item <span style=color:#666>:=</span> <span style=color:green;font-weight:700>range</span> dictResponse.Dictionary.Explanations {
+</span></span><span style=display:flex><span>		fmt.<span style=color:#00f>Println</span>(item)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> <span style=color:green>len</span>(os.Args) <span style=color:#666>!=</span> <span style=color:#666>2</span> {
+</span></span><span style=display:flex><span>		fmt.<span style=color:#00f>Fprintf</span>(os.Stderr, <span style=color:#ba2121>`usage: simpleDict WORD
+</span></span></span><span style=display:flex><span><span style=color:#ba2121>example: simpleDict hello
+</span></span></span><span style=display:flex><span><span style=color:#ba2121>		`</span>)
+</span></span><span style=display:flex><span>		os.<span style=color:#00f>Exit</span>(<span style=color:#666>1</span>)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	word <span style=color:#666>:=</span> os.Args[<span style=color:#666>1</span>]
+</span></span><span style=display:flex><span>	<span style=color:#00f>query</span>(word)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><h2 id=socks-5-代理>Socks 5 代理
+<a class=anchor href=#socks-5-%e4%bb%a3%e7%90%86>#</a></h2><h3 id=介绍>介绍
+<a class=anchor href=#%e4%bb%8b%e7%bb%8d>#</a></h3><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230803103052.png alt></p><p>socks5 协议它虽然是代理协议，但它并不能用来翻，它的协议都是明文传输。
+这个协议历史比较久远，诞生于互联网早期。它的用途是， 比如某些企业的内网为了确保安全性，有很严格的防火墙策略，但是带来的副作用就是访问某些资源会很麻烦。socks5 相当于在防火墙开了个口子，让授权的用户可以通过单个端口去访问内部的所有资源。实际上很多翻软件，最终暴露的也是一个 socks5 协议的端口。
+例如爬，在爬取过程中很容易会遇到 IP 访问频率超过限制。这个时候很多人就会去网上找一些代理 IP 池，这些代理 IP 池里面的很多代理的协议就是 socks5。</p><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230803103305.png alt></p><p>先看一下最终写完的代理服务器的效果。启动程序，然后在浏览器里面配置使用这个代理，此时打开网页。代理服务器的日志，会打印出你访问的网站的域名或者 IP ，这说明我们的网络流量是通过这个代理服务器的。也能在命令行去测试我们的代理服务器。我们可以用 curl -socks5 + 代理服务器地址，后面加一个可访问的 URL，如果代理服务器工作正常的话，那么 curl 命令就会正常返回。</p><h3 id=原理>原理
+<a class=anchor href=#%e5%8e%9f%e7%90%86>#</a></h3><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230803103349.png alt></p><p>了解 socks5 协议的工作原理。正常浏览器访问一个网站，如果不经过代理服务器的话，就是先和对方的网站建立 TCP 连接，然后三次握手，握手完之后发起 HTTP 请求，然后服务返回 HTTP 响应。</p><p>如果设置代理服务器之后，流程会变得复杂一些。首先是浏览器和 socks5 代理建立 TCP 连接，代理再和真正的服务器建立 TCP 连接。这里可以分成四个阶段，<strong>握手阶段、认证阶段、请求阶段、 relay 阶段</strong>。</p><ul><li>第一个握手阶段，浏览器会向 socks 5 代理发送请求，包的内容包括一个协议的版本号，还有支持的认证的种类，socks 5 服务器会选中一个认证方式，返回给浏览器。如果返回的是 00 的话就代表不需要认证，返回其他类型的话会开始认证流程，这里我们就不对认证流程进行概述了。</li><li>第三个阶段是请求阶段，认证通过之后浏览器会对 socks 5 服务器发起请求。主要信息包括版本号，请求的类型，一般主要是 connection 请求，就代表代理服务器要和某个域名或者某个 IP 地址某个端口建立 TCP 连接。代理服务器收到响应之后，会真正和后端服务器建立连接，然后返回一个响应。</li><li>第四个阶段是 relay 阶段。此时浏览器会发送正常发送请求，然后代理服务器接收到请求之后，会直接把请求转换到真正的服务器上。然后如果真正的服务器以后返回响应的话，那么也会把请求转发到浏览器这边。然后实际上代理服务器并不关心流量的细节，可以是 HTTP 流量，也可以是其它 TCP 流量。</li></ul><h3 id=tcp-echo-server>TCP echo server
+<a class=anchor href=#tcp-echo-server>#</a></h3><p>我们先在 go 里面写一个简单的 TCP echo server。为了方便测试， server 的工作逻辑很简单，你给他发送啥，他就回复啥，代码如下。</p><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>package</span> main
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;bufio&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;log&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;net&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 首先在 main 函数里面先用 net.listen 去监听一个端口，会返回一个 server
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	server, err <span style=color:#666>:=</span> net.<span style=color:#00f>Listen</span>(<span style=color:#ba2121>&#34;tcp&#34;</span>, <span style=color:#ba2121>&#34;127.0.0.1:10803&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green>panic</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>for</span> {
+</span></span><span style=display:flex><span>		<span style=color:#408080;font-style:italic>// 然后在一个死循环里面，每次去 accept 一个请求，成功就会返回一个连接
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>		client, err <span style=color:#666>:=</span> server.<span style=color:#00f>Accept</span>()
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>			log.<span style=color:#00f>Printf</span>(<span style=color:#ba2121>&#34;Accept failed %v&#34;</span>, err)
+</span></span><span style=display:flex><span>			<span style=color:green;font-weight:700>continue</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		<span style=color:#408080;font-style:italic>// 接下来的话我们在一个 process 函数里面去处理这个连接。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>		<span style=color:#408080;font-style:italic>// 这前面会有个 go 关键字，这个代表启动一个 goroutinue， 可以暂时类比为其他语言里面的启动一个子线程。只是这里的 goroutinue 的开销会比子线程要小很多，可以很轻松地处理上万的并发。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>		<span style=color:green;font-weight:700>go</span> <span style=color:#00f>process</span>(client)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#408080;font-style:italic>// 接下来是这个 process 函数的实现。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>process</span>(conn net.Conn) {
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 首先第一步的话会先加一个 defer connection.close()， defer 是 Golang 里面的一个语法，这一行的含义就是代表在这个函数退出的时候要把这个连接关掉，否则会有资源的泄露。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:green;font-weight:700>defer</span> conn.<span style=color:#00f>Close</span>()
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 用 bufio.NewReader 来创建一个带缓冲的只读流
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	reader <span style=color:#666>:=</span> bufio.<span style=color:#00f>NewReader</span>(conn)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>for</span> {
+</span></span><span style=display:flex><span>		<span style=color:#408080;font-style:italic>// 带缓冲的流的作用是，可以减少底层系统调用的次数，比如这里为了方便是一个字节一个字节的读取，但是底层可能合并成几次大的读取操作。并且带缓冲的流会有更多的一些工具函数用来读取数据。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>		<span style=color:#408080;font-style:italic>// 可以简单地调用 readbyte 函数来读取单个字节。再把这一个字节写进去连接。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>		b, err <span style=color:#666>:=</span> reader.<span style=color:#00f>ReadByte</span>()
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>			<span style=color:green;font-weight:700>break</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		_, err = conn.<span style=color:#00f>Write</span>([]<span style=color:#b00040>byte</span>{b})
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>			<span style=color:green;font-weight:700>break</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>我们来简单测试一下我们的第一个 TCP 服务器，然后测试会需要用到 nc 命令。如果没有的话可以进行安装，这里用 <code>nc 127.0.0.1 10803</code>，输入 timerring 然后服务器就会给你返回 timerring。
+先运行代码</p><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230803104235.png alt></p><p>然后另开一个终端进行测试：
+<img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230803104333.png alt></p><h3 id=auth>auth
+<a class=anchor href=#auth>#</a></h3><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>package</span> main
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;bufio&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;io&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;log&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;net&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>const</span> socks5Ver = <span style=color:#666>0x05</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>const</span> cmdBind = <span style=color:#666>0x01</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>const</span> atypeIPV4 = <span style=color:#666>0x01</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>const</span> atypeHOST = <span style=color:#666>0x03</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>const</span> atypeIPV6 = <span style=color:#666>0x04</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>	server, err <span style=color:#666>:=</span> net.<span style=color:#00f>Listen</span>(<span style=color:#ba2121>&#34;tcp&#34;</span>, <span style=color:#ba2121>&#34;127.0.0.1:1080&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green>panic</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>for</span> {
+</span></span><span style=display:flex><span>		client, err <span style=color:#666>:=</span> server.<span style=color:#00f>Accept</span>()
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>			log.<span style=color:#00f>Printf</span>(<span style=color:#ba2121>&#34;Accept failed %v&#34;</span>, err)
+</span></span><span style=display:flex><span>			<span style=color:green;font-weight:700>continue</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>go</span> <span style=color:#00f>process</span>(client)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>process</span>(conn net.Conn) {
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>defer</span> conn.<span style=color:#00f>Close</span>()
+</span></span><span style=display:flex><span>	reader <span style=color:#666>:=</span> bufio.<span style=color:#00f>NewReader</span>(conn)
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 我们实现一个空的 auth 函数，在 process 函数里面调用，再来编写 auth 函数的代码。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	err <span style=color:#666>:=</span> <span style=color:#00f>auth</span>(reader, conn)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		log.<span style=color:#00f>Printf</span>(<span style=color:#ba2121>&#34;client %v auth failed:%v&#34;</span>, conn.<span style=color:#00f>RemoteAddr</span>(), err)
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	log.<span style=color:#00f>Println</span>(<span style=color:#ba2121>&#34;auth success&#34;</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>auth</span>(reader <span style=color:#666>*</span>bufio.Reader, conn net.Conn) (err <span style=color:#b00040>error</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// +----+----------+----------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// |VER | NMETHODS | METHODS  |
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// +----+----------+----------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// | 1  |    1     | 1 to 255 |
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// +----+----------+----------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// VER: 协议版本，socks5为0x05
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// NMETHODS: 支持认证的方法数量
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// METHODS: 对应NMETHODS，NMETHODS的值为多少，METHODS就有多少个字节。RFC预定义了一些值的含义，内容如下:
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// X’00’ NO AUTHENTICATION REQUIRED
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// X’02’ USERNAME/PASSWORD
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 先用 read bytes 来把版本号读出来
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	ver, err <span style=color:#666>:=</span> reader.<span style=color:#00f>ReadByte</span>()
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;read ver failed:%w&#34;</span>, err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 然后如果版本号不是 socket 5 的话直接返回报错
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:green;font-weight:700>if</span> ver <span style=color:#666>!=</span> socks5Ver {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;not supported ver:%v&#34;</span>, ver)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 接下来我们再读取 method size ，也是一个字节。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	methodSize, err <span style=color:#666>:=</span> reader.<span style=color:#00f>ReadByte</span>()
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;read methodSize failed:%w&#34;</span>, err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 然后需要我们去 make 一个相应长度的一个 slice ，用 io.ReadFull 把它去填充进去。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	method <span style=color:#666>:=</span> <span style=color:green>make</span>([]<span style=color:#b00040>byte</span>, methodSize)
+</span></span><span style=display:flex><span>	_, err = io.<span style=color:#00f>ReadFull</span>(reader, method)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;read method failed:%w&#34;</span>, err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 写到这里，我们把获取到的版本号和认证方式打印一下。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	log.<span style=color:#00f>Println</span>(<span style=color:#ba2121>&#34;ver&#34;</span>, ver, <span style=color:#ba2121>&#34;method&#34;</span>, method)
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// +----+--------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// |VER | METHOD |
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// +----+--------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// | 1  |   1    |
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// +----+--------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// 此时，代理服务器还需要返回一个response， 返回包包括 两个字段，一个是 version 一个是 method，也就是我们选中的鉴传方式，我们当前只准备实现不需要鉴传的方式，也就是00。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	_, err = conn.<span style=color:#00f>Write</span>([]<span style=color:#b00040>byte</span>{socks5Ver, <span style=color:#666>0x00</span>})
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;write failed:%w&#34;</span>, err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>return</span> <span style=color:green;font-weight:700>nil</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>我们回忆一下认证阶段的逻辑，首先第一步的话，浏览器会给代理服务器发送一个包，然后这个包有三个字段，</p><ul><li>第一个字段， version 也就是协议版本号，固定是 5</li><li>第二个字段 methods，认证的方法数目</li><li>第三个字段每个 method 的编码， 0代表不需要认证， 2 代表用户名密码认证
+我们用 curl 命令测试一下当前版本的效果。此时 curl 命令肯定是不成功的，因为我们的协议还没实现完成。</li></ul><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230803110235.png alt></p><p>但是我们看日志会发现， version 和 method 可以正常打印，说明当前我们的实现是正确的。</p><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230803110244.png alt></p><h3 id=请求阶段>请求阶段
+<a class=anchor href=#%e8%af%b7%e6%b1%82%e9%98%b6%e6%ae%b5>#</a></h3><p>接下来我们开始做第三步，实现请求阶段，我们试图读取到携带 URL 或者 IP 地址+端口的包，然后把它打印出来。</p><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>package</span> main
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;bufio&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;encoding/binary&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;errors&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;io&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;log&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;net&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>const</span> socks5Ver = <span style=color:#666>0x05</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>const</span> cmdBind = <span style=color:#666>0x01</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>const</span> atypeIPV4 = <span style=color:#666>0x01</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>const</span> atypeHOST = <span style=color:#666>0x03</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>const</span> atypeIPV6 = <span style=color:#666>0x04</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>	server, err <span style=color:#666>:=</span> net.<span style=color:#00f>Listen</span>(<span style=color:#ba2121>&#34;tcp&#34;</span>, <span style=color:#ba2121>&#34;127.0.0.1:1080&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green>panic</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>for</span> {
+</span></span><span style=display:flex><span>		client, err <span style=color:#666>:=</span> server.<span style=color:#00f>Accept</span>()
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>			log.<span style=color:#00f>Printf</span>(<span style=color:#ba2121>&#34;Accept failed %v&#34;</span>, err)
+</span></span><span style=display:flex><span>			<span style=color:green;font-weight:700>continue</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>go</span> <span style=color:#00f>process</span>(client)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>process</span>(conn net.Conn) {
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>defer</span> conn.<span style=color:#00f>Close</span>()
+</span></span><span style=display:flex><span>	reader <span style=color:#666>:=</span> bufio.<span style=color:#00f>NewReader</span>(conn)
+</span></span><span style=display:flex><span>	err <span style=color:#666>:=</span> <span style=color:#00f>auth</span>(reader, conn)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		log.<span style=color:#00f>Printf</span>(<span style=color:#ba2121>&#34;client %v auth failed:%v&#34;</span>, conn.<span style=color:#00f>RemoteAddr</span>(), err)
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 我们实现一个和 auth 函数类似的 connect 函数，同样在 process 里面去调用。再来实现 connect 函数的代码。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	err = <span style=color:#00f>connect</span>(reader, conn)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		log.<span style=color:#00f>Printf</span>(<span style=color:#ba2121>&#34;client %v auth failed:%v&#34;</span>, conn.<span style=color:#00f>RemoteAddr</span>(), err)
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>auth</span>(reader <span style=color:#666>*</span>bufio.Reader, conn net.Conn) (err <span style=color:#b00040>error</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// +----+----------+----------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// |VER | NMETHODS | METHODS  |
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// +----+----------+----------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// | 1  |    1     | 1 to 255 |
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// +----+----------+----------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// VER: 协议版本，socks5为0x05
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// NMETHODS: 支持认证的方法数量
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// METHODS: 对应NMETHODS，NMETHODS的值为多少，METHODS就有多少个字节。RFC预定义了一些值的含义，内容如下:
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// X’00’ NO AUTHENTICATION REQUIRED
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// X’02’ USERNAME/PASSWORD
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>
+</span></span><span style=display:flex><span>	ver, err <span style=color:#666>:=</span> reader.<span style=color:#00f>ReadByte</span>()
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;read ver failed:%w&#34;</span>, err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> ver <span style=color:#666>!=</span> socks5Ver {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;not supported ver:%v&#34;</span>, ver)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	methodSize, err <span style=color:#666>:=</span> reader.<span style=color:#00f>ReadByte</span>()
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;read methodSize failed:%w&#34;</span>, err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	method <span style=color:#666>:=</span> <span style=color:green>make</span>([]<span style=color:#b00040>byte</span>, methodSize)
+</span></span><span style=display:flex><span>	_, err = io.<span style=color:#00f>ReadFull</span>(reader, method)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;read method failed:%w&#34;</span>, err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// +----+--------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// |VER | METHOD |
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// +----+--------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// | 1  |   1    |
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// +----+--------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	_, err = conn.<span style=color:#00f>Write</span>([]<span style=color:#b00040>byte</span>{socks5Ver, <span style=color:#666>0x00</span>})
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;write failed:%w&#34;</span>, err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>return</span> <span style=color:green;font-weight:700>nil</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>connect</span>(reader <span style=color:#666>*</span>bufio.Reader, conn net.Conn) (err <span style=color:#b00040>error</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 我们来回忆一下请求阶段的逻辑。浏览器会发送一个包，包里面包含如下6个字段
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// +----+-----+-------+------+----------+----------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// |VER | CMD |  RSV  | ATYP | DST.ADDR | DST.PORT |
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// +----+-----+-------+------+----------+----------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// | 1  |  1  | X&#39;00&#39; |  1   | Variable |    2     |
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// +----+-----+-------+------+----------+----------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// VER 版本号，socks5的值为0x05。version 版本号， 还是 5
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// CMD 0x01表示CONNECT请求。CMD 代表请求的类型，我们只支持 connection 请求，也就是让代理服务建立新的TCP连接。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// RSV 保留字段，值为0x00，不理会。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// ATYP 目标地址类型，DST.ADDR的数据对应这个字段的类型。可能是 IPV4 IPV6 或者域名。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>//   0x01表示IPv4地址，DST.ADDR为4个字节
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>//   0x03表示域名，DST.ADDR是一个可变长度的域名
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// DST.ADDR 一个可变长度的值，这个地址的长度是根据 atype 的类型而不同的,port 端口号，两个字节, 我们需要逐个去读取这些字段。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// DST.PORT 目标端口，固定2个字节
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 后面这四个字段总共四个字节，我们可以一次性把它读出来。我们定义一个长度为 4 的 buffer 然后把它读满。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	buf <span style=color:#666>:=</span> <span style=color:green>make</span>([]<span style=color:#b00040>byte</span>, <span style=color:#666>4</span>)
+</span></span><span style=display:flex><span>	_, err = io.<span style=color:#00f>ReadFull</span>(reader, buf)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;read header failed:%w&#34;</span>, err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 读满之后，然后第0 个、第1个、第3个、分别是 version cmd 和 type
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	ver, cmd, atyp <span style=color:#666>:=</span> buf[<span style=color:#666>0</span>], buf[<span style=color:#666>1</span>], buf[<span style=color:#666>3</span>]
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// version 需要判断是 socket 5
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:green;font-weight:700>if</span> ver <span style=color:#666>!=</span> socks5Ver {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;not supported ver:%v&#34;</span>, ver)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// cmd 需要判断是 1，这里cmdBind是在前面定义好的
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:green;font-weight:700>if</span> cmd <span style=color:#666>!=</span> cmdBind {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;not supported cmd:%v&#34;</span>, cmd)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 下面的 atype，可能是 ipv4 ，ipv6，或者是 host。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	addr <span style=color:#666>:=</span> <span style=color:#ba2121>&#34;&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>switch</span> atyp {
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 如果 IPV4 的话，我们再次读满这个 buffer，因为这个 buffer 长度刚好也是4个字节
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:green;font-weight:700>case</span> atypeIPV4:
+</span></span><span style=display:flex><span>		_, err = io.<span style=color:#00f>ReadFull</span>(reader, buf)
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>			<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;read atyp failed:%w&#34;</span>, err)
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		<span style=color:#408080;font-style:italic>// 然后逐个字节打印成 IP 地址的格式保存到 addr 变量。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>		addr = fmt.<span style=color:#00f>Sprintf</span>(<span style=color:#ba2121>&#34;%d.%d.%d.%d&#34;</span>, buf[<span style=color:#666>0</span>], buf[<span style=color:#666>1</span>], buf[<span style=color:#666>2</span>], buf[<span style=color:#666>3</span>])
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 如果是个 host 的话
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:green;font-weight:700>case</span> atypeHOST:
+</span></span><span style=display:flex><span>		<span style=color:#408080;font-style:italic>// 需要先读它的长度
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>		hostSize, err <span style=color:#666>:=</span> reader.<span style=color:#00f>ReadByte</span>()
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>			<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;read hostSize failed:%w&#34;</span>, err)
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		<span style=color:#408080;font-style:italic>// 再 make 一个相应长度的buf 填充它。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>		host <span style=color:#666>:=</span> <span style=color:green>make</span>([]<span style=color:#b00040>byte</span>, hostSize)
+</span></span><span style=display:flex><span>		_, err = io.<span style=color:#00f>ReadFull</span>(reader, host)
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>			<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;read host failed:%w&#34;</span>, err)
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		<span style=color:#408080;font-style:italic>// 再转换成字符串保存到 addr 变量。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>		addr = <span style=color:green>string</span>(host)
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// IPV6 用得比较少，我们就暂时先不支持。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:green;font-weight:700>case</span> atypeIPV6:
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> errors.<span style=color:#00f>New</span>(<span style=color:#ba2121>&#34;IPv6: no supported yet&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>default</span>:
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> errors.<span style=color:#00f>New</span>(<span style=color:#ba2121>&#34;invalid atyp&#34;</span>)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	_, err = io.<span style=color:#00f>ReadFull</span>(reader, buf[:<span style=color:#666>2</span>])
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;read port failed:%w&#34;</span>, err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 最后还有两个字节那个是 port ，我们读取它，然后按协议规定的大端字节序转换成数字。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// 由于上面的 buffer 已经不会被其他变量使用了，我们可以直接复用之前的内存，建立一个临时的 slice ，长度是2用于读取，这样的话最多会只读两个字节回来。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	port <span style=color:#666>:=</span> binary.BigEndian.<span style=color:#00f>Uint16</span>(buf[:<span style=color:#666>2</span>])
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 接下来我们把这个地址和端口打印出来用于调试。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	log.<span style=color:#00f>Println</span>(<span style=color:#ba2121>&#34;dial&#34;</span>, addr, port)
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 收到浏览器的这个请求包之后，我们需要返回一个包，这个包有很多字段，但其实大部分都不会使用。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// +----+-----+-------+------+----------+----------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// |VER | REP |  RSV  | ATYP | BND.ADDR | BND.PORT |
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// +----+-----+-------+------+----------+----------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// | 1  |  1  | X&#39;00&#39; |  1   | Variable |    2     |
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// +----+-----+-------+------+----------+----------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// VER socks版本，这里为0x05，第一个是版本号还是 socket 5。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// REP Relay field,内容取值如下 X’00’ succeeded，第二个，就是返回的类型，这里是成功就返回0。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// RSV 保留字段，第三个是保留字段填 0。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// ATYPE 地址类型，第四个 atype 地址类型填 1。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// BND.ADDR 服务绑定的地址，第五个，第六个暂时用不到，都填成 0。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// BND.PORT 服务绑定的端口DST.PORT
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 一共 4 + 4 + 2 个字节，后面6个字节都是 0 填充。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	_, err = conn.<span style=color:#00f>Write</span>([]<span style=color:#b00040>byte</span>{<span style=color:#666>0x05</span>, <span style=color:#666>0x00</span>, <span style=color:#666>0x00</span>, <span style=color:#666>0x01</span>, <span style=color:#666>0</span>, <span style=color:#666>0</span>, <span style=color:#666>0</span>, <span style=color:#666>0</span>, <span style=color:#666>0</span>, <span style=color:#666>0</span>})
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;write failed: %w&#34;</span>, err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>return</span> <span style=color:green;font-weight:700>nil</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>现在我们来测试一下当前阶段的成果， 简单 curl 一下。</p><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230803111853.png alt></p><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230803111909.png alt></p><p>此时请求还是会失败，我们现在已经能看到正常打印出来访问的 IP 地址和端口，这说明我们当前的实现正常，这样我们就可以做最后一步，我们真正和这个端口建立连接，双向转发数据。</p><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230803111941.png alt></p><p>我们直接用 net.dial 建立一个 TCP 连接，建立完连接之后，我们同样要加一个 defer 来关闭连接。接下来需要建立浏览器和下游服务器的双向数据转发。</p><p>标准库的 io.copy 可以实现一个单向数据转发，双向转发的话，需要启动两个 goroutinue。
+<img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230803112022.png alt></p><p>现在有一个问题，connect 函数会立刻返回，返回的时候连接就被关闭了。需要等待任意一个方向 copy 出错的时候，再返回 connect 函数。这里可以使用到标准库里面的一个 context 机制，用 context 连 with cancel 来创建一个 context。</p><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230803112033.png alt></p><p>在最后等待 ctx.Done() ，只要 cancel 被调用， ctx.Done 就会立刻返回。然后在上面的两个 goroutinue 里面调用一次 cancel 即可。</p><h3 id=完整代码>完整代码
+<a class=anchor href=#%e5%ae%8c%e6%95%b4%e4%bb%a3%e7%a0%81>#</a></h3><div class=highlight><pre tabindex=0 style=-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:green;font-weight:700>package</span> main
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;bufio&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;context&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;encoding/binary&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;errors&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;io&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;log&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#ba2121>&#34;net&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>const</span> socks5Ver = <span style=color:#666>0x05</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>const</span> cmdBind = <span style=color:#666>0x01</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>const</span> atypeIPV4 = <span style=color:#666>0x01</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>const</span> atypeHOST = <span style=color:#666>0x03</span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>const</span> atypeIPV6 = <span style=color:#666>0x04</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>main</span>() {
+</span></span><span style=display:flex><span>	server, err <span style=color:#666>:=</span> net.<span style=color:#00f>Listen</span>(<span style=color:#ba2121>&#34;tcp&#34;</span>, <span style=color:#ba2121>&#34;127.0.0.1:1080&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green>panic</span>(err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>for</span> {
+</span></span><span style=display:flex><span>		client, err <span style=color:#666>:=</span> server.<span style=color:#00f>Accept</span>()
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>			log.<span style=color:#00f>Printf</span>(<span style=color:#ba2121>&#34;Accept failed %v&#34;</span>, err)
+</span></span><span style=display:flex><span>			<span style=color:green;font-weight:700>continue</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>go</span> <span style=color:#00f>process</span>(client)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>process</span>(conn net.Conn) {
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>defer</span> conn.<span style=color:#00f>Close</span>()
+</span></span><span style=display:flex><span>	reader <span style=color:#666>:=</span> bufio.<span style=color:#00f>NewReader</span>(conn)
+</span></span><span style=display:flex><span>	err <span style=color:#666>:=</span> <span style=color:#00f>auth</span>(reader, conn)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		log.<span style=color:#00f>Printf</span>(<span style=color:#ba2121>&#34;client %v auth failed:%v&#34;</span>, conn.<span style=color:#00f>RemoteAddr</span>(), err)
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	err = <span style=color:#00f>connect</span>(reader, conn)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		log.<span style=color:#00f>Printf</span>(<span style=color:#ba2121>&#34;client %v auth failed:%v&#34;</span>, conn.<span style=color:#00f>RemoteAddr</span>(), err)
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>auth</span>(reader <span style=color:#666>*</span>bufio.Reader, conn net.Conn) (err <span style=color:#b00040>error</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// +----+----------+----------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// |VER | NMETHODS | METHODS  |
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// +----+----------+----------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// | 1  |    1     | 1 to 255 |
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// +----+----------+----------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// VER: 协议版本，socks5为0x05
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// NMETHODS: 支持认证的方法数量
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// METHODS: 对应NMETHODS，NMETHODS的值为多少，METHODS就有多少个字节。RFC预定义了一些值的含义，内容如下:
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// X’00’ NO AUTHENTICATION REQUIRED
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// X’02’ USERNAME/PASSWORD
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>
+</span></span><span style=display:flex><span>	ver, err <span style=color:#666>:=</span> reader.<span style=color:#00f>ReadByte</span>()
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;read ver failed:%w&#34;</span>, err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> ver <span style=color:#666>!=</span> socks5Ver {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;not supported ver:%v&#34;</span>, ver)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	methodSize, err <span style=color:#666>:=</span> reader.<span style=color:#00f>ReadByte</span>()
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;read methodSize failed:%w&#34;</span>, err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	method <span style=color:#666>:=</span> <span style=color:green>make</span>([]<span style=color:#b00040>byte</span>, methodSize)
+</span></span><span style=display:flex><span>	_, err = io.<span style=color:#00f>ReadFull</span>(reader, method)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;read method failed:%w&#34;</span>, err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// +----+--------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// |VER | METHOD |
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// +----+--------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// | 1  |   1    |
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// +----+--------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	_, err = conn.<span style=color:#00f>Write</span>([]<span style=color:#b00040>byte</span>{socks5Ver, <span style=color:#666>0x00</span>})
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;write failed:%w&#34;</span>, err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>return</span> <span style=color:green;font-weight:700>nil</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:green;font-weight:700>func</span> <span style=color:#00f>connect</span>(reader <span style=color:#666>*</span>bufio.Reader, conn net.Conn) (err <span style=color:#b00040>error</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// +----+-----+-------+------+----------+----------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// |VER | CMD |  RSV  | ATYP | DST.ADDR | DST.PORT |
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// +----+-----+-------+------+----------+----------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// | 1  |  1  | X&#39;00&#39; |  1   | Variable |    2     |
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// +----+-----+-------+------+----------+----------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// VER 版本号，socks5的值为0x05
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// CMD 0x01表示CONNECT请求
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// RSV 保留字段，值为0x00
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// ATYP 目标地址类型，DST.ADDR的数据对应这个字段的类型。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>//   0x01表示IPv4地址，DST.ADDR为4个字节
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>//   0x03表示域名，DST.ADDR是一个可变长度的域名
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// DST.ADDR 一个可变长度的值
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// DST.PORT 目标端口，固定2个字节
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>
+</span></span><span style=display:flex><span>	buf <span style=color:#666>:=</span> <span style=color:green>make</span>([]<span style=color:#b00040>byte</span>, <span style=color:#666>4</span>)
+</span></span><span style=display:flex><span>	_, err = io.<span style=color:#00f>ReadFull</span>(reader, buf)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;read header failed:%w&#34;</span>, err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	ver, cmd, atyp <span style=color:#666>:=</span> buf[<span style=color:#666>0</span>], buf[<span style=color:#666>1</span>], buf[<span style=color:#666>3</span>]
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> ver <span style=color:#666>!=</span> socks5Ver {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;not supported ver:%v&#34;</span>, ver)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> cmd <span style=color:#666>!=</span> cmdBind {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;not supported cmd:%v&#34;</span>, cmd)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	addr <span style=color:#666>:=</span> <span style=color:#ba2121>&#34;&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>switch</span> atyp {
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>case</span> atypeIPV4:
+</span></span><span style=display:flex><span>		_, err = io.<span style=color:#00f>ReadFull</span>(reader, buf)
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>			<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;read atyp failed:%w&#34;</span>, err)
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		addr = fmt.<span style=color:#00f>Sprintf</span>(<span style=color:#ba2121>&#34;%d.%d.%d.%d&#34;</span>, buf[<span style=color:#666>0</span>], buf[<span style=color:#666>1</span>], buf[<span style=color:#666>2</span>], buf[<span style=color:#666>3</span>])
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>case</span> atypeHOST:
+</span></span><span style=display:flex><span>		hostSize, err <span style=color:#666>:=</span> reader.<span style=color:#00f>ReadByte</span>()
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>			<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;read hostSize failed:%w&#34;</span>, err)
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		host <span style=color:#666>:=</span> <span style=color:green>make</span>([]<span style=color:#b00040>byte</span>, hostSize)
+</span></span><span style=display:flex><span>		_, err = io.<span style=color:#00f>ReadFull</span>(reader, host)
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>			<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;read host failed:%w&#34;</span>, err)
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		addr = <span style=color:green>string</span>(host)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>case</span> atypeIPV6:
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> errors.<span style=color:#00f>New</span>(<span style=color:#ba2121>&#34;IPv6: no supported yet&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>default</span>:
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> errors.<span style=color:#00f>New</span>(<span style=color:#ba2121>&#34;invalid atyp&#34;</span>)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	_, err = io.<span style=color:#00f>ReadFull</span>(reader, buf[:<span style=color:#666>2</span>])
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;read port failed:%w&#34;</span>, err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	port <span style=color:#666>:=</span> binary.BigEndian.<span style=color:#00f>Uint16</span>(buf[:<span style=color:#666>2</span>])
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	dest, err <span style=color:#666>:=</span> net.<span style=color:#00f>Dial</span>(<span style=color:#ba2121>&#34;tcp&#34;</span>, fmt.<span style=color:#00f>Sprintf</span>(<span style=color:#ba2121>&#34;%v:%v&#34;</span>, addr, port))
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;dial dst failed:%w&#34;</span>, err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>defer</span> dest.<span style=color:#00f>Close</span>()
+</span></span><span style=display:flex><span>	log.<span style=color:#00f>Println</span>(<span style=color:#ba2121>&#34;dial&#34;</span>, addr, port)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// +----+-----+-------+------+----------+----------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// |VER | REP |  RSV  | ATYP | BND.ADDR | BND.PORT |
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// +----+-----+-------+------+----------+----------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// | 1  |  1  | X&#39;00&#39; |  1   | Variable |    2     |
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// +----+-----+-------+------+----------+----------+
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// VER socks版本，这里为0x05
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// REP Relay field,内容取值如下 X’00’ succeeded
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// RSV 保留字段
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// ATYPE 地址类型
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// BND.ADDR 服务绑定的地址
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// BND.PORT 服务绑定的端口DST.PORT
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	_, err = conn.<span style=color:#00f>Write</span>([]<span style=color:#b00040>byte</span>{<span style=color:#666>0x05</span>, <span style=color:#666>0x00</span>, <span style=color:#666>0x00</span>, <span style=color:#666>0x01</span>, <span style=color:#666>0</span>, <span style=color:#666>0</span>, <span style=color:#666>0</span>, <span style=color:#666>0</span>, <span style=color:#666>0</span>, <span style=color:#666>0</span>})
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>if</span> err <span style=color:#666>!=</span> <span style=color:green;font-weight:700>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:green;font-weight:700>return</span> fmt.<span style=color:#00f>Errorf</span>(<span style=color:#ba2121>&#34;write failed: %w&#34;</span>, err)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 现在有一个问题，connect 函数会立刻返回，返回的时候连接就被关闭了。需要等待任意一个方向copy出错的时候，再返回 connect 函数。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#408080;font-style:italic>// 可以使用到标准库里面的一个 context 机制，用 context 连 with cancel 来创建一个context。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	ctx, cancel <span style=color:#666>:=</span> context.<span style=color:#00f>WithCancel</span>(context.<span style=color:#00f>Background</span>())
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>defer</span> <span style=color:#00f>cancel</span>()
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 然后在两个 goroutinue 里面 调用一次 cancel 即可。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:green;font-weight:700>go</span> <span style=color:green;font-weight:700>func</span>() {
+</span></span><span style=display:flex><span>		_, _ = io.<span style=color:#00f>Copy</span>(dest, reader)
+</span></span><span style=display:flex><span>		<span style=color:#00f>cancel</span>()
+</span></span><span style=display:flex><span>	}()
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>go</span> <span style=color:green;font-weight:700>func</span>() {
+</span></span><span style=display:flex><span>		_, _ = io.<span style=color:#00f>Copy</span>(conn, dest)
+</span></span><span style=display:flex><span>		<span style=color:#00f>cancel</span>()
+</span></span><span style=display:flex><span>	}()
+</span></span><span style=display:flex><span>	<span style=color:#408080;font-style:italic>// 在最后等待 ctx.Done() ， 只要 cancel 被调用， ctx.Done就会立刻返回。
+</span></span></span><span style=display:flex><span><span style=color:#408080;font-style:italic></span>	<span style=color:#666>&lt;-</span>ctx.<span style=color:#00f>Done</span>()
+</span></span><span style=display:flex><span>	<span style=color:green;font-weight:700>return</span> <span style=color:green;font-weight:700>nil</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>我们可以试着在浏览器里面再测试一下，在浏览器里面测试代理需要安装这个 switchomega 插件，然后里面新建一个情景模式，代理服务器选 socks 5，端口 1080 ，保存并启用。此时你应该还能够正常地访问网站，代理服务器这边会显示出浏览器版本的域名和端口。</p><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230803112504.png alt>
+<img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230803112533.png alt></p><h2 id=学习路线推荐>学习路线推荐
+<a class=anchor href=#%e5%ad%a6%e4%b9%a0%e8%b7%af%e7%ba%bf%e6%8e%a8%e8%8d%90>#</a></h2><p><img src=https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230803112616.png alt></p><div class=footnotes role=doc-endnotes><h3>References</h3><ol><li id=ref-link-1><a href=https://curlconverter.com/go/ target=_blank rel="nofollow noopener">https://curlconverter.com/go/</a>
+<a href=#ref-link-back-1 class=footnote-backref role=doc-backlink>↩︎</a></li><li id=ref-link-2><a href=https://oktools.net/json2go target=_blank rel="nofollow noopener">https://oktools.net/json2go</a>
+<a href=#ref-link-back-2 class=footnote-backref role=doc-backlink>↩︎</a></li></ol></div><br><h2>Related readings</h2><ul><li><a href="/posts/go-common-test/?utm_source=related">Go Common Test</a></li></ul><hr><div class=post-nav><a href="https://blogs.timerring.com/posts/stop-slop/?utm_source=nav">&lt;&lt; prev | Stop Slop...</a>
+<a onclick=goToRandomPost() style=cursor:pointer>Continue strolling</a></div><hr>If you want to follow my updates, or have a coffee chat with me, feel free to connect with me:<div class=support><a href=https://github.com/timerring class=book-btn target=_blank><i class="bi bi-github"></i>
+Follow @timerring
+</a><a href=https://x.com/timerringX class=book-btn target=_blank><i class="bi bi-twitter-x"></i>
+@timerringX
+</a><a href=https://www.zhihu.com/people/timerring class=book-btn target=_blank>知乎@timerring
+</a><a href=https://cdn.jsdelivr.net/gh/timerring/scratchpad2023/2024/2025-06-05-17-20-54.png class=book-btn target=_blank><i class="bi bi-wechat"></i>
+Official Account</a></div><div style=margin-bottom:8px></div><script>function goToRandomPost(){const e=["/posts/go-practical-examples/?utm_source=random","/posts/stop-slop/?utm_source=random","/posts/human-writing-chinese-writing-skill/?utm_source=random","/posts/how-to-subscribe-to-gemini-pro-outside-the-us/?utm_source=random","/posts/vim-cheatsheet/?utm_source=random","/posts/erc-8004-trustless-agents/?utm_source=random","/posts/fix-the-ghost-notification-of-github/?utm_source=random","/posts/disable-SIP-on-Macos/?utm_source=random","/posts/how-to-partially-clone/?utm_source=random","/posts/the-tips-of-macos-automator/?utm_source=random","/posts/mainland-network-circuits/?utm_source=random","/posts/cloudflare-warp/?utm_source=random","/posts/the-principle-of-cloudflare-saas-optimization/?utm_source=random","/posts/the-mitm-and-https-capturing/?utm_source=random","/posts/how-to-keep-your-mac-always-awake/?utm_source=random","/posts/the-way-to-get-cookie/?utm_source=random","/posts/how-to-choose-the-right-software-and-creative-license/?utm_source=random","/posts/0516-add-live-photo-effect-to-hugo/?utm_source=random","/posts/the-practice-of-resolving-domain/?utm_source=random","/posts/hidden-markov-models/?utm_source=random","/posts/markov-chains/?utm_source=random","/posts/markov-processes/?utm_source=random","/posts/0418-find-the-formula-rendering-issue-of-hugo/?utm_source=random","/posts/multi-platform-builds-docker/?utm_source=random","/posts/0404-The-invitation-only-mechanism-from-clubhouse-to-manus/?utm_source=random","/posts/how-to-use-git-submodule/?utm_source=random","/posts/live-streaming-infra-and-protocols/?utm_source=random","/posts/implement-danmaku-rendering-algorithm-from-scratch/?utm_source=random","/posts/is-there-an-rss-renaissance-in-the-ai-era/?utm_source=random","/posts/stock-prices/?utm_source=random","/posts/possion-processes/?utm_source=random","/posts/docker-with-gpu/?utm_source=random","/posts/stochastic-processes/?utm_source=random","/posts/some-useful-tools/?utm_source=random","/posts/a-shopping-experience-in-pangdonglai-supermarket/?utm_source=random","/posts/langchain-and-rag-best-practices/?utm_source=random","/posts/random-walks/?utm_source=random","/posts/sequences-of-random-variables/?utm_source=random","/posts/parameter-estimation/?utm_source=random","/posts/two-random-variables/?utm_source=random","/posts/further-understanding-of-proc/?utm_source=random","/posts/the-iftop/?utm_source=random","/posts/some-useful-commands-to-share/?utm_source=random","/posts/random-variables/?utm_source=random","/posts/repeated-trials/?utm_source=random","/posts/probability-and-its-axioms/?utm_source=random","/posts/reflections-on-trending-topics/?utm_source=random","/posts/cpu-can-only-see-the-threads/?utm_source=random","/posts/go-common-test/?utm_source=random","/posts/go-concurrency-and-parallelism/?utm_source=random","/posts/go-cheatsheet/?utm_source=random","/posts/video-technology-101/?utm_source=random","/posts/the-main-kind-of-message-queue/?utm_source=random","/posts/the-method-to-manage-traffic/?utm_source=random","/posts/the-different-kind-of-api-design/?utm_source=random","/posts/the-encode-and-decode-in-python/?utm_source=random","/posts/about-the-systemd/?utm_source=random","/posts/the-tips-about-dockerfile/?utm_source=random","/posts/docker-cheatsheet/?utm_source=random","/posts/docker-101/?utm_source=random","/posts/the-instance-class-static-magic-method-in-python/?utm_source=random","/posts/the-review-and-plan-for-bilive/?utm_source=random","/posts/the-overview-of-security/?utm_source=random","/posts/how-to-publish-your-code-as-a-pip-module/?utm_source=random","/posts/git-cheatsheet/?utm_source=random","/posts/some-good-things-to-share-about-the-packages/?utm_source=random","/posts/introduction-to-the-http-and-https-protocol/?utm_source=random","/posts/mail-service-and-protocol/?utm_source=random","/posts/how-to-add-commits-to-someone-elses-pull-request/?utm_source=random","/posts/how-to-merge-multiple-commit-to-the-one/?utm_source=random","/posts/understanding-clash-through-configuration/?utm_source=random","/posts/thinking-about-advertisement-from-an-open-source-perspective/?utm_source=random","/posts/a-brief-introduction-to-dns/?utm_source=random","/posts/real-computer-network/?utm_source=random","/posts/python-generator-iterator-and-decorator/?utm_source=random","/posts/python-underlying-mechanism/?utm_source=random","/posts/python-files-exceptions-and-modules/?utm_source=random","/posts/python-object-oriented-programming/?utm_source=random","/posts/python-cheatsheet/?utm_source=random","/posts/python-function-parameter/?utm_source=random","/posts/python-control-structure/?utm_source=random","/posts/python-composite-data-type/?utm_source=random","/posts/python-basic-data-type/?utm_source=random","/posts/python-basic-syntax-elements/?utm_source=random","/posts/deploy-github-pages-with-gpg-signing/?utm_source=random","/posts/gpg-101/?utm_source=random","/posts/housewarming-2024/?utm_source=random","/posts/python-d2l-linear-algebra/?utm_source=random","/posts/python-d2l-data-preprocessing/?utm_source=random","/posts/python-d2l-data-manipulation/?utm_source=random","/posts/my-must-haves-for-macos-memo/?utm_source=random","/posts/04-data-export/?utm_source=random","/posts/09-strategies-for-large-datasets/?utm_source=random","/posts/java-11-multithreading-and-locks/?utm_source=random","/posts/java-10-annotations-and-reflection/?utm_source=random","/posts/java-09-exception-handling/?utm_source=random","/posts/java-08-common-containers/?utm_source=random","/posts/java-07-classes-and-interfaces/?utm_source=random","/posts/java-06-functions/?utm_source=random","/posts/java-05-strings/?utm_source=random","/posts/java-04-arrays/?utm_source=random","/posts/java-03-loops/?utm_source=random","/posts/java-02-conditional-statements/?utm_source=random","/posts/java-01-variables-operators-expressions-input-output/?utm_source=random","/posts/density-plotting/?utm_source=random","/posts/univariate-plots-for-continuous-variables/?utm_source=random","/posts/scienceplots-basics-and-features/?utm_source=random","/posts/proplot-basics-and-features/?utm_source=random","/posts/seaborn-basics-and-features/?utm_source=random","/posts/foundations-of-scientific-figure-design-and-color/?utm_source=random","/posts/plotting-tools-and-key-features/?utm_source=random","/posts/12-numerical-descriptive-analysis/?utm_source=random","/posts/11-ggplot2-and-other-plots/?utm_source=random","/posts/10-plotting-with-base-r/?utm_source=random","/posts/08-handling-missing-values/?utm_source=random","/posts/07-merging-data-frames/?utm_source=random","/posts/06-using-dplyr/?utm_source=random","/posts/05-using-base-r/?utm_source=random","/posts/03-data-acquisition/?utm_source=random","/posts/organizing-code-with-design-patterns/?utm_source=random","/posts/02-data-structures-and-conversion/?utm_source=random","/posts/dividing-functionality-with-classes/?utm_source=random","/posts/writing-maintainable-code/?utm_source=random","/posts/01-introduction-to-r/?utm_source=random","/posts/project-structure/?utm_source=random","/posts/apache-thrift-rpc-and-matchmaking-service/?utm_source=random","/posts/latex-basic-concepts/?utm_source=random","/posts/ai-development-hardware-environment/?utm_source=random","/posts/ai-development-software-environment/?utm_source=random","/posts/nginx-basics-and-minimal-configuration/?utm_source=random","/posts/nginx-installation-and-deployment/?utm_source=random","/posts/pipes-environment-variables-and-common-commands/?utm_source=random","/posts/tmux-common-commands/?utm_source=random","/posts/shell-scripting-fundamentals/?utm_source=random","/posts/image-classification-and-foundational-vision-models/?utm_source=random","/posts/ssh-remote-access-and-file-transfer/?utm_source=random","/posts/web-apis-introduction/?utm_source=random","/posts/javascript-data-types/?utm_source=random","/posts/javascript-objects/?utm_source=random","/posts/javascript-functions/?utm_source=random","/posts/javascript-arrays/?utm_source=random","/posts/javascript-operators-and-control-flow/?utm_source=random","/posts/javascript-introduction/?utm_source=random","/posts/html-basics/?utm_source=random"],t=Math.floor(Math.random()*e.length);window.location.href=e[t]}</script></article><ins class=adsbygoogle style=display:block data-ad-format=fluid data-ad-layout-key=-c2+7a+0+1 data-ad-client=ca-pub-1347694832132708 data-ad-slot=5778132754></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({})</script><div class="book-tabs-content markdown-inner"><div id=tcomment></div><script src=https://giscus.app/client.js data-repo=timerring/blog data-repo-id=R_kgDONeZYZg data-category=Announcements data-category-id=DIC_kwDONeZYZs4ClRWs data-mapping=pathname data-strict=0 data-reactions-enabled=1 data-emit-metadata=0 data-input-position=bottom data-theme=preferred_color_scheme data-lang=en crossorigin=anonymous async></script></div><footer class=book-footer><div class="flex flex-wrap justify-between"></div><script>(function(){function t(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}function n(e){if(navigator.clipboard&&navigator.clipboard.writeText)return navigator.clipboard.writeText(e);const t=document.createElement("textarea");t.value=e,t.style.position="fixed",t.style.opacity="0",document.body.appendChild(t),t.select();try{if(!document.execCommand("copy"))throw new Error("Copy failed");return Promise.resolve()}catch(e){return Promise.reject(e)}finally{t.remove()}}const e=new Map;document.querySelectorAll(".markdown pre code").forEach(n=>{const o=n.closest("pre"),i=o.closest(".highlight"),s=i||o;e.has(s)||e.set(s,[]),e.get(s).push(n),n.addEventListener("click",function(){if(window.getSelection().toString())return;t(n),navigator.clipboard&&navigator.clipboard.writeText&&navigator.clipboard.writeText(n.textContent).catch(()=>{})})}),e.forEach((e,t)=>{const r=e[e.length-1];let o=t;t.tagName==="PRE"?(o=document.createElement("div"),o.className="code-copy-container",t.parentNode.insertBefore(o,t),o.appendChild(t)):o.classList.add("code-copy-container");const s=document.createElement("button");s.type="button",s.className="code-copy-button";const c='<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">',l={default:'<rect x="8" y="8" width="13" height="13" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/>',success:'<path d="m4 12 5 5L20 6"/>',failure:'<path d="M6 6 18 18M18 6 6 18"/>'};function i(e,t){s.innerHTML=c+l[e]+"</svg>",s.setAttribute("aria-label",t),s.setAttribute("title",t)}i("default","复制代码"),o.appendChild(s);let a;s.addEventListener("click",function(e){e.stopPropagation(),clearTimeout(a),n(r.textContent).then(()=>{i("success","已复制")}).catch(()=>{i("failure","复制失败")}).finally(()=>{a=setTimeout(()=>{i("default","复制代码")},2e3)})})})})()</script><div class=footer-info><p style=text-align:center>&copy; 2022 - present <a href=https://github.com/timerring>timerring</a></p></div></footer><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><h3>Table of Contents</h3><nav id=TableOfContents><ul><li><a href=#猜数字>猜数字</a></li><li><a href=#命令行排版的词典>命令行排版的词典</a><ul><li><a href=#生成-request-body>生成 request body</a></li><li><a href=#解析-response-body>解析 response body</a></li><li><a href=#打印结果>打印结果</a></li><li><a href=#结构完善>结构完善</a></li></ul></li><li><a href=#socks-5-代理>Socks 5 代理</a><ul><li><a href=#介绍>介绍</a></li><li><a href=#原理>原理</a></li><li><a href=#tcp-echo-server>TCP echo server</a></li><li><a href=#auth>auth</a></li><li><a href=#请求阶段>请求阶段</a></li><li><a href=#完整代码>完整代码</a></li></ul></li><li><a href=#学习路线推荐>学习路线推荐</a></li></ul></nav><style>.book-toc .book-toc-content a{color:var(--body-font-color)}</style><h3>Connects</h3><a href=https://github.com/timerring target=_blank><img src=https://trendshift.io/api/badge/developers/8761 alt="timerring | Trendshift" style=width:250px;height:55px width=250 height=55></a><br><br><style>.github-stats-card{display:flex;align-items:center;width:105%;gap:12px;font-size:14px;padding:10px 16px;border:1px solid #000;border-radius:8px;text-decoration:none;transition:all .2s ease-in-out}.github-stats-card:hover{transform:translateY(-2px)}.github-stats-card .icon{flex-shrink:0;font-size:14px;color:#06f}.github-stats-card .text-content{display:flex;flex-direction:column;text-align:left}.github-stats-card .title{font-size:12px;font-weight:500;color:#036;margin-bottom:2px}.github-stats-card .stats{font-size:12px;font-weight:600;color:#036;white-space:nowrap}</style><a href=https://github.com/timerring class=github-stats-card target=_blank rel="noopener noreferrer"><i class="bi bi-github" style=font-size:20px></i><div class=text-content><span class=title>Github: @timerring</span>
+<span class=stats>Followers 145 - Stars 3.4k<br>Commits 1.4k - PRs 260</span></div></a><br><style>.x-stats-card{display:flex;align-items:center;width:105%;gap:12px;font-size:14px;padding:10px 16px;border:1px solid #000;border-radius:8px;text-decoration:none;transition:all .2s ease-in-out}.x-stats-card:hover{transform:translateY(-2px)}.x-stats-card .icon{flex-shrink:0;font-size:14px;color:#06f}.x-stats-card .text-content{display:flex;flex-direction:column;text-align:left}.x-stats-card .title{font-size:12px;font-weight:500;color:#036;margin-bottom:2px}.x-stats-card .stats{font-size:12px;font-weight:600;color:#036;white-space:nowrap}</style><a href=https://x.com/timerringX class=x-stats-card target=_blank rel="noopener noreferrer"><i class="bi bi-twitter-x" style=font-size:20px></i><div class=text-content><span class=title>X: @timerringX</span>
+<span class=stats>Followers 7 - Tweets 14</span></div></a><br><style>.linkedin-stats-card{display:flex;align-items:center;width:105%;gap:12px;font-size:14px;padding:10px 16px;border:1px solid #000;border-radius:8px;text-decoration:none;transition:all .2s ease-in-out}.linkedin-stats-card:hover{transform:translateY(-2px)}.linkedin-stats-card .icon{flex-shrink:0;font-size:14px;color:#0966c2}.linkedin-stats-card .text-content{display:flex;flex-direction:column;text-align:left}.linkedin-stats-card .title{font-size:12px;font-weight:500;color:#036;margin-bottom:2px}.linkedin-stats-card .stats{font-size:12px;font-weight:600;color:#036;white-space:nowrap}</style><a href=https://www.linkedin.com/in/john-howe-zh/ class=linkedin-stats-card target=_blank rel="noopener noreferrer"><div class=icon><i class="bi bi-linkedin" style=font-size:20px></i></div><div class=text-content><span class=title>linkedin: @john-howe-zh</span>
+<span class=stats>Welcome to connect with me</span></div></a><br><style>.zhihu-stats-card{display:flex;align-items:center;width:105%;gap:12px;font-size:14px;padding:10px 16px;border:1px solid #000;border-radius:8px;text-decoration:none;transition:all .2s ease-in-out}.zhihu-stats-card:hover{transform:translateY(-2px)}.zhihu-stats-card .icon{flex-shrink:0;font-size:14px;color:#06f}.zhihu-stats-card .text-content{display:flex;flex-direction:column;text-align:left}.zhihu-stats-card .title{font-size:12px;font-weight:500;color:#036;margin-bottom:2px}.zhihu-stats-card .stats{font-size:12px;font-weight:600;color:#036;white-space:nowrap}</style><a href=https://www.zhihu.com/people/timerring class=zhihu-stats-card target=_blank rel="noopener noreferrer"><div class=icon>知乎</div><div class=text-content><span class=title>Zhihu(中文博客): @timerring</span>
+<span class=stats>Followers 488 - Voteups 1.1k<br>Articles 259 - Answers 192</span></div></a><br><style>.wechatoa-stats-card{display:flex;align-items:center;width:105%;gap:12px;font-size:14px;padding:10px 16px;border:1px solid #000;border-radius:8px;text-decoration:none;transition:all .2s ease-in-out}.wechatoa-stats-card:hover{transform:translateY(-2px)}.wechatoa-stats-card .icon{flex-shrink:0;font-size:14px;color:#06f}.wechatoa-stats-card .text-content{display:flex;flex-direction:column;text-align:left}.wechatoa-stats-card .title{font-size:12px;font-weight:500;color:#036;margin-bottom:2px}.wechatoa-stats-card .stats{font-size:12px;font-weight:600;color:#036;white-space:nowrap}</style><a href=https://cdn.jsdelivr.net/gh/timerring/scratchpad2023/2024/2025-06-13-23-14-18.png class=wechatoa-stats-card target=_blank rel="noopener noreferrer"><div class=icon><i class="bi bi-wechat" style=font-size:20px></i></div><div class=text-content><span class=title>Wechat Account @AIShareLab</span>
+<span class=stats>Followers 1k<br>Just as a temporary chat.</span></div></a><br><style>.csdn-stats-card{display:flex;align-items:center;width:105%;gap:12px;font-size:14px;padding:10px 16px;border:1px solid #000;border-radius:8px;text-decoration:none;transition:all .2s ease-in-out}.csdn-stats-card:hover{transform:translateY(-2px)}.csdn-stats-card .icon{flex-shrink:0;font-size:8px;color:#fb5531}.csdn-stats-card .text-content{display:flex;flex-direction:column;text-align:left}.csdn-stats-card .title{font-size:12px;font-weight:500;color:#036;margin-bottom:2px}.csdn-stats-card .stats{font-size:12px;font-weight:600;color:#036;white-space:nowrap}</style><a href=https://blog.csdn.net/m0_52316372 class=csdn-stats-card target=_blank rel="noopener noreferrer"><div class=icon>CSDN</div><div class=text-content><span class=title>CSDN: @timerring</span>
+<span class=stats>Followers 182k - Voteups 10k<br>Articles 556 - Collects 39k</span></div></a><ins class=adsbygoogle style=display:block data-ad-client=ca-pub-1347694832132708 data-ad-slot=1676758726 data-ad-format=auto data-full-width-responsive=true></ins><script>(adsbygoogle=window.adsbygoogle||[]).push({})</script></div></aside></main></body></html>
