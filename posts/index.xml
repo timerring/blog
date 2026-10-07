@@ -81,7 +81,263 @@ A tensor with two axes corresponds to a mathematical &lt;em>matrix&lt;/em>.&lt;/
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#408080;font-style:italic"># IMPORT DATA&lt;/span>
 &lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#00f">load&lt;/span>(&lt;span style="color:#ba2121">&amp;#34;patients.rdata&amp;#34;&lt;/span>)
-&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>the rdata format file takes up less space and loads quickly with R. Therefore, it is recommended that users ** save data in rdata format ** after importing and organizing data in other formats. To import data in this format, simply call the &lt;code>load( )&lt;/code> function.&lt;/p></description></item><item><title>Strategies for Processing Large Datasets</title><link>https://blogs.timerring.com/posts/09-strategies-for-large-datasets/</link><pubDate>Sun, 25 Feb 2024 19:47:08 +0800</pubDate><guid>https://blogs.timerring.com/posts/09-strategies-for-large-datasets/</guid><description>&lt;p>In real-world problems, data analysts may face datasets with hundreds of thousands of records and hundreds of variables. Processing such large datasets requires a relatively large amount of computer memory, so &lt;strong>use a 64-bit operating system and a device with relatively large memory whenever possible&lt;/strong>. Otherwise, data analysis may take too long or may even be impossible to carry out. In addition, &lt;strong>effective strategies for processing data&lt;/strong> can greatly improve analysis efficiency.&lt;/p></description></item><item><title>Density Plotting</title><link>https://blogs.timerring.com/posts/density-plotting/</link><pubDate>Thu, 31 Aug 2023 22:19:04 +0800</pubDate><guid>https://blogs.timerring.com/posts/density-plotting/</guid><description>&lt;p>Seaborn&amp;rsquo;s &lt;code>kdeplot() &lt;/code> function is one way to draw density plots in Python. At present, Matplotlib does not have a specific function for drawing density plots, and plotting is generally performed in combination with the result of the &lt;code>gaussian_kde()&lt;/code> function in the Scipy library.&lt;/p>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>the rdata format file takes up less space and loads quickly with R. Therefore, it is recommended that users ** save data in rdata format ** after importing and organizing data in other formats. To import data in this format, simply call the &lt;code>load( )&lt;/code> function.&lt;/p></description></item><item><title>Strategies for Processing Large Datasets</title><link>https://blogs.timerring.com/posts/09-strategies-for-large-datasets/</link><pubDate>Sun, 25 Feb 2024 19:47:08 +0800</pubDate><guid>https://blogs.timerring.com/posts/09-strategies-for-large-datasets/</guid><description>&lt;p>In real-world problems, data analysts may face datasets with hundreds of thousands of records and hundreds of variables. Processing such large datasets requires a relatively large amount of computer memory, so &lt;strong>use a 64-bit operating system and a device with relatively large memory whenever possible&lt;/strong>. Otherwise, data analysis may take too long or may even be impossible to carry out. In addition, &lt;strong>effective strategies for processing data&lt;/strong> can greatly improve analysis efficiency.&lt;/p></description></item><item><title>11 Multithreading and Locks</title><link>https://blogs.timerring.com/posts/java-11-multithreading-and-locks/</link><pubDate>Sat, 13 Jan 2024 19:57:43 +0800</pubDate><guid>https://blogs.timerring.com/posts/java-11-multithreading-and-locks/</guid><description>&lt;h3 id="111-multithreading">
+ 11.1 Multithreading
+ &lt;a class="anchor" href="#111-multithreading">#&lt;/a>
+&lt;/h3>
+&lt;h4 id="1111-implementing-multithreading">
+ 11.1.1 Implementing Multithreading
+ &lt;a class="anchor" href="#1111-implementing-multithreading">#&lt;/a>
+&lt;/h4>
+&lt;p>Approach 1: Extend the Thread class.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#008000;font-weight:bold">class&lt;/span> &lt;span style="color:#00f;font-weight:bold">Worker&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">extends&lt;/span>&lt;span style="color:#bbb"> &lt;/span>Thread&lt;span style="color:#bbb"> &lt;/span>{&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#a2f">@Override&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">public&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#b00040">void&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#00f">run&lt;/span>()&lt;span style="color:#bbb"> &lt;/span>{&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">for&lt;/span>&lt;span style="color:#bbb"> &lt;/span>(&lt;span style="color:#b00040">int&lt;/span>&lt;span style="color:#bbb"> &lt;/span>i&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>0;&lt;span style="color:#bbb"> &lt;/span>i&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">&amp;lt;&lt;/span>&lt;span style="color:#bbb"> &lt;/span>10;&lt;span style="color:#bbb"> &lt;/span>i&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">++&lt;/span>&lt;span style="color:#bbb"> &lt;/span>)&lt;span style="color:#bbb"> &lt;/span>{&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>System.&lt;span style="color:#7d9029">out&lt;/span>.&lt;span style="color:#7d9029">println&lt;/span>(&lt;span style="color:#ba2121">&amp;#34;Hello! &amp;#34;&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">+&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">this&lt;/span>.&lt;span style="color:#7d9029">getName&lt;/span>());&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">try&lt;/span>&lt;span style="color:#bbb"> &lt;/span>{&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>Thread.&lt;span style="color:#7d9029">sleep&lt;/span>(1000);&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>}&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">catch&lt;/span>&lt;span style="color:#bbb"> &lt;/span>(InterruptedException&lt;span style="color:#bbb"> &lt;/span>e)&lt;span style="color:#bbb"> &lt;/span>{&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">throw&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">new&lt;/span>&lt;span style="color:#bbb"> &lt;/span>RuntimeException(e);&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>}&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>}&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>}&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>}&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#008000;font-weight:bold">public&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">class&lt;/span> &lt;span style="color:#00f;font-weight:bold">Main&lt;/span>&lt;span style="color:#bbb"> &lt;/span>{&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">public&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">static&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#b00040">void&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#00f">main&lt;/span>(String&lt;span style="color:#666">[]&lt;/span>&lt;span style="color:#bbb"> &lt;/span>args)&lt;span style="color:#bbb"> &lt;/span>{&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>Worker&lt;span style="color:#bbb"> &lt;/span>worker1&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">new&lt;/span>&lt;span style="color:#bbb"> &lt;/span>Worker();&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>Worker&lt;span style="color:#bbb"> &lt;/span>worker2&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">new&lt;/span>&lt;span style="color:#bbb"> &lt;/span>Worker();&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>worker1.&lt;span style="color:#7d9029">setName&lt;/span>(&lt;span style="color:#ba2121">&amp;#34;thread-1&amp;#34;&lt;/span>);&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>worker2.&lt;span style="color:#7d9029">setName&lt;/span>(&lt;span style="color:#ba2121">&amp;#34;thread-2&amp;#34;&lt;/span>);&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>worker1.&lt;span style="color:#7d9029">start&lt;/span>();&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>worker2.&lt;span style="color:#7d9029">start&lt;/span>();&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>}&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>}&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>10 Annotations and Reflection</title><link>https://blogs.timerring.com/posts/java-10-annotations-and-reflection/</link><pubDate>Fri, 12 Jan 2024 21:32:06 +0800</pubDate><guid>https://blogs.timerring.com/posts/java-10-annotations-and-reflection/</guid><description>&lt;h3 id="101-annotations">
+ 10.1 Annotations
+ &lt;a class="anchor" href="#101-annotations">#&lt;/a>
+&lt;/h3>
+&lt;p>(1) Annotations, also called metadata, describe packages, methods, fields, constructors, local variables, and other program elements.&lt;br>
+(2) Annotations do not affect program logic, but can be processed at compile time or runtime.&lt;br>
+(3) In Java SE, annotations serve relatively simple purposes, such as marking obsolete features or suppressing warnings. In Java EE, they play a more important role, such as configuring aspects of an application in place of the verbose code and XML configuration left over from older Java EE versions.&lt;/p></description></item><item><title>09 Exception Handling</title><link>https://blogs.timerring.com/posts/java-09-exception-handling/</link><pubDate>Thu, 11 Jan 2024 11:37:58 +0800</pubDate><guid>https://blogs.timerring.com/posts/java-09-exception-handling/</guid><description>&lt;h4 id="1-differences-between-error-and-exception">
+ 1. Differences Between Error and Exception
+ &lt;a class="anchor" href="#1-differences-between-error-and-exception">#&lt;/a>
+&lt;/h4>
+&lt;p>An Error is a failure that a program cannot handle, such as OutOfMemoryError or ThreadDeath. When these occur, the Java Virtual Machine (JVM) generally terminates the thread. Such failures are fatal to the program and cannot be caught and handled.&lt;/p>
+&lt;p>An Exception is an exceptional condition that the program itself can handle. Exceptions fall into two categories: runtime and non-runtime exceptions. Programs should handle these exceptions whenever possible.&lt;/p></description></item><item><title>08 Common Containers</title><link>https://blogs.timerring.com/posts/java-08-common-containers/</link><pubDate>Wed, 10 Jan 2024 20:49:57 +0800</pubDate><guid>https://blogs.timerring.com/posts/java-08-common-containers/</guid><description>&lt;h4 id="81-list">
+ 8.1 List
+ &lt;a class="anchor" href="#81-list">#&lt;/a>
+&lt;/h4>
+&lt;p>Interface: &lt;code>java.util.List&amp;lt;&amp;gt;&lt;/code>.&lt;/p>
+&lt;p>Implementations:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>java.util.ArrayList&amp;lt;&amp;gt;&lt;/code>: resizable array&lt;/li>
+&lt;li>&lt;code>java.util.LinkedList&amp;lt;&amp;gt;&lt;/code>: doubly linked list&lt;/li>
+&lt;/ul>
+&lt;p>Methods:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>add()&lt;/code>: add an element at the end&lt;/li>
+&lt;li>&lt;code>clear()&lt;/code>: clear the list&lt;/li>
+&lt;li>&lt;code>size()&lt;/code>: return its length&lt;/li>
+&lt;li>&lt;code>isEmpty()&lt;/code>: check whether it is empty&lt;/li>
+&lt;li>&lt;code>get(i)&lt;/code>: get the &lt;code>i&lt;/code>th element&lt;/li>
+&lt;li>&lt;code>set(i, val)&lt;/code>: set the &lt;code>i&lt;/code>th element to &lt;code>val&lt;/code>&lt;/li>
+&lt;/ul>
+&lt;p>Loop syntax:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#408080;font-style:italic">// Standard&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#008000;font-weight:bold">for&lt;/span>(&lt;span style="color:#b00040">int&lt;/span>&lt;span style="color:#bbb"> &lt;/span>i&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>0;&lt;span style="color:#bbb"> &lt;/span>i&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">&amp;lt;&lt;/span>&lt;span style="color:#bbb"> &lt;/span>list.&lt;span style="color:#7d9029">size&lt;/span>();&lt;span style="color:#bbb"> &lt;/span>i&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">++&lt;/span>)&lt;span style="color:#bbb"> &lt;/span>{&lt;span style="color:#bbb"> 
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>System.&lt;span style="color:#7d9029">out&lt;/span>.&lt;span style="color:#7d9029">println&lt;/span>(list.&lt;span style="color:#7d9029">get&lt;/span>(i));&lt;span style="color:#bbb"> 
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>}&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#408080;font-style:italic">// Enhanced&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#008000;font-weight:bold">for&lt;/span>&lt;span style="color:#bbb"> &lt;/span>(Integer&lt;span style="color:#bbb"> &lt;/span>integer&lt;span style="color:#bbb"> &lt;/span>:&lt;span style="color:#bbb"> &lt;/span>list)&lt;span style="color:#bbb"> &lt;/span>{&lt;span style="color:#bbb"> 
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>System.&lt;span style="color:#7d9029">out&lt;/span>.&lt;span style="color:#7d9029">println&lt;/span>(integer);&lt;span style="color:#bbb"> 
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>}&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>07 Classes and Interfaces</title><link>https://blogs.timerring.com/posts/java-07-classes-and-interfaces/</link><pubDate>Tue, 09 Jan 2024 22:24:11 +0800</pubDate><guid>https://blogs.timerring.com/posts/java-07-classes-and-interfaces/</guid><description>&lt;h4 id="71-classes-and-objects">
+ 7.1 Classes and Objects
+ &lt;a class="anchor" href="#71-classes-and-objects">#&lt;/a>
+&lt;/h4>
+&lt;p>A class defines an entirely new data type containing a group of variables and functions; an object is an instance of that class.&lt;/p>
+&lt;blockquote>
+&lt;p>Defining &lt;code>Student&lt;/code> as a class represents the abstract concept of a “student.” Each student is then an object (instance) of the &lt;code>Student&lt;/code> class.&lt;/p>
+&lt;/blockquote></description></item><item><title>06 Functions</title><link>https://blogs.timerring.com/posts/java-06-functions/</link><pubDate>Mon, 08 Jan 2024 19:18:32 +0800</pubDate><guid>https://blogs.timerring.com/posts/java-06-functions/</guid><description>&lt;h2 id="function-basics">
+ Function Basics
+ &lt;a class="anchor" href="#function-basics">#&lt;/a>
+&lt;/h2>
+&lt;p>A typical function definition includes the following parts: modifiers, return type, function name, a list of zero or more parameters, and the function body.&lt;/p></description></item><item><title>05 Strings</title><link>https://blogs.timerring.com/posts/java-05-strings/</link><pubDate>Sun, 07 Jan 2024 21:53:46 +0800</pubDate><guid>https://blogs.timerring.com/posts/java-05-strings/</guid><description>&lt;h4 id="1-characters-and-integers--ascii-codes">
+ 1. Characters and Integers — ASCII Codes
+ &lt;a class="anchor" href="#1-characters-and-integers--ascii-codes">#&lt;/a>
+&lt;/h4>
+&lt;p>Each commonly used character corresponds to a number in &lt;code>-128 ~ 127&lt;/code>, and the two can be converted to each other. Note: currently, negative numbers have no corresponding characters.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#008000;font-weight:bold">import&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#00f;font-weight:bold">java.util.Arrays&lt;/span>;&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#008000;font-weight:bold">public&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">class&lt;/span> &lt;span style="color:#00f;font-weight:bold">Main&lt;/span>&lt;span style="color:#bbb"> &lt;/span>{&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">public&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">static&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#b00040">void&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#00f">main&lt;/span>(String&lt;span style="color:#666">[]&lt;/span>&lt;span style="color:#bbb"> &lt;/span>args)&lt;span style="color:#bbb"> &lt;/span>{&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#b00040">char&lt;/span>&lt;span style="color:#bbb"> &lt;/span>c&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#ba2121">&amp;#39;a&amp;#39;&lt;/span>;&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>System.&lt;span style="color:#7d9029">out&lt;/span>.&lt;span style="color:#7d9029">println&lt;/span>((&lt;span style="color:#b00040">int&lt;/span>)c);&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#b00040">int&lt;/span>&lt;span style="color:#bbb"> &lt;/span>a&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>66;&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>System.&lt;span style="color:#7d9029">out&lt;/span>.&lt;span style="color:#7d9029">println&lt;/span>((&lt;span style="color:#b00040">char&lt;/span>)a);&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>}&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>}&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Common ASCII values: &lt;code>'A'- 'Z'&lt;/code> are &lt;code>65 ~ 90&lt;/code>, &lt;code>'a' - 'z'&lt;/code> are &lt;code>97 - 122&lt;/code>, and &lt;code>0 - 9&lt;/code> are &lt;code>48 - 57&lt;/code>.&lt;/p>
+&lt;p>In Java, &lt;strong>character literals must be enclosed in single quotes&lt;/strong> and &lt;strong>string literals in double quotes&lt;/strong>. They are distinct. (Python and JS do not make this distinction.)&lt;/p>
+&lt;p>Characters can participate in arithmetic; they are treated as integers during operations:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#008000;font-weight:bold">import&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#00f;font-weight:bold">java.util.Arrays&lt;/span>;&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#008000;font-weight:bold">public&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">class&lt;/span> &lt;span style="color:#00f;font-weight:bold">Main&lt;/span>&lt;span style="color:#bbb"> &lt;/span>{&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">public&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">static&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#b00040">void&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#00f">main&lt;/span>(String&lt;span style="color:#666">[]&lt;/span>&lt;span style="color:#bbb"> &lt;/span>args)&lt;span style="color:#bbb"> &lt;/span>{&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#b00040">int&lt;/span>&lt;span style="color:#bbb"> &lt;/span>a&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#ba2121">&amp;#39;B&amp;#39;&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">-&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#ba2121">&amp;#39;A&amp;#39;&lt;/span>;&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#b00040">int&lt;/span>&lt;span style="color:#bbb"> &lt;/span>b&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#ba2121">&amp;#39;A&amp;#39;&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">*&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#ba2121">&amp;#39;B&amp;#39;&lt;/span>;&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#b00040">char&lt;/span>&lt;span style="color:#bbb"> &lt;/span>c&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#ba2121">&amp;#39;A&amp;#39;&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">+&lt;/span>&lt;span style="color:#bbb"> &lt;/span>2;&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>System.&lt;span style="color:#7d9029">out&lt;/span>.&lt;span style="color:#7d9029">println&lt;/span>(a);&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#408080;font-style:italic">// 1&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>System.&lt;span style="color:#7d9029">out&lt;/span>.&lt;span style="color:#7d9029">println&lt;/span>(b);&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>System.&lt;span style="color:#7d9029">out&lt;/span>.&lt;span style="color:#7d9029">println&lt;/span>(c);&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>}&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>}&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>04 Arrays</title><link>https://blogs.timerring.com/posts/java-04-arrays/</link><pubDate>Sat, 06 Jan 2024 20:36:19 +0800</pubDate><guid>https://blogs.timerring.com/posts/java-04-arrays/</guid><description>&lt;h4 id="one-dimensional-arrays">
+ One-Dimensional Arrays
+ &lt;a class="anchor" href="#one-dimensional-arrays">#&lt;/a>
+&lt;/h4>
+&lt;h5 id="defining-arrays">
+ Defining Arrays
+ &lt;a class="anchor" href="#defining-arrays">#&lt;/a>
+&lt;/h5>
+&lt;p>Array definitions are similar to variable definitions.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#008000;font-weight:bold">public&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">class&lt;/span> &lt;span style="color:#00f;font-weight:bold">Main&lt;/span>&lt;span style="color:#bbb"> &lt;/span>{&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">public&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">static&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#b00040">void&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#00f">main&lt;/span>(String&lt;span style="color:#666">[]&lt;/span>&lt;span style="color:#bbb"> &lt;/span>args)&lt;span style="color:#bbb"> &lt;/span>{&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">	 &lt;/span>&lt;span style="color:#b00040">int&lt;/span>&lt;span style="color:#666">[]&lt;/span>&lt;span style="color:#bbb"> &lt;/span>a;&lt;span style="color:#408080;font-style:italic">// Definition: define an array a&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">		&lt;/span>a&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">new&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#b00040">int&lt;/span>&lt;span style="color:#666">[&lt;/span>10&lt;span style="color:#666">]&lt;/span>;&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#408080;font-style:italic">// Initialization: initialize a as an array of length 10, meaning a contains 10 int variables; equivalent to =&amp;gt;int[] a = new int[10]// Define and initialize at the same time&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#b00040">int&lt;/span>&lt;span style="color:#666">[]&lt;/span>&lt;span style="color:#bbb"> &lt;/span>a&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">new&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#b00040">int&lt;/span>&lt;span style="color:#666">[&lt;/span>10&lt;span style="color:#666">]&lt;/span>,&lt;span style="color:#bbb"> &lt;/span>b;&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#b00040">float&lt;/span>&lt;span style="color:#666">[]&lt;/span>&lt;span style="color:#bbb"> &lt;/span>f&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">new&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#b00040">float&lt;/span>&lt;span style="color:#666">[&lt;/span>33&lt;span style="color:#666">]&lt;/span>;&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#b00040">double&lt;/span>&lt;span style="color:#666">[]&lt;/span>&lt;span style="color:#bbb"> &lt;/span>d&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">new&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#b00040">double&lt;/span>&lt;span style="color:#666">[&lt;/span>123&lt;span style="color:#666">]&lt;/span>;&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#b00040">char&lt;/span>&lt;span style="color:#666">[]&lt;/span>&lt;span style="color:#bbb"> &lt;/span>c&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">new&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#b00040">char&lt;/span>&lt;span style="color:#666">[&lt;/span>21&lt;span style="color:#666">]&lt;/span>;&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#408080;font-style:italic">// Arrays can be defined for more than just primitive data types; String arrays can also be defined&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>String&lt;span style="color:#666">[]&lt;/span>&lt;span style="color:#bbb"> &lt;/span>strs&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">new&lt;/span>&lt;span style="color:#bbb"> &lt;/span>String&lt;span style="color:#666">[&lt;/span>10&lt;span style="color:#666">]&lt;/span>;&lt;span style="color:#408080;font-style:italic">// This array contains 10 String variables&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>}&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>}&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>03 Loops</title><link>https://blogs.timerring.com/posts/java-03-loops/</link><pubDate>Fri, 05 Jan 2024 22:07:53 +0800</pubDate><guid>https://blogs.timerring.com/posts/java-03-loops/</guid><description>&lt;p>Use &lt;code>==&lt;/code> to compare primitive data types for equality; for other types (such as strings and functions), use equals to compare them.&lt;/p></description></item><item><title>02 Conditional Statements</title><link>https://blogs.timerring.com/posts/java-02-conditional-statements/</link><pubDate>Thu, 04 Jan 2024 19:42:08 +0800</pubDate><guid>https://blogs.timerring.com/posts/java-02-conditional-statements/</guid><description>&lt;h2 id="if-statements">
+ If Statements
+ &lt;a class="anchor" href="#if-statements">#&lt;/a>
+&lt;/h2>
+&lt;p>&lt;code>if-else&lt;/code> statements can also contain other &lt;code>if-else&lt;/code> statements.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#008000;font-weight:bold">import&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#00f;font-weight:bold">java.util.Scanner&lt;/span>;&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#008000;font-weight:bold">public&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">class&lt;/span> &lt;span style="color:#00f;font-weight:bold">Main&lt;/span>&lt;span style="color:#bbb"> &lt;/span>{&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">public&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">static&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#b00040">void&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#00f">main&lt;/span>(String&lt;span style="color:#666">[]&lt;/span>&lt;span style="color:#bbb"> &lt;/span>args)&lt;span style="color:#bbb"> &lt;/span>{&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>Scanner&lt;span style="color:#bbb"> &lt;/span>sc&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">new&lt;/span>&lt;span style="color:#bbb"> &lt;/span>Scanner(System.&lt;span style="color:#7d9029">in&lt;/span>);&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#b00040">int&lt;/span>&lt;span style="color:#bbb"> &lt;/span>a&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>sc.&lt;span style="color:#7d9029">nextInt&lt;/span>(),&lt;span style="color:#bbb"> &lt;/span>b&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>sc.&lt;span style="color:#7d9029">nextInt&lt;/span>(),&lt;span style="color:#bbb"> &lt;/span>c&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>sc.&lt;span style="color:#7d9029">nextInt&lt;/span>();&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">if&lt;/span>&lt;span style="color:#bbb"> &lt;/span>(a&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">&amp;gt;&lt;/span>&lt;span style="color:#bbb"> &lt;/span>b)&lt;span style="color:#bbb"> &lt;/span>{&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">if&lt;/span>&lt;span style="color:#bbb"> &lt;/span>(a&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">&amp;gt;&lt;/span>&lt;span style="color:#bbb"> &lt;/span>c)&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>System.&lt;span style="color:#7d9029">out&lt;/span>.&lt;span style="color:#7d9029">println&lt;/span>(a);&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">else&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>System.&lt;span style="color:#7d9029">out&lt;/span>.&lt;span style="color:#7d9029">println&lt;/span>(c);&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>}&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">else&lt;/span>&lt;span style="color:#bbb"> &lt;/span>{&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">if&lt;/span>&lt;span style="color:#bbb"> &lt;/span>(b&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">&amp;gt;&lt;/span>&lt;span style="color:#bbb"> &lt;/span>c)&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>System.&lt;span style="color:#7d9029">out&lt;/span>.&lt;span style="color:#7d9029">println&lt;/span>(b);&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">else&lt;/span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>System.&lt;span style="color:#7d9029">out&lt;/span>.&lt;span style="color:#7d9029">println&lt;/span>(c);&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>}&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>}&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>}&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Chained &lt;code>if-else&lt;/code> statements&lt;/p>
+&lt;p>Enter a score between 0 and 100.&lt;br>
+If it is at least 85, output A;&lt;br>
+if it is at least 70 but less than 85, output B;&lt;br>
+if it is at least 60 but less than 70, output C;&lt;br>
+if it is less than 60, output D.&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-java" data-lang="java">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#008000;font-weight:bold">import&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#00f;font-weight:bold">java.util.Scanner&lt;/span>;&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>&lt;span style="color:#008000;font-weight:bold">public&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">class&lt;/span> &lt;span style="color:#00f;font-weight:bold">Main&lt;/span>&lt;span style="color:#bbb"> &lt;/span>{&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">public&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">static&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#b00040">void&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#00f">main&lt;/span>(String&lt;span style="color:#666">[]&lt;/span>&lt;span style="color:#bbb"> &lt;/span>args)&lt;span style="color:#bbb"> &lt;/span>{&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>Scanner&lt;span style="color:#bbb"> &lt;/span>sc&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">new&lt;/span>&lt;span style="color:#bbb"> &lt;/span>Scanner(System.&lt;span style="color:#7d9029">in&lt;/span>);&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#b00040">int&lt;/span>&lt;span style="color:#bbb"> &lt;/span>s&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>sc.&lt;span style="color:#7d9029">nextInt&lt;/span>();&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">if&lt;/span>&lt;span style="color:#bbb"> &lt;/span>(s&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">&amp;gt;=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>85)&lt;span style="color:#bbb"> &lt;/span>{&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>System.&lt;span style="color:#7d9029">out&lt;/span>.&lt;span style="color:#7d9029">println&lt;/span>(&lt;span style="color:#ba2121">&amp;#34;A&amp;#34;&lt;/span>);&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>}&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">else&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">if&lt;/span>&lt;span style="color:#bbb"> &lt;/span>(s&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">&amp;gt;=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>70)&lt;span style="color:#bbb"> &lt;/span>{&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>System.&lt;span style="color:#7d9029">out&lt;/span>.&lt;span style="color:#7d9029">println&lt;/span>(&lt;span style="color:#ba2121">&amp;#34;B&amp;#34;&lt;/span>);&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>}&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">else&lt;/span>&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">if&lt;/span>&lt;span style="color:#bbb"> &lt;/span>(s&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#666">&amp;gt;=&lt;/span>&lt;span style="color:#bbb"> &lt;/span>60)&lt;span style="color:#bbb"> &lt;/span>{&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>System.&lt;span style="color:#7d9029">out&lt;/span>.&lt;span style="color:#7d9029">println&lt;/span>(&lt;span style="color:#ba2121">&amp;#34;C&amp;#34;&lt;/span>);&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>}&lt;span style="color:#bbb"> &lt;/span>&lt;span style="color:#008000;font-weight:bold">else&lt;/span>&lt;span style="color:#bbb"> &lt;/span>{&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>System.&lt;span style="color:#7d9029">out&lt;/span>.&lt;span style="color:#7d9029">println&lt;/span>(&lt;span style="color:#ba2121">&amp;#34;D&amp;#34;&lt;/span>);&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>}&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb"> &lt;/span>}&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#bbb">&lt;/span>}&lt;span style="color:#bbb">
+&lt;/span>&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item><item><title>01 Variables, Operators, Expressions, Input and Output</title><link>https://blogs.timerring.com/posts/java-01-variables-operators-expressions-input-output/</link><pubDate>Wed, 03 Jan 2024 21:14:37 +0800</pubDate><guid>https://blogs.timerring.com/posts/java-01-variables-operators-expressions-input-output/</guid><description>&lt;h2 id="syntax-basics">
+ Syntax Basics
+ &lt;a class="anchor" href="#syntax-basics">#&lt;/a>
+&lt;/h2>
+&lt;h3 id="variables">
+ Variables
+ &lt;a class="anchor" href="#variables">#&lt;/a>
+&lt;/h3>
+&lt;ol>
+&lt;li>In Java, outputting a variable without assigning it a value causes an error.&lt;/li>
+&lt;li>Built-in data types&lt;/li>
+&lt;/ol>
+&lt;table>
+ &lt;thead>
+ &lt;tr>
+ &lt;th style="text-align: left">Type&lt;/th>
+ &lt;th style="text-align: left">Bytes&lt;/th>
+ &lt;th style="text-align: left">Example&lt;/th>
+ &lt;th style="text-align: left">Additional notes&lt;/th>
+ &lt;/tr>
+ &lt;/thead>
+ &lt;tbody>
+ &lt;tr>
+ &lt;td style="text-align: left">byte&lt;/td>
+ &lt;td style="text-align: left">1&lt;/td>
+ &lt;td style="text-align: left">123&lt;/td>
+ &lt;td style="text-align: left">&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">short&lt;/td>
+ &lt;td style="text-align: left">2&lt;/td>
+ &lt;td style="text-align: left">12345&lt;/td>
+ &lt;td style="text-align: left">$2^{16}=65536$&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">int&lt;/td>
+ &lt;td style="text-align: left">4&lt;/td>
+ &lt;td style="text-align: left">123456789&lt;/td>
+ &lt;td style="text-align: left">$2^{32}=2147483648≈2.1*10^9$&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">long&lt;/td>
+ &lt;td style="text-align: left">8&lt;/td>
+ &lt;td style="text-align: left">1234567891011L&lt;/td>
+ &lt;td style="text-align: left">$2^{64}≈10^{18}$&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">float&lt;/td>
+ &lt;td style="text-align: left">4&lt;/td>
+ &lt;td style="text-align: left">1.2F&lt;/td>
+ &lt;td style="text-align: left">About 6 or 7 significant decimal digits; subsequent digits are imprecise approximations. To explicitly denote a float, append f or F.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">double&lt;/td>
+ &lt;td style="text-align: left">8&lt;/td>
+ &lt;td style="text-align: left">1.2, 1.2D&lt;/td>
+ &lt;td style="text-align: left">About 15 or 16 significant decimal digits; subsequent digits are imprecise approximations. To explicitly denote a double, append d or D.&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">boolean&lt;/td>
+ &lt;td style="text-align: left">1&lt;/td>
+ &lt;td style="text-align: left">true, false&lt;/td>
+ &lt;td style="text-align: left">&lt;/td>
+ &lt;/tr>
+ &lt;tr>
+ &lt;td style="text-align: left">char&lt;/td>
+ &lt;td style="text-align: left">2&lt;/td>
+ &lt;td style="text-align: left">‘A’&lt;/td>
+ &lt;td style="text-align: left">ASCII code correspondences: a-97 A-65 0-48&lt;/td>
+ &lt;/tr>
+ &lt;/tbody>
+&lt;/table></description></item><item><title>Density Plotting</title><link>https://blogs.timerring.com/posts/density-plotting/</link><pubDate>Thu, 31 Aug 2023 22:19:04 +0800</pubDate><guid>https://blogs.timerring.com/posts/density-plotting/</guid><description>&lt;p>Seaborn&amp;rsquo;s &lt;code>kdeplot() &lt;/code> function is one way to draw density plots in Python. At present, Matplotlib does not have a specific function for drawing density plots, and plotting is generally performed in combination with the result of the &lt;code>gaussian_kde()&lt;/code> function in the Scipy library.&lt;/p>
 &lt;p>The &lt;code>neighbors.KernelDensity ()&lt;/code> module in Python&amp;rsquo;s scikit-learn library provides six kernel functions—Gaussian, Tophat, Epanechnikov, Exponential, Linear, and Cosine—for kernel density estimation calculations. Python&amp;rsquo;s KDEpy library provides as many as nine kernel functions, including Gaussian, Exponential, Box, Tri, Epa, Biweight, Triweight, Tricube,
 Cosine.&lt;/p>
 &lt;p>A schematic diagram of the nine kernel functions in the KDEpy library is shown below:&lt;/p>
