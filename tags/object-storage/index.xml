@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>Object Storage on timerring</title><link>https://blogs.timerring.com/tags/object-storage/</link><description>Recent content in Object Storage on timerring</description><generator>Hugo</generator><language>en</language><lastBuildDate>Sun, 27 Aug 2023 17:20:40 +0800</lastBuildDate><atom:link href="https://blogs.timerring.com/tags/object-storage/index.xml" rel="self" type="application/rss+xml"/><item><title>TOS Object Storage: Fundamentals and Architecture</title><link>https://blogs.timerring.com/posts/tos-object-storage/</link><pubDate>Sun, 27 Aug 2023 17:20:40 +0800</pubDate><guid>https://blogs.timerring.com/posts/tos-object-storage/</guid><description>&lt;h2 id="抖音背后的存储">
+ 抖音背后的存储
+ &lt;a class="anchor" href="#%e6%8a%96%e9%9f%b3%e8%83%8c%e5%90%8e%e7%9a%84%e5%ad%98%e5%82%a8">#&lt;/a>
+&lt;/h2>
+&lt;ul>
+&lt;li>短视频生产/消费：片源系统-&amp;gt;审核系统-&amp;gt;推荐系统&lt;/li>
+&lt;li>公共系统：客户端、账号系统、评论系统&lt;/li>
+&lt;/ul>
+&lt;p>&lt;img src="https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230827172040.png" alt="" />&lt;/p>
+&lt;p>处理流程：&lt;/p>
+&lt;ol>
+&lt;li>手机上传视频到片源服务，片源服务将视频存储。&lt;/li>
+&lt;li>片源服务将视频发送抽帧服务和转码服务。&lt;/li>
+&lt;li>抽帧服务将视频抽帧采样并存储。&lt;/li>
+&lt;li>转码服务将原视频转换为不同清晰度、不同码率的视频并存储。&lt;/li>
+&lt;li>抽帧后的图片被送往审核服务。&lt;/li>
+&lt;li>机器或人工审核过后视频被传给推荐服务。&lt;/li>
+&lt;li>用户可以获取推荐列表或下载推荐视频/图片。&lt;/li>
+&lt;/ol>
+&lt;p>存储量分析：&lt;/p>
+&lt;p>&lt;img src="https://raw.githubusercontent.com/timerring/scratchpad2023/main/2023/20230827172100.png" alt="" />&lt;/p>
+&lt;p>因此存储要求：易用、海量、便宜。&lt;/p></description></item></channel></rss>
