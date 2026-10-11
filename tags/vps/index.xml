@@ -30,17 +30,17 @@
  Log In to the Server
  &lt;a class="anchor" href="#log-in-to-the-server">#&lt;/a>
 &lt;/h2>
-&lt;div class="highlight">&lt;pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>ssh user@hostname
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">ssh user@hostname
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;ul>
 &lt;li>&lt;code>user&lt;/code>: username&lt;/li>
 &lt;li>&lt;code>hostname&lt;/code>: IP address or domain name&lt;/li>
 &lt;/ul>
 &lt;p>The first time you log in, you will see this prompt:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>The authenticity of host &lt;span style="color:#ba2121">&amp;#39;123.57.47.211 (123.57.47.211)&amp;#39;&lt;/span> can&lt;span style="">&amp;#39;&lt;/span>t be established.
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>ECDSA key fingerprint is SHA256:iy237yysfCe013/l+
-&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>Are you sure you want to &lt;span style="color:#008000;font-weight:bold">continue&lt;/span> connecting &lt;span style="color:#666">(&lt;/span>yes/no/&lt;span style="color:#666">[&lt;/span>fingerprint&lt;span style="color:#666">])&lt;/span>?
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">The authenticity of host &lt;span class="s1">&amp;#39;123.57.47.211 (123.57.47.211)&amp;#39;&lt;/span> can&lt;span class="err">&amp;#39;&lt;/span>t be established.
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">ECDSA key fingerprint is SHA256:iy237yysfCe013/l+
+&lt;/span>&lt;/span>&lt;span class="line">&lt;span class="cl">Are you sure you want to &lt;span class="k">continue&lt;/span> connecting &lt;span class="o">(&lt;/span>yes/no/&lt;span class="o">[&lt;/span>fingerprint&lt;span class="o">])&lt;/span>?
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>Enter &lt;code>yes&lt;/code> and press Enter. This records the server&amp;rsquo;s information in &lt;code>~/.ssh/known_hosts&lt;/code>.&lt;/p>
 &lt;p>Then enter the password to log in to the remote server.
 The default login port is 22. To log in through a specific port:&lt;/p>
-&lt;div class="highlight">&lt;pre tabindex="0" style=";-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-shell" data-lang="shell">&lt;span style="display:flex;">&lt;span>ssh user@hostname -p &lt;span style="color:#666">22&lt;/span>
+&lt;div class="highlight">&lt;pre tabindex="0" class="chroma">&lt;code class="language-shell" data-lang="shell">&lt;span class="line">&lt;span class="cl">ssh user@hostname -p &lt;span class="m">22&lt;/span>
 &lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div></description></item></channel></rss>
