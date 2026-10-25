@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="finance-exercise-vs-profit" class="svg-canvas logic2image" width="100%" viewBox="0 0 1200 900" role="img" aria-labelledby="finance-exercise-vs-profit-title" aria-describedby="finance-exercise-vs-profit-desc" style="display:block;margin-inline:auto;min-width:480px;max-width:568px">
+  <title id="finance-exercise-vs-profit-title">A valuable right can still lose money</title>
+  <desc id="finance-exercise-vs-profit-desc">Gold call for one troy ounce. Strike 4,150 USD, premium 50. Net profit is max(price minus 4,150, zero) minus 50. At 4,180 profit is minus 20; break-even 4,200. Dashed guides mark zero profit, strike and break-even. Shaded areas are net loss or profit relative to zero, not probabilities. Costs excluded; shown range is not a cap.</desc>
+  <defs>
+    <style>
+#finance-exercise-vs-profit text { font-family: Georgia, serif; font-weight:400; font-size:35.915493px; fill:var(--rg-ink,#383a42); }
+#finance-exercise-vs-profit .rg-title { font-size:46.690141px; }
+#finance-exercise-vs-profit .rg-support { font-size:32.323944px; fill:var(--rg-support,#696c77); }
+#finance-exercise-vs-profit .rg-shape { fill:var(--rg-fill); stroke:var(--rg-stroke); stroke-width:2.625000; }
+#finance-exercise-vs-profit [data-rg-role="purple"] { --rg-fill:#faecf9; --rg-stroke:#a626a4; --rg-ink:#771977; --rg-support:#a626a4; }
+#finance-exercise-vs-profit [data-rg-role="teal"] { --rg-fill:#e1f3fa; --rg-stroke:#0184bc; --rg-ink:#015f88; --rg-support:#0184bc; }
+#finance-exercise-vs-profit [data-rg-role="coral"] { --rg-fill:#fbeee2; --rg-stroke:#ca6f1e; --rg-ink:#925113; --rg-support:#ca6f1e; }
+#finance-exercise-vs-profit [data-rg-role="pink"] { --rg-fill:#fce8ee; --rg-stroke:#b83260; --rg-ink:#852344; --rg-support:#b83260; }
+#finance-exercise-vs-profit [data-rg-role="gray"] { --rg-fill:#f0f0f1; --rg-stroke:#5c5e66; --rg-ink:#383a42; --rg-support:#5c5e66; }
+#finance-exercise-vs-profit [data-rg-role="blue"] { --rg-fill:#e6efff; --rg-stroke:#4078f2; --rg-ink:#1a52cf; --rg-support:#4078f2; }
+#finance-exercise-vs-profit [data-rg-role="green"] { --rg-fill:#e8f3e2; --rg-stroke:#50a14f; --rg-ink:#3a7639; --rg-support:#50a14f; }
+#finance-exercise-vs-profit [data-rg-role="amber"] { --rg-fill:#fbeed8; --rg-stroke:#c18401; --rg-ink:#8c6001; --rg-support:#c18401; }
+#finance-exercise-vs-profit [data-rg-role="red"] { --rg-fill:#fde8e6; --rg-stroke:#e45649; --rg-ink:#a83329; --rg-support:#e45649; }
+</style>
+    <filter id="finance-exercise-vs-profit-sketch" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="turbulence" baseFrequency="0.03" numOctaves="4" seed="2" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.5" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+    <marker id="finance-exercise-vs-profit-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+      <path d="M2 3L10 6L2 9Z" fill="context-stroke" />
+    </marker>
+  </defs>
+  <rect width="1200" height="900" fill="#ffffff" />
+  <text class="rg-title" data-rg-title="true" x="600.0" y="80" text-anchor="middle">A valuable right can still lose money</text>
+  <g data-rg-content="true">
+    
+  <text x="140" y="165" text-anchor="start">Net profit at expiration (USD)</text><text x="140" y="220" text-anchor="start" class="rg-support">1 troy oz · Strike 4,150 · Premium 50</text><path d="M620.0 536.6666666666667V670.0L780.0 536.6666666666667Z" fill="#fbeed8" data-rg-kind="data" /><path d="M780.0 536.6666666666667L1100.0 270.0V536.6666666666667Z" fill="#e1f3fa" data-rg-kind="data" /><path d="M140 536.6666666666667H1100" fill="none" stroke="#5c5e66" stroke-width="3" data-rg-kind="guide" data-rg-name="zero-profit" stroke-dasharray="8 8" /><path d="M620.0 250V690" fill="none" stroke="#5c5e66" stroke-width="3" data-rg-kind="guide" data-rg-name="strike" stroke-dasharray="8 8" /><path d="M780.0 250V690" fill="none" stroke="#a626a4" stroke-width="3" data-rg-kind="guide" data-rg-name="break-even" stroke-dasharray="8 8" /><path d="M140 690V250" fill="none" stroke="#5c5e66" stroke-width="3" data-rg-kind="guide" marker-end="url(#finance-exercise-vs-profit-arrow)" /><path d="M140 690H1120" fill="none" stroke="#5c5e66" stroke-width="3" data-rg-kind="guide" marker-end="url(#finance-exercise-vs-profit-arrow)" /><text x="115" y="682.0" text-anchor="end">-50</text><text x="115" y="548.6666666666667" text-anchor="end">0</text><text x="115" y="282.0" text-anchor="end">+100</text><polyline points="140.0,670.0 620.0,670.0 716.0,590.0 780.0,536.6666666666667 1100.0,270.0" fill="none" stroke="#383a42" stroke-width="4" data-rg-kind="data" data-rg-name="call-profit" /><circle cx="140.0" cy="670.0" r="8" fill="#f0f0f1" stroke="#5c5e66" stroke-width="3" data-rg-kind="data" data-price="4000" /><circle cx="716.0" cy="590.0" r="8" fill="#fbeed8" stroke="#c18401" stroke-width="3" data-rg-kind="data" data-price="4180" /><circle cx="780.0" cy="536.6666666666667" r="8" fill="#faecf9" stroke="#a626a4" stroke-width="3" data-rg-kind="data" data-price="4200" /><circle cx="1100.0" cy="270.0" r="8" fill="#e1f3fa" stroke="#0184bc" stroke-width="3" data-rg-kind="data" data-price="4300" /><g data-rg-role="amber"><text x="590.0" y="602.0" text-anchor="end" data-rg-name="middle-scenario">4,180 → −20</text></g><text x="140.0" y="735" text-anchor="middle">4,000</text><text x="620.0" y="735" text-anchor="middle">4,150</text><text x="780.0" y="735" text-anchor="middle">4,200</text><text x="1100.0" y="735" text-anchor="middle">4,300</text><text x="600.0" y="790" text-anchor="end" class="rg-support">Strike</text><g data-rg-role="purple"><text x="780.0" y="790" text-anchor="middle">Break-even</text></g><text x="1100" y="860" text-anchor="end" class="rg-support">Gold price at expiration (USD)</text></g>
+</svg>
