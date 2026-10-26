@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="finance-yield-is-obligation" class="svg-canvas logic2image" width="100%" viewBox="0 0 1200 780" role="img" aria-labelledby="finance-yield-is-obligation-title" aria-describedby="finance-yield-is-obligation-desc" style="display:block;margin-inline:auto;min-width:480px;max-width:568px">
+  <title id="finance-yield-is-obligation-title">Yield is payment for an obligation</title>
+  <desc id="finance-yield-is-obligation-desc">Economic analogies, not identical legal contracts: Buy Low resembles a cash-secured put, accepting a conditional BTC purchase at target; Sell High resembles a covered call, accepting a conditional sale while retaining BTC downside risk.</desc>
+  <defs>
+    <style>
+#finance-yield-is-obligation text { font-family: Georgia, serif; font-weight:400; font-size:35.915493px; fill:var(--rg-ink,#383a42); }
+#finance-yield-is-obligation .rg-title { font-size:46.690141px; }
+#finance-yield-is-obligation .rg-support { font-size:32.323944px; fill:var(--rg-support,#696c77); }
+#finance-yield-is-obligation .rg-shape { fill:var(--rg-fill); stroke:var(--rg-stroke); stroke-width:2.625000; }
+#finance-yield-is-obligation [data-rg-role="purple"] { --rg-fill:#faecf9; --rg-stroke:#a626a4; --rg-ink:#771977; --rg-support:#a626a4; }
+#finance-yield-is-obligation [data-rg-role="teal"] { --rg-fill:#e1f3fa; --rg-stroke:#0184bc; --rg-ink:#015f88; --rg-support:#0184bc; }
+#finance-yield-is-obligation [data-rg-role="coral"] { --rg-fill:#fbeee2; --rg-stroke:#ca6f1e; --rg-ink:#925113; --rg-support:#ca6f1e; }
+#finance-yield-is-obligation [data-rg-role="pink"] { --rg-fill:#fce8ee; --rg-stroke:#b83260; --rg-ink:#852344; --rg-support:#b83260; }
+#finance-yield-is-obligation [data-rg-role="gray"] { --rg-fill:#f0f0f1; --rg-stroke:#5c5e66; --rg-ink:#383a42; --rg-support:#5c5e66; }
+#finance-yield-is-obligation [data-rg-role="blue"] { --rg-fill:#e6efff; --rg-stroke:#4078f2; --rg-ink:#1a52cf; --rg-support:#4078f2; }
+#finance-yield-is-obligation [data-rg-role="green"] { --rg-fill:#e8f3e2; --rg-stroke:#50a14f; --rg-ink:#3a7639; --rg-support:#50a14f; }
+#finance-yield-is-obligation [data-rg-role="amber"] { --rg-fill:#fbeed8; --rg-stroke:#c18401; --rg-ink:#8c6001; --rg-support:#c18401; }
+#finance-yield-is-obligation [data-rg-role="red"] { --rg-fill:#fde8e6; --rg-stroke:#e45649; --rg-ink:#a83329; --rg-support:#e45649; }
+</style>
+    <filter id="finance-yield-is-obligation-sketch" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="turbulence" baseFrequency="0.03" numOctaves="4" seed="2" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.5" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+    <marker id="finance-yield-is-obligation-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+      <path d="M2 3L10 6L2 9Z" fill="context-stroke" />
+    </marker>
+  </defs>
+  <rect width="1200" height="780" fill="#ffffff" />
+  <text class="rg-title" data-rg-title="true" x="600.0" y="80" text-anchor="middle">Yield is payment for an obligation</text>
+  <g data-rg-content="true">
+    
+  <g data-rg-role="teal"><rect x="60" y="150" width="1080" height="250" rx="8" data-rg-kind="shape" class="rg-shape" filter="url(#finance-yield-is-obligation-sketch)" /><text x="100" y="210" text-anchor="start">Buy Low</text><text x="100" y="265" text-anchor="start" class="rg-support">Deposit USDT</text><text x="495" y="210" text-anchor="middle">≈</text><text x="600" y="210" text-anchor="start">Cash-secured put</text><text x="600" y="265" text-anchor="start" class="rg-support">Accept a conditional BTC purchase</text><text x="600" y="315" text-anchor="start" class="rg-support">at the target price</text><text x="100" y="370" text-anchor="start">Risk: buying above market at maturity</text></g><g data-rg-role="purple"><rect x="60" y="440" width="1080" height="250" rx="8" data-rg-kind="shape" class="rg-shape" filter="url(#finance-yield-is-obligation-sketch)" /><text x="100" y="500" text-anchor="start">Sell High</text><text x="100" y="555" text-anchor="start" class="rg-support">Hold BTC</text><text x="495" y="500" text-anchor="middle">≈</text><text x="600" y="500" text-anchor="start">Covered call</text><text x="600" y="555" text-anchor="start" class="rg-support">Accept a conditional BTC sale</text><text x="600" y="605" text-anchor="start" class="rg-support">at the target price</text><text x="100" y="660" text-anchor="start">Capped upside; BTC downside remains</text></g><text x="600" y="750" text-anchor="middle" class="rg-support">Economic analogy, not an identical legal contract</text></g>
+</svg>

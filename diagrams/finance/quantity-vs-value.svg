@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="finance-quantity-vs-value" class="svg-canvas logic2image" width="100%" viewBox="0 0 1200 1000" role="img" aria-labelledby="finance-quantity-vs-value-title" aria-describedby="finance-quantity-vs-value-desc" style="display:block;margin-inline:auto;min-width:480px;max-width:568px">
+  <title id="finance-quantity-vs-value-title">More BTC. Less value.</title>
+  <desc id="finance-quantity-vs-value-desc">80,000 USDT plus 64 yield converts at 79,000 into 1.013468354 BTC. At 76,000 it is worth 77,023.59 USDT, a 2,976.41 loss. Two bars share a zero baseline and scale; geometry uses the unrounded balance. Initial 80,000 price allowed 1 BTC.</desc>
+  <defs>
+    <style>
+#finance-quantity-vs-value text { font-family: Georgia, serif; font-weight:400; font-size:35.915493px; fill:var(--rg-ink,#383a42); }
+#finance-quantity-vs-value .rg-title { font-size:46.690141px; }
+#finance-quantity-vs-value .rg-support { font-size:32.323944px; fill:var(--rg-support,#696c77); }
+#finance-quantity-vs-value .rg-shape { fill:var(--rg-fill); stroke:var(--rg-stroke); stroke-width:2.625000; }
+#finance-quantity-vs-value [data-rg-role="purple"] { --rg-fill:#faecf9; --rg-stroke:#a626a4; --rg-ink:#771977; --rg-support:#a626a4; }
+#finance-quantity-vs-value [data-rg-role="teal"] { --rg-fill:#e1f3fa; --rg-stroke:#0184bc; --rg-ink:#015f88; --rg-support:#0184bc; }
+#finance-quantity-vs-value [data-rg-role="coral"] { --rg-fill:#fbeee2; --rg-stroke:#ca6f1e; --rg-ink:#925113; --rg-support:#ca6f1e; }
+#finance-quantity-vs-value [data-rg-role="pink"] { --rg-fill:#fce8ee; --rg-stroke:#b83260; --rg-ink:#852344; --rg-support:#b83260; }
+#finance-quantity-vs-value [data-rg-role="gray"] { --rg-fill:#f0f0f1; --rg-stroke:#5c5e66; --rg-ink:#383a42; --rg-support:#5c5e66; }
+#finance-quantity-vs-value [data-rg-role="blue"] { --rg-fill:#e6efff; --rg-stroke:#4078f2; --rg-ink:#1a52cf; --rg-support:#4078f2; }
+#finance-quantity-vs-value [data-rg-role="green"] { --rg-fill:#e8f3e2; --rg-stroke:#50a14f; --rg-ink:#3a7639; --rg-support:#50a14f; }
+#finance-quantity-vs-value [data-rg-role="amber"] { --rg-fill:#fbeed8; --rg-stroke:#c18401; --rg-ink:#8c6001; --rg-support:#c18401; }
+#finance-quantity-vs-value [data-rg-role="red"] { --rg-fill:#fde8e6; --rg-stroke:#e45649; --rg-ink:#a83329; --rg-support:#e45649; }
+</style>
+    <filter id="finance-quantity-vs-value-sketch" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="turbulence" baseFrequency="0.03" numOctaves="4" seed="2" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.5" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+    <marker id="finance-quantity-vs-value-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+      <path d="M2 3L10 6L2 9Z" fill="context-stroke" />
+    </marker>
+  </defs>
+  <rect width="1200" height="1000" fill="#ffffff" />
+  <text class="rg-title" data-rg-title="true" x="600.0" y="80" text-anchor="middle">More BTC. Less value.</text>
+  <g data-rg-content="true">
+    
+  <text x="600" y="160" text-anchor="middle">80,000 USDT + 64 USDT yield</text><path d="M600 190V230" fill="none" stroke="#0184bc" stroke-width="3" data-rg-kind="connector" marker-end="url(#finance-quantity-vs-value-arrow)" /><g data-rg-role="teal"><ellipse cx="600" cy="310" rx="290" ry="70" data-rg-kind="shape" class="rg-shape" filter="url(#finance-quantity-vs-value-sketch)" /><text x="600" y="325" text-anchor="middle" data-rg-name="btc-balance">≈ 1.01347 BTC</text></g><text x="600" y="410" text-anchor="middle" class="rg-support">80,064 ÷ 79,000 target</text><text x="600" y="460" text-anchor="middle" class="rg-support">More than the 1 BTC affordable at the start</text><g data-rg-role="gray"><text x="100" y="510" text-anchor="start">Original deposit</text><text x="1100" y="510" text-anchor="end">80,000 USDT</text><rect x="100" y="540" width="1000.0" height="45" rx="8" data-rg-kind="data" class="rg-shape" data-rg-name="deposit" data-value="80000" /></g><g data-rg-role="coral"><text x="100" y="660" text-anchor="start">At BTC = 76,000</text><text x="1100" y="660" text-anchor="end">77,023.59 USDT</text><rect x="100" y="690" width="962.7949367088609" height="45" rx="8" data-rg-kind="data" class="rg-shape" data-rg-name="market-value" data-value="77023.59493670886" /></g><text x="100" y="790" text-anchor="start" class="rg-support">Shared zero baseline</text><g data-rg-role="coral"><text x="600" y="865" text-anchor="middle">−2,976.41 USDT</text></g><text x="600" y="930" text-anchor="middle" class="rg-support">The 64 USDT yield is already included</text></g>
+</svg>

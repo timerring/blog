@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="finance-settlement" class="svg-canvas logic2image" width="100%" viewBox="0 0 1200 900" role="img" aria-labelledby="finance-settlement-title" aria-describedby="finance-settlement-desc" style="display:block;margin-inline:auto;min-width:480px;max-width:568px">
+  <title id="finance-settlement-title">The target chooses your asset</title>
+  <desc id="finance-settlement-desc">Categorical maturity-price regions, not a numeric scale or probability. Buy Low: below 79,000 converts USDT to BTC at target; at or above keeps USDT. Sell High: below 81,000 keeps BTC; at or above converts to USDT at target. All principal and yield included.</desc>
+  <defs>
+    <style>
+#finance-settlement text { font-family: Georgia, serif; font-weight:400; font-size:35.915493px; fill:var(--rg-ink,#383a42); }
+#finance-settlement .rg-title { font-size:46.690141px; }
+#finance-settlement .rg-support { font-size:32.323944px; fill:var(--rg-support,#696c77); }
+#finance-settlement .rg-shape { fill:var(--rg-fill); stroke:var(--rg-stroke); stroke-width:2.625000; }
+#finance-settlement [data-rg-role="purple"] { --rg-fill:#faecf9; --rg-stroke:#a626a4; --rg-ink:#771977; --rg-support:#a626a4; }
+#finance-settlement [data-rg-role="teal"] { --rg-fill:#e1f3fa; --rg-stroke:#0184bc; --rg-ink:#015f88; --rg-support:#0184bc; }
+#finance-settlement [data-rg-role="coral"] { --rg-fill:#fbeee2; --rg-stroke:#ca6f1e; --rg-ink:#925113; --rg-support:#ca6f1e; }
+#finance-settlement [data-rg-role="pink"] { --rg-fill:#fce8ee; --rg-stroke:#b83260; --rg-ink:#852344; --rg-support:#b83260; }
+#finance-settlement [data-rg-role="gray"] { --rg-fill:#f0f0f1; --rg-stroke:#5c5e66; --rg-ink:#383a42; --rg-support:#5c5e66; }
+#finance-settlement [data-rg-role="blue"] { --rg-fill:#e6efff; --rg-stroke:#4078f2; --rg-ink:#1a52cf; --rg-support:#4078f2; }
+#finance-settlement [data-rg-role="green"] { --rg-fill:#e8f3e2; --rg-stroke:#50a14f; --rg-ink:#3a7639; --rg-support:#50a14f; }
+#finance-settlement [data-rg-role="amber"] { --rg-fill:#fbeed8; --rg-stroke:#c18401; --rg-ink:#8c6001; --rg-support:#c18401; }
+#finance-settlement [data-rg-role="red"] { --rg-fill:#fde8e6; --rg-stroke:#e45649; --rg-ink:#a83329; --rg-support:#e45649; }
+</style>
+    <filter id="finance-settlement-sketch" x="-3%" y="-3%" width="106%" height="106%">
+      <feTurbulence type="turbulence" baseFrequency="0.03" numOctaves="4" seed="2" result="noise" />
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="2.5" xChannelSelector="R" yChannelSelector="G" />
+    </filter>
+    <marker id="finance-settlement-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="10" markerHeight="10" orient="auto-start-reverse">
+      <path d="M2 3L10 6L2 9Z" fill="context-stroke" />
+    </marker>
+  </defs>
+  <rect width="1200" height="900" fill="#ffffff" />
+  <text class="rg-title" data-rg-title="true" x="600.0" y="80" text-anchor="middle">The target chooses your asset</text>
+  <g data-rg-content="true">
+    
+  <g data-rg-role="teal"><text x="70" y="190" text-anchor="start">Buy Low · deposit USDT</text><text x="1130" y="190" text-anchor="end" class="rg-support">Target: 79,000</text></g><g data-rg-role="teal"><text x="340" y="260" text-anchor="middle">BTC &lt; 79,000</text><rect x="80" y="295" width="520" height="66" rx="8" data-rg-kind="data" class="rg-shape" data-rg-name="Buy Low-Receive BTC" /><text x="340" y="339" text-anchor="middle">Receive BTC</text><text x="340" y="415" text-anchor="middle" class="rg-support">Convert at 79,000</text></g><g data-rg-role="gray"><text x="860" y="260" text-anchor="middle">BTC ≥ 79,000</text><rect x="600" y="295" width="520" height="66" rx="8" data-rg-kind="data" class="rg-shape" data-rg-name="Buy Low-Receive USDT" /><text x="860" y="339" text-anchor="middle">Receive USDT</text><text x="860" y="415" text-anchor="middle" class="rg-support">No conversion</text></g><path d="M600 278V375" fill="none" stroke="#5c5e66" stroke-width="3" data-rg-kind="guide" /><g data-rg-role="purple"><text x="70" y="540" text-anchor="start">Sell High · deposit BTC</text><text x="1130" y="540" text-anchor="end" class="rg-support">Target: 81,000</text></g><g data-rg-role="gray"><text x="340" y="610" text-anchor="middle">BTC &lt; 81,000</text><rect x="80" y="645" width="520" height="66" rx="8" data-rg-kind="data" class="rg-shape" data-rg-name="Sell High-Receive BTC" /><text x="340" y="689" text-anchor="middle">Receive BTC</text><text x="340" y="765" text-anchor="middle" class="rg-support">No conversion</text></g><g data-rg-role="purple"><text x="860" y="610" text-anchor="middle">BTC ≥ 81,000</text><rect x="600" y="645" width="520" height="66" rx="8" data-rg-kind="data" class="rg-shape" data-rg-name="Sell High-Receive USDT" /><text x="860" y="689" text-anchor="middle">Receive USDT</text><text x="860" y="765" text-anchor="middle" class="rg-support">Convert at 81,000</text></g><path d="M600 628V725" fill="none" stroke="#5c5e66" stroke-width="3" data-rg-kind="guide" /><path d="M70 465H1130" fill="none" stroke="#5c5e66" stroke-width="3" data-rg-kind="guide" stroke-dasharray="8 8" /><text x="600" y="850" text-anchor="middle" class="rg-support">At maturity · Principal + yield included</text></g>
+</svg>
