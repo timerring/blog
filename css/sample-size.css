@@ -1,0 +1,41 @@
+.sample-size {
+  border: 1px solid var(--gray-200, #aaa);
+  border-radius: .5rem;
+  padding: 1.25rem;
+  margin: 1.5rem 0;
+}
+.sample-size-fields {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+.sample-size label {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 0;
+  font-weight: 600;
+}
+@media (max-width: 600px) {
+  .sample-size-fields { grid-template-columns: 1fr; }
+}
+.sample-size input, .sample-size select {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  height: 3rem;
+  margin-top: .5rem;
+  padding: .6rem;
+  font: inherit;
+  color: inherit;
+  background: var(--body-background, white);
+  border: 1px solid var(--gray-200, #aaa);
+  border-radius: .25rem;
+}
+.sample-size input:focus-visible, .sample-size select:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+.sample-size-result { border-top: 1px solid var(--gray-200, #aaa); padding-top: 1rem; }
+.sample-size-result strong { display: block; font-size: 1.5rem; }
+.sample-size-result span { display: block; margin-top: .5rem; }
