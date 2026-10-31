@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="mq-8" class="logic2image" role="img" aria-labelledby="mq-8-title" aria-describedby="mq-8-desc" viewBox="0 0 680 560" width="680" height="560" style="max-width:100%;height:auto"><title id="mq-8-title">Historical mirrors store a full queue copy</title><desc id="mq-8-desc">Historical mirrors replicate Q; removed in RabbitMQ 4.0.</desc><style>#mq-8 text {font-family: Georgia, serif;}</style><defs><marker id="mq-8-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="context-stroke"/></marker></defs><rect width="680" height="560" fill="#ffffff"/><g data-rg-content="true"><text x="340" y="36" text-anchor="middle" font-size="23" fill="#383a42" data-rg-title="true"><tspan x="340" dy="0">Historical mirrors store a full queue copy</tspan></text>
+<text x="340" y="78" text-anchor="middle" font-size="18" fill="#a83329"><tspan x="340" dy="0">Historical only — removed in RabbitMQ 4.0</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="teal" x="245" y="100" width="190" height="56" rx="8" fill="#e1f3fa" stroke="#0184bc" stroke-width="1.5"/>
+<text x="340.0" y="134.0" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="340.0" dy="0">Producer</tspan></text>
+<rect data-rg-kind="shape" x="20" y="235" width="190" height="145" rx="10" fill="#ffffff" stroke="#5c5e66" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="35" y="365" text-anchor="start" font-size="18" fill="#383a42"><tspan x="35" dy="0">RabbitMQ node 1</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="blue" x="35" y="250" width="160" height="70" rx="8" fill="#e6efff" stroke="#4078f2" stroke-width="1.5"/>
+<text x="115.0" y="279.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="115.0" dy="0">Mirror</tspan><tspan x="115.0" dy="24">Q: data 1, 2, 3</tspan></text>
+<polyline data-rg-kind="connector" points="185,320 185,400 115,400 115,425" fill="none" stroke="#a626a4" stroke-width="2" marker-end="url(#mq-8-arrow)"/>
+<rect data-rg-kind="shape" data-rg-role="purple" x="20" y="425" width="190" height="56" rx="8" fill="#faecf9" stroke="#a626a4" stroke-width="1.5"/>
+<text x="115.0" y="459.0" text-anchor="middle" font-size="18" fill="#771977"><tspan x="115.0" dy="0">Consumer</tspan></text>
+<rect data-rg-kind="shape" x="245" y="235" width="190" height="145" rx="10" fill="#ffffff" stroke="#5c5e66" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="260" y="365" text-anchor="start" font-size="18" fill="#383a42"><tspan x="260" dy="0">RabbitMQ node 2</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="coral" x="260" y="250" width="160" height="70" rx="8" fill="#fbeee2" stroke="#ca6f1e" stroke-width="1.5"/>
+<text x="340.0" y="279.0" text-anchor="middle" font-size="18" fill="#925113"><tspan x="340.0" dy="0">Leader</tspan><tspan x="340.0" dy="24">Q: data 1, 2, 3</tspan></text>
+<polyline data-rg-kind="connector" points="410,320 410,400 340,400 340,425" fill="none" stroke="#a626a4" stroke-width="2" marker-end="url(#mq-8-arrow)"/>
+<rect data-rg-kind="shape" data-rg-role="purple" x="245" y="425" width="190" height="56" rx="8" fill="#faecf9" stroke="#a626a4" stroke-width="1.5"/>
+<text x="340.0" y="459.0" text-anchor="middle" font-size="18" fill="#771977"><tspan x="340.0" dy="0">Consumer</tspan></text>
+<rect data-rg-kind="shape" x="470" y="235" width="190" height="145" rx="10" fill="#ffffff" stroke="#5c5e66" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="485" y="365" text-anchor="start" font-size="18" fill="#383a42"><tspan x="485" dy="0">RabbitMQ node 3</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="blue" x="485" y="250" width="160" height="70" rx="8" fill="#e6efff" stroke="#4078f2" stroke-width="1.5"/>
+<text x="565.0" y="279.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="565.0" dy="0">Mirror</tspan><tspan x="565.0" dy="24">Q: data 1, 2, 3</tspan></text>
+<polyline data-rg-kind="connector" points="635,320 635,400 565,400 565,425" fill="none" stroke="#a626a4" stroke-width="2" marker-end="url(#mq-8-arrow)"/>
+<rect data-rg-kind="shape" data-rg-role="purple" x="470" y="425" width="190" height="56" rx="8" fill="#faecf9" stroke="#a626a4" stroke-width="1.5"/>
+<text x="565.0" y="459.0" text-anchor="middle" font-size="18" fill="#771977"><tspan x="565.0" dy="0">Consumer</tspan></text>
+<polyline data-rg-kind="connector" points="340,156 340,250" fill="none" stroke="#0184bc" stroke-width="2" marker-end="url(#mq-8-arrow)"/>
+<polyline data-rg-kind="connector" points="260,285 195,285" fill="none" stroke="#4078f2" stroke-width="2" marker-end="url(#mq-8-arrow)"/>
+<polyline data-rg-kind="connector" points="420,285 485,285" fill="none" stroke="#4078f2" stroke-width="2" marker-end="url(#mq-8-arrow)"/>
+<text x="340" y="525" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">Full copies add redundancy, not queue sharding</tspan></text></g></svg>

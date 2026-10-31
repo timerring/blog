@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="rabbitmq-quorum" class="logic2image" role="img" aria-labelledby="rabbitmq-quorum-title" aria-describedby="rabbitmq-quorum-desc" viewBox="0 0 680 660" width="680" height="660" style="max-width:100%;height:auto"><title id="rabbitmq-quorum-title">Quorum queue: a majority makes a write safe</title><desc id="rabbitmq-quorum-desc">Three members replicate one queue. Leader and follower A durably store the entry before publisher confirmation. A slower follower B need not delay that confirmation. One failure leaves a majority; two failures lose it. Failover requires election and recovery.</desc><style>#rabbitmq-quorum text {font-family: Georgia, serif;}</style><defs><marker id="rabbitmq-quorum-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="context-stroke"/></marker></defs><rect width="680" height="660" fill="#ffffff"/><g data-rg-content="true"><text x="340" y="36" text-anchor="middle" font-size="23" fill="#383a42" data-rg-title="true"><tspan x="340" dy="0">Quorum queue: a majority makes a write safe</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="teal" x="245" y="75" width="190" height="56" rx="8" fill="#e1f3fa" stroke="#0184bc" stroke-width="1.5"/>
+<text x="340.0" y="109.0" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="340.0" dy="0">Producer</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="blue" x="25" y="230" width="170" height="80" rx="8" fill="#e6efff" stroke="#4078f2" stroke-width="1.5"/>
+<text x="110.0" y="264.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="110.0" dy="0">Follower A</tspan><tspan x="110.0" dy="24">stored</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="coral" x="255" y="230" width="170" height="80" rx="8" fill="#fbeee2" stroke="#ca6f1e" stroke-width="1.5"/>
+<text x="340.0" y="264.0" text-anchor="middle" font-size="18" fill="#925113"><tspan x="340.0" dy="0">Leader</tspan><tspan x="340.0" dy="24">stored</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="gray" x="485" y="230" width="170" height="80" rx="8" fill="#f0f0f1" stroke="#5c5e66" stroke-width="1.5"/>
+<text x="570.0" y="264.0" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="570.0" dy="0">Follower B</tspan><tspan x="570.0" dy="24">may lag</tspan></text>
+<polyline data-rg-kind="connector" points="340,131 340,230" fill="none" stroke="#0184bc" stroke-width="2" marker-end="url(#rabbitmq-quorum-arrow)"/>
+<text x="315" y="185" text-anchor="end" font-size="18" fill="#015f88"><tspan x="315" dy="0">Publish</tspan></text>
+<polyline data-rg-kind="connector" points="255,255 195,255" fill="none" stroke="#4078f2" stroke-width="2" marker-end="url(#rabbitmq-quorum-arrow)"/>
+<polyline data-rg-kind="connector" points="425,255 485,255" fill="none" stroke="#4078f2" stroke-width="2" marker-end="url(#rabbitmq-quorum-arrow)"/>
+<text x="340" y="430" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="340" dy="0">Replicate the same queue entry</tspan></text>
+<path data-rg-kind="connector" data-rg-route="bezier" data-line-meaning="follower A acknowledges durable storage" d="M195,290 C215,385 235,385 255,290" fill="none" stroke="#50a14f" stroke-width="2" marker-end="url(#rabbitmq-quorum-arrow)"/>
+<text x="225" y="405" text-anchor="middle" font-size="18" fill="#3a7639"><tspan x="225" dy="0">Durable ack</tspan></text>
+<path data-rg-kind="connector" data-rg-route="bezier" data-line-meaning="publisher confirm after a majority durably stores the entry" d="M400,230 C470,205 470,103 435,103" fill="none" stroke="#50a14f" stroke-width="2" marker-end="url(#rabbitmq-quorum-arrow)"/>
+<text x="550" y="160" text-anchor="middle" font-size="18" fill="#3a7639"><tspan x="550" dy="0">Confirm after</tspan><tspan x="550" dy="24">2 / 3 stored</tspan></text>
+<text x="340" y="455" text-anchor="middle" font-size="18" fill="#3a7639"><tspan x="340" dy="0">Majority = leader + one follower</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="green" x="25" y="490" width="300" height="105" rx="8" fill="#e8f3e2" stroke="#50a14f" stroke-width="1.5"/>
+<text x="175.0" y="524.5" text-anchor="middle" font-size="18" fill="#3a7639"><tspan x="175.0" dy="0">1 member down</tspan><tspan x="175.0" dy="24">2 / 3 remain</tspan><tspan x="175.0" dy="24">Majority can operate</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="red" x="355" y="490" width="300" height="105" rx="8" fill="#fde8e6" stroke="#e45649" stroke-width="1.5"/>
+<text x="505.0" y="524.5" text-anchor="middle" font-size="18" fill="#a83329"><tspan x="505.0" dy="0">2 members down</tspan><tspan x="505.0" dy="24">1 / 3 remains</tspan><tspan x="505.0" dy="24">No majority: unavailable</tspan></text>
+<text x="340" y="640" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">Leader failover requires election and recovery</tspan></text></g></svg>

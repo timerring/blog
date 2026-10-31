@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="mq-11" class="logic2image" role="img" aria-labelledby="mq-11-title" aria-describedby="mq-11-desc" viewBox="0 0 680 940" width="680" height="940" style="max-width:100%;height:auto"><title id="mq-11-title">Same event twice, one business effect</title><desc id="mq-11-desc">Billing handles event E1 twice. First transaction inserts unique (billing, E1) and debits 10 atomically: balance 100 becomes 90. A crash before MQ acknowledgement causes redelivery. The duplicate insert conflicts, so no second debit runs. Roll back only the duplicate attempt, keep the committed state, and acknowledge MQ.</desc><style>#mq-11 text {font-family: Georgia, serif;}</style><defs><marker id="mq-11-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="context-stroke"/></marker></defs><rect width="680" height="940" fill="#ffffff"/><g data-rg-content="true"><text x="340" y="36" text-anchor="middle" font-size="23" fill="#383a42" data-rg-title="true"><tspan x="340" dy="0">Same event twice, one business effect</tspan></text>
+<text x="340" y="85" text-anchor="middle" font-size="18" fill="#771977"><tspan x="340" dy="0">1. First delivery: apply the change</tspan></text>
+<rect data-rg-kind="shape" x="185" y="120" width="475" height="230" rx="10" fill="#ffffff" stroke="#5c5e66" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="200" y="147" text-anchor="start" font-size="18" fill="#383a42"><tspan x="200" dy="0">Local DB transaction — billing</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="coral" x="20" y="165" width="140" height="80" rx="8" fill="#fbeee2" stroke="#ca6f1e" stroke-width="1.5"/>
+<text x="90.0" y="199.0" text-anchor="middle" font-size="18" fill="#925113"><tspan x="90.0" dy="0">MQ delivers</tspan><tspan x="90.0" dy="24">E1</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="blue" x="205" y="165" width="200" height="80" rx="8" fill="#e6efff" stroke="#4078f2" stroke-width="1.5"/>
+<text x="305.0" y="199.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="305.0" dy="0">INSERT record</tspan><tspan x="305.0" dy="24">(billing, E1): new</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="green" x="435" y="165" width="200" height="80" rx="8" fill="#e8f3e2" stroke="#50a14f" stroke-width="1.5"/>
+<text x="535.0" y="199.0" text-anchor="middle" font-size="18" fill="#3a7639"><tspan x="535.0" dy="0">Debit 10</tspan><tspan x="535.0" dy="24">100 → 90</tspan></text>
+<polyline data-rg-kind="connector" points="160,205 205,205" fill="none" stroke="#ca6f1e" stroke-width="2" marker-end="url(#mq-11-arrow)"/>
+<polyline data-rg-kind="connector" points="405,205 435,205" fill="none" stroke="#4078f2" stroke-width="2" marker-end="url(#mq-11-arrow)"/>
+<rect data-rg-kind="shape" data-rg-role="green" x="205" y="275" width="430" height="56" rx="8" fill="#e8f3e2" stroke="#50a14f" stroke-width="1.5"/>
+<text x="420.0" y="309.0" text-anchor="middle" font-size="18" fill="#3a7639"><tspan x="420.0" dy="0">COMMIT: record + debit together</tspan></text>
+<polyline data-rg-kind="connector" points="535,245 535,275" fill="none" stroke="#50a14f" stroke-width="2" marker-end="url(#mq-11-arrow)"/>
+<rect data-rg-kind="shape" data-rg-role="green" x="185" y="385" width="475" height="80" rx="8" fill="#e8f3e2" stroke="#50a14f" stroke-width="1.5"/>
+<text x="422.5" y="419.0" text-anchor="middle" font-size="18" fill="#3a7639"><tspan x="422.5" dy="0">DB: one (billing, E1) record</tspan><tspan x="422.5" dy="24">Balance = 90</tspan></text>
+<polyline data-rg-kind="connector" points="535,331 535,365 422.5,365 422.5,385" fill="none" stroke="#50a14f" stroke-width="2" marker-end="url(#mq-11-arrow)"/>
+<rect data-rg-kind="shape" data-rg-role="red" x="20" y="385" width="140" height="90" rx="8" fill="#fde8e6" stroke="#e45649" stroke-width="1.5"/>
+<text x="90.0" y="424.0" text-anchor="middle" font-size="18" fill="#a83329"><tspan x="90.0" dy="0">Crash before</tspan><tspan x="90.0" dy="24">MQ ack</tspan></text>
+<polyline data-rg-kind="connector" points="185,425 160,425" fill="none" stroke="#e45649" stroke-width="2" marker-end="url(#mq-11-arrow)"/>
+<text x="340" y="515" text-anchor="middle" font-size="18" fill="#771977"><tspan x="340" dy="0">2. Redelivery: reject the duplicate</tspan></text>
+<rect data-rg-kind="shape" x="185" y="535" width="475" height="240" rx="10" fill="#ffffff" stroke="#5c5e66" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="200" y="562" text-anchor="start" font-size="18" fill="#383a42"><tspan x="200" dy="0">New DB transaction — same billing</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="coral" x="20" y="580" width="140" height="80" rx="8" fill="#fbeee2" stroke="#ca6f1e" stroke-width="1.5"/>
+<text x="90.0" y="614.0" text-anchor="middle" font-size="18" fill="#925113"><tspan x="90.0" dy="0">MQ redelivers</tspan><tspan x="90.0" dy="24">same E1</tspan></text>
+<polyline data-rg-kind="connector" points="90,475 90,580" fill="none" stroke="#e45649" stroke-width="2" marker-end="url(#mq-11-arrow)"/>
+<rect data-rg-kind="shape" data-rg-role="amber" x="205" y="580" width="200" height="80" rx="8" fill="#fbeed8" stroke="#c18401" stroke-width="1.5"/>
+<text x="305.0" y="614.0" text-anchor="middle" font-size="18" fill="#8c6001"><tspan x="305.0" dy="0">INSERT record</tspan><tspan x="305.0" dy="24">Unique key exists</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="gray" x="435" y="580" width="200" height="80" rx="8" fill="#f0f0f1" stroke="#5c5e66" stroke-width="1.5"/>
+<text x="535.0" y="614.0" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="535.0" dy="0">Skip debit</tspan><tspan x="535.0" dy="24">No second charge</tspan></text>
+<polyline data-rg-kind="connector" points="160,620 205,620" fill="none" stroke="#ca6f1e" stroke-width="2" marker-end="url(#mq-11-arrow)"/>
+<polyline data-rg-kind="connector" points="405,620 435,620" fill="none" stroke="#c18401" stroke-width="2" marker-end="url(#mq-11-arrow)"/>
+<rect data-rg-kind="shape" data-rg-role="amber" x="205" y="700" width="430" height="56" rx="8" fill="#fbeed8" stroke="#c18401" stroke-width="1.5"/>
+<text x="420.0" y="734.0" text-anchor="middle" font-size="18" fill="#8c6001"><tspan x="420.0" dy="0">ROLLBACK: duplicate attempt only</tspan></text>
+<polyline data-rg-kind="connector" points="535,660 535,700" fill="none" stroke="#c18401" stroke-width="2" marker-end="url(#mq-11-arrow)"/>
+<rect data-rg-kind="shape" data-rg-role="green" x="185" y="810" width="475" height="80" rx="8" fill="#e8f3e2" stroke="#50a14f" stroke-width="1.5"/>
+<text x="422.5" y="844.0" text-anchor="middle" font-size="18" fill="#3a7639"><tspan x="422.5" dy="0">DB unchanged: one (billing, E1) record</tspan><tspan x="422.5" dy="24">Balance still 90, not 80</tspan></text>
+<polyline data-rg-kind="connector" points="535,756 535,790 422.5,790 422.5,810" fill="none" stroke="#50a14f" stroke-width="2" marker-end="url(#mq-11-arrow)"/>
+<path data-rg-kind="connector" data-rg-route="bezier" data-line-meaning="acknowledge the duplicate without repeating the debit" d="M185,850 C90,850 90,760 90,660" fill="none" stroke="#50a14f" stroke-width="2" marker-end="url(#mq-11-arrow)"/>
+<text x="70" y="775" text-anchor="end" font-size="18" fill="#3a7639"><tspan x="70" dy="0">Ack MQ</tspan></text>
+<text x="340" y="925" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">Unique key: (consumer, event ID) — not a check-then-insert</tspan></text></g></svg>

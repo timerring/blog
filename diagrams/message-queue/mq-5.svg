@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="mq-5" class="logic2image" role="img" aria-labelledby="mq-5-title" aria-describedby="mq-5-desc" viewBox="0 0 680 580" width="680" height="580" style="max-width:100%;height:auto"><title id="mq-5-title">A traffic burst can exceed backend capacity</title><desc id="mq-5-desc">Example database capacity 2000 requests/s, input 5000/s. Direct requests exceed capacity. Smooth traffic shape and threshold placement are qualitative, not measured.</desc><style>#mq-5 text {font-family: Georgia, serif;}</style><defs><marker id="mq-5-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="context-stroke"/></marker></defs><rect width="680" height="580" fill="#ffffff"/><g data-rg-content="true"><text x="340" y="36" text-anchor="middle" font-size="23" fill="#383a42" data-rg-title="true"><tspan x="340" dy="0">A traffic burst can exceed backend capacity</tspan></text>
+<ellipse data-rg-kind="shape" cx="90" cy="130" rx="65" ry="30" fill="#f0f0f1" stroke="#5c5e66" stroke-width="1.5"/>
+<text x="90" y="136" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="90" dy="0">Users</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="teal" x="255" y="100" width="170" height="60" rx="8" fill="#e1f3fa" stroke="#0184bc" stroke-width="1.5"/>
+<text x="340.0" y="136.0" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="340.0" dy="0">System A</tspan></text>
+<path data-rg-kind="shape" d="M500,102 C500,78 650,78 650,102 L650,168 C650,192 500,192 500,168 Z" fill="#e6efff" stroke="#4078f2" stroke-width="1.5"/><path data-rg-kind="shape" d="M500,102 C500,126 650,126 650,102" fill="none" stroke="#4078f2" stroke-width="1.5"/>
+<text x="575" y="145" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="575" dy="0">MySQL</tspan></text>
+<polyline data-rg-kind="connector" points="155,130 255,130" fill="none" stroke="#0184bc" stroke-width="2" marker-end="url(#mq-5-arrow)"/>
+<polyline data-rg-kind="connector" points="425,130 500,130" fill="none" stroke="#e45649" stroke-width="2" marker-end="url(#mq-5-arrow)"/>
+<text x="340" y="220" text-anchor="middle" font-size="18" fill="#a83329"><tspan x="340" dy="0">5,000 / s input &gt; 2,000 / s example capacity</tspan></text>
+<polyline data-rg-kind="guide" points="65,270 65,430 615,430" fill="none" stroke="#5c5e66" stroke-width="1.5"/>
+<path data-rg-kind="data" data-evidence="qualitative" data-description="Schematic traffic hump and capacity comparison; not measured data" d="M80,415 C184,415 204.8,389 288,304.5 C350.4,272 355.6,356.5 418,356.5 C506.4,356.5 558.4,389 600,415" fill="none" stroke="#e45649" stroke-width="2.5"/>
+<path data-rg-kind="guide" d="M65,365 H615" fill="none" stroke="#4078f2" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="475" y="350" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="475" dy="0">Backend limit (schematic)</tspan></text>
+<text x="340" y="470" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">Traffic shape and threshold: schematic, not measured</tspan></text>
+<text x="340" y="540" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">Without buffering, excess load reaches the database</tspan></text></g></svg>

@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="rabbitmq-message-lose" class="logic2image" role="img" aria-labelledby="rabbitmq-message-lose-title" aria-describedby="rabbitmq-message-lose-desc" viewBox="0 0 680 540" width="680" height="540" style="max-width:100%;height:auto"><title id="rabbitmq-message-lose-title">RabbitMQ: three places where processing can be lost</title><desc id="rabbitmq-message-lose-desc">Network failure before receipt; crash before durable broker storage; ack before consumer business completion.</desc><style>#rabbitmq-message-lose text {font-family: Georgia, serif;}</style><defs><marker id="rabbitmq-message-lose-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="context-stroke"/></marker></defs><rect width="680" height="540" fill="#ffffff"/><g data-rg-content="true"><text x="340" y="36" text-anchor="middle" font-size="23" fill="#383a42" data-rg-title="true"><tspan x="340" dy="0">RabbitMQ: three places where processing can be lost</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="teal" x="25" y="110" width="170" height="56" rx="8" fill="#e1f3fa" stroke="#0184bc" stroke-width="1.5"/>
+<text x="110.0" y="144.0" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="110.0" dy="0">Producer</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="coral" x="255" y="110" width="170" height="56" rx="8" fill="#fbeee2" stroke="#ca6f1e" stroke-width="1.5"/>
+<text x="340.0" y="144.0" text-anchor="middle" font-size="18" fill="#925113"><tspan x="340.0" dy="0">RabbitMQ</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="purple" x="485" y="110" width="170" height="56" rx="8" fill="#faecf9" stroke="#a626a4" stroke-width="1.5"/>
+<text x="570.0" y="144.0" text-anchor="middle" font-size="18" fill="#771977"><tspan x="570.0" dy="0">Consumer</tspan></text>
+<polyline data-rg-kind="connector" points="195,138 255,138" fill="none" stroke="#5c5e66" stroke-width="2" marker-end="url(#rabbitmq-message-lose-arrow)"/>
+<polyline data-rg-kind="connector" points="425,138 485,138" fill="none" stroke="#5c5e66" stroke-width="2" marker-end="url(#rabbitmq-message-lose-arrow)"/>
+<polyline data-rg-kind="connector" points="110,166 110,245" fill="none" stroke="#e45649" stroke-width="2" marker-end="url(#rabbitmq-message-lose-arrow)"/>
+<rect data-rg-kind="shape" data-rg-role="red" x="25" y="245" width="170" height="60" rx="8" fill="#fde8e6" stroke="#e45649" stroke-width="1.5"/>
+<text x="110.0" y="281.0" text-anchor="middle" font-size="18" fill="#a83329"><tspan x="110.0" dy="0">1. In transit</tspan></text>
+<text x="110" y="350" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="110" dy="0">Network failure</tspan><tspan x="110" dy="24">before broker receives</tspan></text>
+<polyline data-rg-kind="connector" points="340,166 340,245" fill="none" stroke="#e45649" stroke-width="2" marker-end="url(#rabbitmq-message-lose-arrow)"/>
+<rect data-rg-kind="shape" data-rg-role="red" x="255" y="245" width="170" height="60" rx="8" fill="#fde8e6" stroke="#e45649" stroke-width="1.5"/>
+<text x="340.0" y="281.0" text-anchor="middle" font-size="18" fill="#a83329"><tspan x="340.0" dy="0">2. At the broker</tspan></text>
+<text x="340" y="350" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">Crash before durable</tspan><tspan x="340" dy="24">storage / replication</tspan></text>
+<polyline data-rg-kind="connector" points="570,166 570,245" fill="none" stroke="#e45649" stroke-width="2" marker-end="url(#rabbitmq-message-lose-arrow)"/>
+<rect data-rg-kind="shape" data-rg-role="red" x="485" y="245" width="170" height="60" rx="8" fill="#fde8e6" stroke="#e45649" stroke-width="1.5"/>
+<text x="570.0" y="281.0" text-anchor="middle" font-size="18" fill="#a83329"><tspan x="570.0" dy="0">3. At consumer</tspan></text>
+<text x="570" y="350" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="570" dy="0">Ack first; crash before</tspan><tspan x="570" dy="24">business completion</tspan></text>
+<text x="340" y="450" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">A successful API call is not an end-to-end guarantee</tspan></text>
+<text x="340" y="495" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">Check producer, storage and business completion separately</tspan></text></g></svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="mq-2" class="logic2image" role="img" aria-labelledby="mq-2-title" aria-describedby="mq-2-desc" viewBox="0 0 680 510" width="680" height="510" style="max-width:100%;height:auto"><title id="mq-2-title">Subscribers join or leave without changing A</title><desc id="mq-2-desc">A publishes to independent subscriptions for B/C; D leaves and E joins.</desc><style>#mq-2 text {font-family: Georgia, serif;}</style><defs><marker id="mq-2-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="context-stroke"/></marker></defs><rect width="680" height="510" fill="#ffffff"/><g data-rg-content="true"><text x="340" y="36" text-anchor="middle" font-size="23" fill="#383a42" data-rg-title="true"><tspan x="340" dy="0">Subscribers join or leave without changing A</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="teal" x="250" y="85" width="180" height="56" rx="8" fill="#e1f3fa" stroke="#0184bc" stroke-width="1.5"/>
+<text x="340.0" y="119.0" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="340.0" dy="0">System A</tspan></text>
+<polyline data-rg-kind="connector" points="340,141 340,225" fill="none" stroke="#0184bc" stroke-width="2" marker-end="url(#mq-2-arrow)"/>
+<text x="365" y="185" text-anchor="start" font-size="18" fill="#383a42"><tspan x="365" dy="0">publish once</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="coral" x="250" y="225" width="180" height="56" rx="8" fill="#fbeee2" stroke="#ca6f1e" stroke-width="1.5"/>
+<text x="340.0" y="259.0" text-anchor="middle" font-size="18" fill="#925113"><tspan x="340.0" dy="0">MQ</tspan></text>
+<polyline data-rg-kind="guide" points="340,281 340,330 92.5,330" fill="none" stroke="#5c5e66" stroke-width="1.5"/>
+<polyline data-rg-kind="guide" points="340,330 587.5,330" fill="none" stroke="#5c5e66" stroke-width="1.5"/>
+<polyline data-rg-kind="connector" points="92.5,330 92.5,390" fill="none" stroke="#a626a4" stroke-width="2" marker-end="url(#mq-2-arrow)"/>
+<rect data-rg-kind="shape" data-rg-role="purple" x="20" y="390" width="145" height="56" rx="8" fill="#faecf9" stroke="#a626a4" stroke-width="1.5"/>
+<text x="92.5" y="424.0" text-anchor="middle" font-size="18" fill="#771977"><tspan x="92.5" dy="0">B</tspan></text>
+<polyline data-rg-kind="connector" points="257.5,330 257.5,390" fill="none" stroke="#a626a4" stroke-width="2" marker-end="url(#mq-2-arrow)"/>
+<rect data-rg-kind="shape" data-rg-role="purple" x="185" y="390" width="145" height="56" rx="8" fill="#faecf9" stroke="#a626a4" stroke-width="1.5"/>
+<text x="257.5" y="424.0" text-anchor="middle" font-size="18" fill="#771977"><tspan x="257.5" dy="0">C</tspan></text>
+<polyline data-rg-kind="connector" points="422.5,330 422.5,390" fill="none" stroke="#e45649" stroke-width="2" marker-end="url(#mq-2-arrow)" stroke-dasharray="6 4"/>
+<rect data-rg-kind="shape" data-rg-role="red" x="350" y="390" width="145" height="56" rx="8" fill="#fde8e6" stroke="#e45649" stroke-width="1.5"/>
+<text x="422.5" y="424.0" text-anchor="middle" font-size="18" fill="#a83329"><tspan x="422.5" dy="0">D (leaves)</tspan></text>
+<polyline data-rg-kind="connector" points="587.5,330 587.5,390" fill="none" stroke="#50a14f" stroke-width="2" marker-end="url(#mq-2-arrow)" stroke-dasharray="6 4"/>
+<rect data-rg-kind="shape" data-rg-role="green" x="515" y="390" width="145" height="56" rx="8" fill="#e8f3e2" stroke="#50a14f" stroke-width="1.5"/>
+<text x="587.5" y="424.0" text-anchor="middle" font-size="18" fill="#3a7639"><tspan x="587.5" dy="0">E (new)</tspan></text>
+<text x="340" y="480" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">Independent subscriptions, not competing consumers</tspan></text></g></svg>

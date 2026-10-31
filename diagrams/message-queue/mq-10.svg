@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="mq-10" class="logic2image" role="img" aria-labelledby="mq-10-title" aria-describedby="mq-10-desc" viewBox="0 0 680 620" width="680" height="620" style="max-width:100%;height:auto"><title id="mq-10-title">Uncommitted offsets cause processed records to replay</title><desc id="mq-10-desc">Committed next offset is 152. Process 152/153; crash before committing 154. Restart reads 152 again. Modern position storage is __consumer_offsets.</desc><style>#mq-10 text {font-family: Georgia, serif;}</style><defs><marker id="mq-10-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="context-stroke"/></marker></defs><rect width="680" height="620" fill="#ffffff"/><g data-rg-content="true"><text x="340" y="36" text-anchor="middle" font-size="23" fill="#383a42" data-rg-title="true"><tspan x="340" dy="0">Uncommitted offsets cause processed records to replay</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="teal" x="25" y="90" width="150" height="56" rx="8" fill="#e1f3fa" stroke="#0184bc" stroke-width="1.5"/>
+<text x="100.0" y="124.0" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="100.0" dy="0">Producer</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="coral" x="265" y="90" width="150" height="56" rx="8" fill="#fbeee2" stroke="#ca6f1e" stroke-width="1.5"/>
+<text x="340.0" y="124.0" text-anchor="middle" font-size="18" fill="#925113"><tspan x="340.0" dy="0">Kafka</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="purple" x="505" y="90" width="150" height="56" rx="8" fill="#faecf9" stroke="#a626a4" stroke-width="1.5"/>
+<text x="580.0" y="124.0" text-anchor="middle" font-size="18" fill="#771977"><tspan x="580.0" dy="0">Consumer</tspan></text>
+<polyline data-rg-kind="connector" points="175,118 265,118" fill="none" stroke="#0184bc" stroke-width="2" marker-end="url(#mq-10-arrow)"/>
+<polyline data-rg-kind="connector" points="415,118 505,118" fill="none" stroke="#ca6f1e" stroke-width="2" marker-end="url(#mq-10-arrow)"/>
+<rect data-rg-kind="shape" data-rg-role="blue" x="160" y="210" width="360" height="75" rx="8" fill="#e6efff" stroke="#4078f2" stroke-width="1.5"/>
+<text x="340.0" y="241.5" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="340.0" dy="0">__consumer_offsets</tspan><tspan x="340.0" dy="24">committed next offset: 152</tspan></text>
+<polyline data-rg-kind="connector" points="580,146 580,245 520,245" fill="none" stroke="#e45649" stroke-width="2" marker-end="url(#mq-10-arrow)" stroke-dasharray="6 4"/>
+<text x="565" y="190" text-anchor="end" font-size="18" fill="#a83329"><tspan x="565" dy="0">commit 154</tspan></text>
+<text x="340" y="325" text-anchor="middle" font-size="18" fill="#a83329"><tspan x="340" dy="0">Crash before commit → stored position stays at 152</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="purple" x="100" y="370" width="480" height="56" rx="8" fill="#faecf9" stroke="#a626a4" stroke-width="1.5"/>
+<text x="340.0" y="404.0" text-anchor="middle" font-size="18" fill="#771977"><tspan x="340.0" dy="0">First run: process 152 → 153</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="amber" x="100" y="450" width="480" height="56" rx="8" fill="#fbeed8" stroke="#c18401" stroke-width="1.5"/>
+<text x="340.0" y="484.0" text-anchor="middle" font-size="18" fill="#8c6001"><tspan x="340.0" dy="0">Restart: read 152 → 153 → 154</tspan></text>
+<polyline data-rg-kind="connector" points="340,426 340,450" fill="none" stroke="#e45649" stroke-width="2" marker-end="url(#mq-10-arrow)"/>
+<text x="340" y="565" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">152 and 153 repeat unless business effects are deduplicated</tspan></text>
+<text x="340" y="598" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">Dashed commit was not completed</tspan></text></g></svg>
