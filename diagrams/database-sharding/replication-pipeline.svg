@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="replication-pipeline" class="logic2image" role="img" aria-labelledby="replication-pipeline-title" aria-describedby="replication-pipeline-desc" viewBox="0 0 680 800" width="680" height="800" style="max-width:100%;height:auto"><title id="replication-pipeline-title">Replication: received does not mean applied</title><desc id="replication-pipeline-desc">The primary sends binlog events. The replica receiver writes relay log, then appliers commit changes to tables. A semi-sync acknowledgement follows relay log flush, not completion of application; readers may still see older data.</desc><style>#replication-pipeline text {font-family: Georgia, serif;}</style><defs><marker id="replication-pipeline-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="context-stroke"/></marker></defs><rect width="680" height="800" fill="#ffffff"/><g data-rg-content="true"><text x="340" y="36" text-anchor="middle" font-size="23" fill="#383a42" data-rg-title="true"><tspan x="340" dy="0">Replication: received does not mean applied</tspan></text>
+<rect data-rg-kind="shape" x="25" y="100" width="260" height="200" rx="10" fill="#ffffff" stroke="#5c5e66" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="40" y="127" text-anchor="start" font-size="18" fill="#383a42"><tspan x="40" dy="0">Primary</tspan></text>
+<rect data-rg-kind="shape" x="345" y="100" width="310" height="640" rx="10" fill="#ffffff" stroke="#5c5e66" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="360" y="127" text-anchor="start" font-size="18" fill="#383a42"><tspan x="360" dy="0">Replica</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="coral" x="45" y="175" width="220" height="70" rx="8" fill="#fbeee2" stroke="#ca6f1e" stroke-width="1.5"/>
+<text x="155.0" y="204.0" text-anchor="middle" font-size="18" fill="#925113"><tspan x="155.0" dy="0">binlog</tspan><tspan x="155.0" dy="24">transaction events</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="teal" x="365" y="175" width="270" height="70" rx="8" fill="#e1f3fa" stroke="#0184bc" stroke-width="1.5"/>
+<text x="500.0" y="216.0" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="500.0" dy="0">I/O receiver</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="coral" x="365" y="310" width="270" height="70" rx="8" fill="#fbeee2" stroke="#ca6f1e" stroke-width="1.5"/>
+<text x="500.0" y="339.0" text-anchor="middle" font-size="18" fill="#925113"><tspan x="500.0" dy="0">relay log</tspan><tspan x="500.0" dy="24">received events</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="purple" x="365" y="490" width="270" height="70" rx="8" fill="#faecf9" stroke="#a626a4" stroke-width="1.5"/>
+<text x="500.0" y="519.0" text-anchor="middle" font-size="18" fill="#771977"><tspan x="500.0" dy="0">Applier / workers</tspan><tspan x="500.0" dy="24">execute + commit</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="blue" x="365" y="625" width="270" height="70" rx="8" fill="#e6efff" stroke="#4078f2" stroke-width="1.5"/>
+<text x="500.0" y="654.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="500.0" dy="0">Replica tables</tspan><tspan x="500.0" dy="24">new rows now readable</tspan></text>
+<polyline data-rg-kind="connector" points="265,210 365,210" fill="none" stroke="#ca6f1e" stroke-width="2" marker-end="url(#replication-pipeline-arrow)"/>
+<polyline data-rg-kind="connector" points="500,245 500,310" fill="none" stroke="#0184bc" stroke-width="2" marker-end="url(#replication-pipeline-arrow)"/>
+<polyline data-rg-kind="connector" points="500,380 500,490" fill="none" stroke="#ca6f1e" stroke-width="2" marker-end="url(#replication-pipeline-arrow)"/>
+<polyline data-rg-kind="connector" points="500,560 500,625" fill="none" stroke="#a626a4" stroke-width="2" marker-end="url(#replication-pipeline-arrow)"/>
+<text x="480" y="440" text-anchor="end" font-size="18" fill="#925113"><tspan x="480" dy="0">Not applied yet</tspan></text>
+<path data-rg-kind="connector" data-rg-route="bezier" data-line-meaning="semi-sync receiver acknowledgement after relay log is flushed to disk" d="M365,345 C300,345 300,235 265,235" fill="none" stroke="#50a14f" stroke-width="2" marker-end="url(#replication-pipeline-arrow)"/>
+<text x="190" y="410" text-anchor="middle" font-size="18" fill="#3a7639"><tspan x="190" dy="0">Semi-sync ack:</tspan><tspan x="190" dy="24">relay log flushed</tspan></text>
+<text x="170" y="545" text-anchor="middle" font-size="18" fill="#771977"><tspan x="170" dy="0">Receipt ≠ execution</tspan></text>
+<text x="340" y="785" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">Semi-sync confirms receipt; reads wait for application</tspan></text></g></svg>

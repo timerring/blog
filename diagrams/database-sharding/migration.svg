@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="migration" class="logic2image" role="img" aria-labelledby="migration-title" aria-describedby="migration-desc" viewBox="0 0 680 750" width="680" height="750" style="max-width:100%;height:auto"><title id="migration-title">Online migration: copy history, keep newer changes</title><desc id="migration-desc">Read old database while dual writing changes and backfilling history. A late version 9 cannot overwrite version 10. Verify and drain changes before switching read and write routing.</desc><style>#migration text {font-family: Georgia, serif;}</style><defs><marker id="migration-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="context-stroke"/></marker></defs><rect width="680" height="750" fill="#ffffff"/><g data-rg-content="true"><text x="340" y="36" text-anchor="middle" font-size="23" fill="#383a42" data-rg-title="true"><tspan x="340" dy="0">Online migration: copy history, keep newer changes</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="teal" x="245" y="85" width="190" height="56" rx="8" fill="#e1f3fa" stroke="#0184bc" stroke-width="1.5"/>
+<text x="340.0" y="119.0" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="340.0" dy="0">Application</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="blue" x="25" y="230" width="230" height="80" rx="8" fill="#e6efff" stroke="#4078f2" stroke-width="1.5"/>
+<text x="140.0" y="264.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="140.0" dy="0">Old database</tspan><tspan x="140.0" dy="24">read authority</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="purple" x="425" y="230" width="230" height="80" rx="8" fill="#faecf9" stroke="#a626a4" stroke-width="1.5"/>
+<text x="540.0" y="264.0" text-anchor="middle" font-size="18" fill="#771977"><tspan x="540.0" dy="0">New shards</tspan><tspan x="540.0" dy="24">version 10</tspan></text>
+<polyline data-rg-kind="guide" points="340,141 340,180 140,180" fill="none" stroke="#5c5e66" stroke-width="1.5"/>
+<polyline data-rg-kind="guide" points="340,180 540,180" fill="none" stroke="#5c5e66" stroke-width="1.5"/>
+<polyline data-rg-kind="connector" points="140,180 140,230" fill="none" stroke="#4078f2" stroke-width="2" marker-end="url(#migration-arrow)"/>
+<polyline data-rg-kind="connector" points="540,180 540,230" fill="none" stroke="#a626a4" stroke-width="2" marker-end="url(#migration-arrow)"/>
+<text x="340" y="215" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="340" dy="0">Dual writes</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="coral" x="25" y="390" width="230" height="80" rx="8" fill="#fbeee2" stroke="#ca6f1e" stroke-width="1.5"/>
+<text x="140.0" y="424.0" text-anchor="middle" font-size="18" fill="#925113"><tspan x="140.0" dy="0">Backfill worker</tspan><tspan x="140.0" dy="24">old snapshot: v9</tspan></text>
+<polyline data-rg-kind="connector" points="140,310 140,390" fill="none" stroke="#ca6f1e" stroke-width="2" marker-end="url(#migration-arrow)"/>
+<rect data-rg-kind="shape" data-rg-role="amber" x="425" y="390" width="230" height="80" rx="8" fill="#fbeed8" stroke="#c18401" stroke-width="1.5"/>
+<text x="540.0" y="424.0" text-anchor="middle" font-size="18" fill="#8c6001"><tspan x="540.0" dy="0">Compare versions</tspan><tspan x="540.0" dy="24">9 &lt; 10: skip</tspan></text>
+<polyline data-rg-kind="connector" points="255,430 425,430" fill="none" stroke="#ca6f1e" stroke-width="2" marker-end="url(#migration-arrow)"/>
+<path data-rg-kind="connector" data-rg-route="bezier" data-line-meaning="read target version 10 for the atomic comparison" d="M540,310 C540,340 540,365 540,390" fill="none" stroke="#a626a4" stroke-width="2" marker-end="url(#migration-arrow)"/>
+<text x="340" y="525" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">Deletes also need a version or tombstone</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="green" x="60" y="570" width="560" height="56" rx="8" fill="#e8f3e2" stroke="#50a14f" stroke-width="1.5"/>
+<text x="340.0" y="604.0" text-anchor="middle" font-size="18" fill="#3a7639"><tspan x="340.0" dy="0">Verify rows + drain pending changes</tspan></text>
+<polyline data-rg-kind="connector" points="340,626 340,665" fill="none" stroke="#50a14f" stroke-width="2" marker-end="url(#migration-arrow)"/>
+<rect data-rg-kind="shape" data-rg-role="green" x="60" y="665" width="560" height="56" rx="8" fill="#e8f3e2" stroke="#50a14f" stroke-width="1.5"/>
+<text x="340.0" y="699.0" text-anchor="middle" font-size="18" fill="#3a7639"><tspan x="340.0" dy="0">Switch read/write routing; retain rollback data</tspan></text></g></svg>

@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="read-write-routing" class="logic2image" role="img" aria-labelledby="read-write-routing-title" aria-describedby="read-write-routing-desc" viewBox="0 0 680 720" width="680" height="720" style="max-width:100%;height:auto"><title id="read-write-routing-title">Read/write splitting: write once, read from replicas</title><desc id="read-write-routing-desc">An application routes writes to the primary and ordinary reads to two replicas. Lower curves show replication data flowing from the primary to each replica, not application queries. Replicas hold copies rather than distinct shards.</desc><style>#read-write-routing text {font-family: Georgia, serif;}</style><defs><marker id="read-write-routing-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="context-stroke"/></marker></defs><rect width="680" height="720" fill="#ffffff"/><g data-rg-content="true"><text x="340" y="36" text-anchor="middle" font-size="23" fill="#383a42" data-rg-title="true"><tspan x="340" dy="0">Read/write splitting: write once, read from replicas</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="teal" x="245" y="75" width="190" height="56" rx="8" fill="#e1f3fa" stroke="#0184bc" stroke-width="1.5"/>
+<text x="340.0" y="109.0" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="340.0" dy="0">Application</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="gray" x="245" y="190" width="190" height="56" rx="8" fill="#f0f0f1" stroke="#5c5e66" stroke-width="1.5"/>
+<text x="340.0" y="224.0" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340.0" dy="0">Read/write router</tspan></text>
+<polyline data-rg-kind="connector" points="340,131 340,190" fill="none" stroke="#0184bc" stroke-width="2" marker-end="url(#read-write-routing-arrow)"/>
+<rect data-rg-kind="shape" data-rg-role="blue" x="25" y="400" width="170" height="80" rx="8" fill="#e6efff" stroke="#4078f2" stroke-width="1.5"/>
+<text x="110.0" y="434.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="110.0" dy="0">Replica A</tspan><tspan x="110.0" dy="24">ordinary reads</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="coral" x="255" y="400" width="170" height="80" rx="8" fill="#fbeee2" stroke="#ca6f1e" stroke-width="1.5"/>
+<text x="340.0" y="434.0" text-anchor="middle" font-size="18" fill="#925113"><tspan x="340.0" dy="0">Primary</tspan><tspan x="340.0" dy="24">writes</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="blue" x="485" y="400" width="170" height="80" rx="8" fill="#e6efff" stroke="#4078f2" stroke-width="1.5"/>
+<text x="570.0" y="434.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="570.0" dy="0">Replica B</tspan><tspan x="570.0" dy="24">ordinary reads</tspan></text>
+<polyline data-rg-kind="connector" points="245,218 110,218 110,400" fill="none" stroke="#4078f2" stroke-width="2" marker-end="url(#read-write-routing-arrow)"/>
+<polyline data-rg-kind="connector" points="340,246 340,400" fill="none" stroke="#ca6f1e" stroke-width="2" marker-end="url(#read-write-routing-arrow)"/>
+<polyline data-rg-kind="connector" points="435,218 570,218 570,400" fill="none" stroke="#4078f2" stroke-width="2" marker-end="url(#read-write-routing-arrow)"/>
+<text x="90" y="315" text-anchor="end" font-size="18" fill="#1a52cf"><tspan x="90" dy="0">Reads</tspan></text>
+<text x="365" y="315" text-anchor="start" font-size="18" fill="#925113"><tspan x="365" dy="0">Writes</tspan></text>
+<text x="590" y="315" text-anchor="start" font-size="18" fill="#1a52cf"><tspan x="590" dy="0">Reads</tspan></text>
+<path data-rg-kind="connector" data-rg-route="bezier" data-line-meaning="primary changes replicate to this replica; not a query route" d="M340,480 C340,620 110,620 110,480" fill="none" stroke="#a626a4" stroke-width="2" marker-end="url(#read-write-routing-arrow)"/>
+<path data-rg-kind="connector" data-rg-route="bezier" data-line-meaning="primary changes replicate to this replica; not a query route" d="M340,480 C340,620 570,620 570,480" fill="none" stroke="#a626a4" stroke-width="2" marker-end="url(#read-write-routing-arrow)"/>
+<text x="340" y="635" text-anchor="middle" font-size="18" fill="#771977"><tspan x="340" dy="0">Replication: primary → replicas</tspan></text>
+<text x="340" y="690" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">Full copies, not shards; replication takes time</tspan></text></g></svg>

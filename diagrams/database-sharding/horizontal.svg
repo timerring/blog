@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="horizontal" class="logic2image" role="img" aria-labelledby="horizontal-title" aria-describedby="horizontal-desc" viewBox="0 0 680 690" width="680" height="690" style="max-width:100%;height:auto"><title id="horizontal-title">Horizontal split: same columns, different rows</title><desc id="horizontal-desc">Six orders split by user_id modulo 2 onto separate instances. Every original row appears exactly once; schema stays the same.</desc><style>#horizontal text {font-family: Georgia, serif;}</style><defs><marker id="horizontal-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="context-stroke"/></marker></defs><rect width="680" height="690" fill="#ffffff"/><g data-rg-content="true"><text x="340" y="36" text-anchor="middle" font-size="23" fill="#383a42" data-rg-title="true"><tspan x="340" dy="0">Horizontal split: same columns, different rows</tspan></text>
+<rect data-rg-kind="shape" x="130" y="100" width="140" height="38" fill="#e6efff" stroke="#4078f2" stroke-width="1"/>
+<text x="200.0" y="125.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="200.0" dy="0">order_id</tspan></text>
+<rect data-rg-kind="shape" x="270" y="100" width="140" height="38" fill="#e6efff" stroke="#4078f2" stroke-width="1"/>
+<text x="340.0" y="125.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="340.0" dy="0">user_id</tspan></text>
+<rect data-rg-kind="shape" x="410" y="100" width="140" height="38" fill="#e6efff" stroke="#4078f2" stroke-width="1"/>
+<text x="480.0" y="125.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="480.0" dy="0">amount</tspan></text>
+<rect data-rg-kind="shape" x="130" y="138" width="140" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="200.0" y="163.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="200.0" dy="0">100</tspan></text>
+<rect data-rg-kind="shape" x="270" y="138" width="140" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="340.0" y="163.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="340.0" dy="0">0</tspan></text>
+<rect data-rg-kind="shape" x="410" y="138" width="140" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="480.0" y="163.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="480.0" dy="0">50</tspan></text>
+<rect data-rg-kind="shape" x="130" y="176" width="140" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="200.0" y="201.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="200.0" dy="0">101</tspan></text>
+<rect data-rg-kind="shape" x="270" y="176" width="140" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="340.0" y="201.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="340.0" dy="0">1</tspan></text>
+<rect data-rg-kind="shape" x="410" y="176" width="140" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="480.0" y="201.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="480.0" dy="0">60</tspan></text>
+<rect data-rg-kind="shape" x="130" y="214" width="140" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="200.0" y="239.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="200.0" dy="0">102</tspan></text>
+<rect data-rg-kind="shape" x="270" y="214" width="140" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="340.0" y="239.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="340.0" dy="0">2</tspan></text>
+<rect data-rg-kind="shape" x="410" y="214" width="140" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="480.0" y="239.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="480.0" dy="0">70</tspan></text>
+<rect data-rg-kind="shape" x="130" y="252" width="140" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="200.0" y="277.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="200.0" dy="0">103</tspan></text>
+<rect data-rg-kind="shape" x="270" y="252" width="140" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="340.0" y="277.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="340.0" dy="0">3</tspan></text>
+<rect data-rg-kind="shape" x="410" y="252" width="140" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="480.0" y="277.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="480.0" dy="0">80</tspan></text>
+<rect data-rg-kind="shape" x="130" y="290" width="140" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="200.0" y="315.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="200.0" dy="0">104</tspan></text>
+<rect data-rg-kind="shape" x="270" y="290" width="140" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="340.0" y="315.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="340.0" dy="0">4</tspan></text>
+<rect data-rg-kind="shape" x="410" y="290" width="140" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="480.0" y="315.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="480.0" dy="0">90</tspan></text>
+<rect data-rg-kind="shape" x="130" y="328" width="140" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="200.0" y="353.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="200.0" dy="0">105</tspan></text>
+<rect data-rg-kind="shape" x="270" y="328" width="140" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="340.0" y="353.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="340.0" dy="0">5</tspan></text>
+<rect data-rg-kind="shape" x="410" y="328" width="140" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="480.0" y="353.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="480.0" dy="0">100</tspan></text>
+<polyline data-rg-kind="guide" points="340,366 340,400 170,400" fill="none" stroke="#5c5e66" stroke-width="1.5"/>
+<polyline data-rg-kind="guide" points="340,400 510,400" fill="none" stroke="#5c5e66" stroke-width="1.5"/>
+<polyline data-rg-kind="connector" points="170,400 170,450" fill="none" stroke="#4078f2" stroke-width="2" marker-end="url(#horizontal-arrow)"/>
+<polyline data-rg-kind="connector" points="510,400 510,450" fill="none" stroke="#a626a4" stroke-width="2" marker-end="url(#horizontal-arrow)"/>
+<rect data-rg-kind="shape" x="20" y="450" width="100" height="38" fill="#e6efff" stroke="#4078f2" stroke-width="1"/>
+<text x="70.0" y="475.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="70.0" dy="0">order_id</tspan></text>
+<rect data-rg-kind="shape" x="120" y="450" width="100" height="38" fill="#e6efff" stroke="#4078f2" stroke-width="1"/>
+<text x="170.0" y="475.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="170.0" dy="0">user_id</tspan></text>
+<rect data-rg-kind="shape" x="220" y="450" width="100" height="38" fill="#e6efff" stroke="#4078f2" stroke-width="1"/>
+<text x="270.0" y="475.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="270.0" dy="0">amount</tspan></text>
+<rect data-rg-kind="shape" x="20" y="488" width="100" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="70.0" y="513.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="70.0" dy="0">100</tspan></text>
+<rect data-rg-kind="shape" x="120" y="488" width="100" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="170.0" y="513.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="170.0" dy="0">0</tspan></text>
+<rect data-rg-kind="shape" x="220" y="488" width="100" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="270.0" y="513.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="270.0" dy="0">50</tspan></text>
+<rect data-rg-kind="shape" x="20" y="526" width="100" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="70.0" y="551.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="70.0" dy="0">102</tspan></text>
+<rect data-rg-kind="shape" x="120" y="526" width="100" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="170.0" y="551.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="170.0" dy="0">2</tspan></text>
+<rect data-rg-kind="shape" x="220" y="526" width="100" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="270.0" y="551.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="270.0" dy="0">70</tspan></text>
+<rect data-rg-kind="shape" x="20" y="564" width="100" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="70.0" y="589.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="70.0" dy="0">104</tspan></text>
+<rect data-rg-kind="shape" x="120" y="564" width="100" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="170.0" y="589.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="170.0" dy="0">4</tspan></text>
+<rect data-rg-kind="shape" x="220" y="564" width="100" height="38" fill="#ffffff" stroke="#4078f2" stroke-width="1"/>
+<text x="270.0" y="589.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="270.0" dy="0">90</tspan></text>
+<rect data-rg-kind="shape" x="360" y="450" width="100" height="38" fill="#faecf9" stroke="#a626a4" stroke-width="1"/>
+<text x="410.0" y="475.0" text-anchor="middle" font-size="18" fill="#771977"><tspan x="410.0" dy="0">order_id</tspan></text>
+<rect data-rg-kind="shape" x="460" y="450" width="100" height="38" fill="#faecf9" stroke="#a626a4" stroke-width="1"/>
+<text x="510.0" y="475.0" text-anchor="middle" font-size="18" fill="#771977"><tspan x="510.0" dy="0">user_id</tspan></text>
+<rect data-rg-kind="shape" x="560" y="450" width="100" height="38" fill="#faecf9" stroke="#a626a4" stroke-width="1"/>
+<text x="610.0" y="475.0" text-anchor="middle" font-size="18" fill="#771977"><tspan x="610.0" dy="0">amount</tspan></text>
+<rect data-rg-kind="shape" x="360" y="488" width="100" height="38" fill="#ffffff" stroke="#a626a4" stroke-width="1"/>
+<text x="410.0" y="513.0" text-anchor="middle" font-size="18" fill="#771977"><tspan x="410.0" dy="0">101</tspan></text>
+<rect data-rg-kind="shape" x="460" y="488" width="100" height="38" fill="#ffffff" stroke="#a626a4" stroke-width="1"/>
+<text x="510.0" y="513.0" text-anchor="middle" font-size="18" fill="#771977"><tspan x="510.0" dy="0">1</tspan></text>
+<rect data-rg-kind="shape" x="560" y="488" width="100" height="38" fill="#ffffff" stroke="#a626a4" stroke-width="1"/>
+<text x="610.0" y="513.0" text-anchor="middle" font-size="18" fill="#771977"><tspan x="610.0" dy="0">60</tspan></text>
+<rect data-rg-kind="shape" x="360" y="526" width="100" height="38" fill="#ffffff" stroke="#a626a4" stroke-width="1"/>
+<text x="410.0" y="551.0" text-anchor="middle" font-size="18" fill="#771977"><tspan x="410.0" dy="0">103</tspan></text>
+<rect data-rg-kind="shape" x="460" y="526" width="100" height="38" fill="#ffffff" stroke="#a626a4" stroke-width="1"/>
+<text x="510.0" y="551.0" text-anchor="middle" font-size="18" fill="#771977"><tspan x="510.0" dy="0">3</tspan></text>
+<rect data-rg-kind="shape" x="560" y="526" width="100" height="38" fill="#ffffff" stroke="#a626a4" stroke-width="1"/>
+<text x="610.0" y="551.0" text-anchor="middle" font-size="18" fill="#771977"><tspan x="610.0" dy="0">80</tspan></text>
+<rect data-rg-kind="shape" x="360" y="564" width="100" height="38" fill="#ffffff" stroke="#a626a4" stroke-width="1"/>
+<text x="410.0" y="589.0" text-anchor="middle" font-size="18" fill="#771977"><tspan x="410.0" dy="0">105</tspan></text>
+<rect data-rg-kind="shape" x="460" y="564" width="100" height="38" fill="#ffffff" stroke="#a626a4" stroke-width="1"/>
+<text x="510.0" y="589.0" text-anchor="middle" font-size="18" fill="#771977"><tspan x="510.0" dy="0">5</tspan></text>
+<rect data-rg-kind="shape" x="560" y="564" width="100" height="38" fill="#ffffff" stroke="#a626a4" stroke-width="1"/>
+<text x="610.0" y="589.0" text-anchor="middle" font-size="18" fill="#771977"><tspan x="610.0" dy="0">100</tspan></text>
+<text x="170" y="635" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="170" dy="0">MySQL A: even user_id</tspan></text>
+<text x="510" y="635" text-anchor="middle" font-size="18" fill="#771977"><tspan x="510" dy="0">MySQL B: odd user_id</tspan></text>
+<text x="340" y="675" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">6 rows = 3 + 3; one user routes to one shard</tspan></text></g></svg>

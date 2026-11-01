@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="expansion" class="logic2image" role="img" aria-labelledby="expansion-title" aria-describedby="expansion-desc" viewBox="0 0 680 670" width="680" height="670" style="max-width:100%;height:auto"><title id="expansion-title">Keep logical shards; move their physical location</title><desc id="expansion-desc">Four fixed logical shards initially live on two servers. Move S1 to C and S3 to D. Routing from key to shard remains unchanged, but data must be copied, caught up and verified.</desc><style>#expansion text {font-family: Georgia, serif;}</style><defs><marker id="expansion-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="context-stroke"/></marker></defs><rect width="680" height="670" fill="#ffffff"/><g data-rg-content="true"><text x="340" y="36" text-anchor="middle" font-size="23" fill="#383a42" data-rg-title="true"><tspan x="340" dy="0">Keep logical shards; move their physical location</tspan></text>
+<text x="340" y="90" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">Before: 2 physical servers</tspan></text>
+<rect data-rg-kind="shape" x="25" y="120" width="300" height="160" rx="10" fill="#ffffff" stroke="#5c5e66" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="40" y="147" text-anchor="start" font-size="18" fill="#383a42"><tspan x="40" dy="0">MySQL A</tspan></text>
+<rect data-rg-kind="shape" x="355" y="120" width="300" height="160" rx="10" fill="#ffffff" stroke="#5c5e66" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="370" y="147" text-anchor="start" font-size="18" fill="#383a42"><tspan x="370" dy="0">MySQL B</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="blue" x="45" y="185" width="120" height="56" rx="8" fill="#e6efff" stroke="#4078f2" stroke-width="1.5"/>
+<text x="105.0" y="219.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="105.0" dy="0">S0</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="blue" x="185" y="185" width="120" height="56" rx="8" fill="#e6efff" stroke="#4078f2" stroke-width="1.5"/>
+<text x="245.0" y="219.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="245.0" dy="0">S1</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="blue" x="375" y="185" width="120" height="56" rx="8" fill="#e6efff" stroke="#4078f2" stroke-width="1.5"/>
+<text x="435.0" y="219.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="435.0" dy="0">S2</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="blue" x="515" y="185" width="120" height="56" rx="8" fill="#e6efff" stroke="#4078f2" stroke-width="1.5"/>
+<text x="575.0" y="219.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="575.0" dy="0">S3</tspan></text>
+<text x="340" y="340" text-anchor="middle" font-size="18" fill="#925113"><tspan x="340" dy="0">Copy → catch up → verify → change mapping</tspan></text>
+<text x="340" y="400" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">After: 4 physical servers</tspan></text>
+<rect data-rg-kind="shape" x="10" y="435" width="150" height="150" rx="10" fill="#ffffff" stroke="#5c5e66" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="25" y="462" text-anchor="start" font-size="18" fill="#383a42"><tspan x="25" dy="0">MySQL A</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="blue" x="25" y="495" width="120" height="56" rx="8" fill="#e6efff" stroke="#4078f2" stroke-width="1.5"/>
+<text x="85.0" y="529.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="85.0" dy="0">S0</tspan></text>
+<rect data-rg-kind="shape" x="180" y="435" width="150" height="150" rx="10" fill="#ffffff" stroke="#5c5e66" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="195" y="462" text-anchor="start" font-size="18" fill="#383a42"><tspan x="195" dy="0">MySQL C</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="purple" x="195" y="495" width="120" height="56" rx="8" fill="#faecf9" stroke="#a626a4" stroke-width="1.5"/>
+<text x="255.0" y="529.0" text-anchor="middle" font-size="18" fill="#771977"><tspan x="255.0" dy="0">S1</tspan></text>
+<rect data-rg-kind="shape" x="350" y="435" width="150" height="150" rx="10" fill="#ffffff" stroke="#5c5e66" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="365" y="462" text-anchor="start" font-size="18" fill="#383a42"><tspan x="365" dy="0">MySQL B</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="blue" x="365" y="495" width="120" height="56" rx="8" fill="#e6efff" stroke="#4078f2" stroke-width="1.5"/>
+<text x="425.0" y="529.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="425.0" dy="0">S2</tspan></text>
+<rect data-rg-kind="shape" x="520" y="435" width="150" height="150" rx="10" fill="#ffffff" stroke="#5c5e66" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="535" y="462" text-anchor="start" font-size="18" fill="#383a42"><tspan x="535" dy="0">MySQL D</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="purple" x="535" y="495" width="120" height="56" rx="8" fill="#faecf9" stroke="#a626a4" stroke-width="1.5"/>
+<text x="595.0" y="529.0" text-anchor="middle" font-size="18" fill="#771977"><tspan x="595.0" dy="0">S3</tspan></text>
+<text x="340" y="635" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">key → logical shard stays fixed; shard → server changes</tspan></text></g></svg>

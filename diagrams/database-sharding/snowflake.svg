@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="snowflake" class="logic2image" role="img" aria-labelledby="snowflake-title" aria-describedby="snowflake-desc" viewBox="0 0 680 600" width="680" height="600" style="max-width:100%;height:auto"><title id="snowflake-title">Snowflake: pack time, node and sequence into 64 bits</title><desc id="snowflake-desc">Field widths are exactly proportional to 1,41,10,12 bits. Time uses an epoch-relative millisecond count. The sequence has 4096 values per node per millisecond, not a throughput benchmark.</desc><style>#snowflake text {font-family: Georgia, serif;}</style><defs><marker id="snowflake-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="context-stroke"/></marker></defs><rect width="680" height="600" fill="#ffffff"/><g data-rg-content="true"><text x="340" y="36" text-anchor="middle" font-size="23" fill="#383a42" data-rg-title="true"><tspan x="340" dy="0">Snowflake: pack time, node and sequence into 64 bits</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="gray" x="20" y="115" width="10" height="65" fill="#f0f0f1" stroke="#5c5e66" stroke-width="1"/>
+<rect data-rg-kind="shape" data-rg-role="teal" x="30" y="115" width="410" height="65" fill="#e1f3fa" stroke="#0184bc" stroke-width="1"/>
+<rect data-rg-kind="shape" data-rg-role="purple" x="440" y="115" width="100" height="65" fill="#faecf9" stroke="#a626a4" stroke-width="1"/>
+<rect data-rg-kind="shape" data-rg-role="coral" x="540" y="115" width="120" height="65" fill="#fbeee2" stroke="#ca6f1e" stroke-width="1"/>
+<text x="340" y="85" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">MSB ←                         64 bits                         → LSB</tspan></text>
+<text x="25" y="225" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="25" dy="0">0</tspan></text>
+<text x="235" y="225" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="235" dy="0">41-bit time delta</tspan></text>
+<text x="490" y="225" text-anchor="middle" font-size="18" fill="#771977"><tspan x="490" dy="0">10-bit node</tspan></text>
+<text x="600" y="265" text-anchor="middle" font-size="18" fill="#925113"><tspan x="600" dy="0">12-bit sequence</tspan></text>
+<polyline data-rg-kind="guide" points="600,180 600,240" fill="none" stroke="#5c5e66" stroke-width="1.5"/>
+<text x="340" y="325" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">(elapsedMillis &lt;&lt; 22) | (nodeId &lt;&lt; 12) | sequence</tspan></text>
+<rect data-rg-kind="shape" x="60" y="375" width="220" height="38" fill="#e1f3fa" stroke="#0184bc" stroke-width="1"/>
+<text x="170.0" y="400.0" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="170.0" dy="0">Field</tspan></text>
+<rect data-rg-kind="shape" x="280" y="375" width="340" height="38" fill="#e1f3fa" stroke="#0184bc" stroke-width="1"/>
+<text x="450.0" y="400.0" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="450.0" dy="0">Range / meaning</tspan></text>
+<rect data-rg-kind="shape" x="60" y="413" width="220" height="38" fill="#ffffff" stroke="#0184bc" stroke-width="1"/>
+<text x="170.0" y="438.0" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="170.0" dy="0">Time delta</tspan></text>
+<rect data-rg-kind="shape" x="280" y="413" width="340" height="38" fill="#ffffff" stroke="#0184bc" stroke-width="1"/>
+<text x="450.0" y="438.0" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="450.0" dy="0">0 .. 2^41 - 1 ms</tspan></text>
+<rect data-rg-kind="shape" x="60" y="451" width="220" height="38" fill="#ffffff" stroke="#0184bc" stroke-width="1"/>
+<text x="170.0" y="476.0" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="170.0" dy="0">Node ID</tspan></text>
+<rect data-rg-kind="shape" x="280" y="451" width="340" height="38" fill="#ffffff" stroke="#0184bc" stroke-width="1"/>
+<text x="450.0" y="476.0" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="450.0" dy="0">0 .. 1023</tspan></text>
+<rect data-rg-kind="shape" x="60" y="489" width="220" height="38" fill="#ffffff" stroke="#0184bc" stroke-width="1"/>
+<text x="170.0" y="514.0" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="170.0" dy="0">Sequence</tspan></text>
+<rect data-rg-kind="shape" x="280" y="489" width="340" height="38" fill="#ffffff" stroke="#0184bc" stroke-width="1"/>
+<text x="450.0" y="514.0" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="450.0" dy="0">0 .. 4095 each millisecond</tspan></text>
+<text x="340" y="575" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">Unique node IDs + clock handling + serialized sequence</tspan></text></g></svg>

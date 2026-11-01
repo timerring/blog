@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="middleware" class="logic2image" role="img" aria-labelledby="middleware-title" aria-describedby="middleware-desc" viewBox="0 0 680 650" width="680" height="650" style="max-width:100%;height:auto"><title id="middleware-title">Client-side routing vs a shared proxy</title><desc id="middleware-desc">JDBC routing runs inside the application process. A proxy is a separate network service. Both route SQL to physical databases.</desc><style>#middleware text {font-family: Georgia, serif;}</style><defs><marker id="middleware-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="context-stroke"/></marker></defs><rect width="680" height="650" fill="#ffffff"/><g data-rg-content="true"><text x="340" y="36" text-anchor="middle" font-size="23" fill="#383a42" data-rg-title="true"><tspan x="340" dy="0">Client-side routing vs a shared proxy</tspan></text>
+<text x="340" y="85" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="340" dy="0">Client: embedded in each Java application</tspan></text>
+<rect data-rg-kind="shape" x="25" y="115" width="300" height="200" rx="10" fill="#ffffff" stroke="#5c5e66" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="40" y="142" text-anchor="start" font-size="18" fill="#383a42"><tspan x="40" dy="0">Application process</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="gray" x="45" y="165" width="260" height="56" rx="8" fill="#f0f0f1" stroke="#5c5e66" stroke-width="1.5"/>
+<text x="175.0" y="199.0" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="175.0" dy="0">Business code</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="teal" x="45" y="245" width="260" height="56" rx="8" fill="#e1f3fa" stroke="#0184bc" stroke-width="1.5"/>
+<text x="175.0" y="279.0" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="175.0" dy="0">ShardingSphere-JDBC</tspan></text>
+<polyline data-rg-kind="connector" points="175,221 175,245" fill="none" stroke="#0184bc" stroke-width="2" marker-end="url(#middleware-arrow)"/>
+<rect data-rg-kind="shape" data-rg-role="blue" x="480" y="245" width="170" height="56" rx="8" fill="#e6efff" stroke="#4078f2" stroke-width="1.5"/>
+<text x="565.0" y="279.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="565.0" dy="0">MySQL shards</tspan></text>
+<polyline data-rg-kind="connector" points="305,273 480,273" fill="none" stroke="#0184bc" stroke-width="2" marker-end="url(#middleware-arrow)"/>
+<text x="410" y="220" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="410" dy="0">direct SQL</tspan></text>
+<text x="340" y="390" text-anchor="middle" font-size="18" fill="#925113"><tspan x="340" dy="0">Proxy: a separately deployed network service</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="gray" x="25" y="470" width="170" height="80" rx="8" fill="#f0f0f1" stroke="#5c5e66" stroke-width="1.5"/>
+<text x="110.0" y="516.0" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="110.0" dy="0">Applications</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="coral" x="255" y="470" width="170" height="80" rx="8" fill="#fbeee2" stroke="#ca6f1e" stroke-width="1.5"/>
+<text x="340.0" y="504.0" text-anchor="middle" font-size="18" fill="#925113"><tspan x="340.0" dy="0">Proxy</tspan><tspan x="340.0" dy="24">SQL routing</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="blue" x="485" y="470" width="170" height="80" rx="8" fill="#e6efff" stroke="#4078f2" stroke-width="1.5"/>
+<text x="570.0" y="516.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="570.0" dy="0">MySQL shards</tspan></text>
+<polyline data-rg-kind="connector" points="195,510 255,510" fill="none" stroke="#ca6f1e" stroke-width="2" marker-end="url(#middleware-arrow)"/>
+<polyline data-rg-kind="connector" points="425,510 485,510" fill="none" stroke="#ca6f1e" stroke-width="2" marker-end="url(#middleware-arrow)"/>
+<text x="340" y="610" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">Proxy needs its own capacity and high availability</tspan></text></g></svg>
