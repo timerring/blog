@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="leaky-bucket" class="logic2image" role="img" aria-labelledby="leaky-bucket-title" aria-describedby="leaky-bucket-desc" viewBox="0 0 680 640" width="680" height="640" style="max-width:100%;height:auto"><title id="leaky-bucket-title">Leaky bucket: queue requests, release at a steady pace</title><desc id="leaky-bucket-desc">Model: queue capacity 4, six arrivals at t=0, accept four and reject two. Start releasing at 0.5s, then every 0.5s. The queue scheduler is required; a water-level admission check alone does not pace execution.</desc><style>#leaky-bucket text {font-family: Georgia, serif;}</style><defs><marker id="leaky-bucket-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="context-stroke"/></marker></defs><rect width="680" height="640" fill="#ffffff"/><g data-rg-content="true"><text x="340" y="36" text-anchor="middle" font-size="23" fill="#383a42" data-rg-title="true"><tspan x="340" dy="0">Leaky bucket: queue requests, release at a steady pace</tspan></text>
+<text x="340" y="85" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">Queue capacity = 4; release rate = 2 requests/s</tspan></text>
+<path data-rg-kind="shape" d="M70,145 L90,390 H280 L300,145" fill="none" stroke="#5c5e66" stroke-width="2"/>
+<rect data-rg-kind="shape" data-rg-role="blue" x="105" y="165" width="160" height="38" rx="8" fill="#e6efff" stroke="#4078f2" stroke-width="1.5"/>
+<text x="185.0" y="190.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="185.0" dy="0">Request 1</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="blue" x="105" y="213" width="160" height="38" rx="8" fill="#e6efff" stroke="#4078f2" stroke-width="1.5"/>
+<text x="185.0" y="238.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="185.0" dy="0">Request 2</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="blue" x="105" y="261" width="160" height="38" rx="8" fill="#e6efff" stroke="#4078f2" stroke-width="1.5"/>
+<text x="185.0" y="286.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="185.0" dy="0">Request 3</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="blue" x="105" y="309" width="160" height="38" rx="8" fill="#e6efff" stroke="#4078f2" stroke-width="1.5"/>
+<text x="185.0" y="334.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="185.0" dy="0">Request 4</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="coral" x="390" y="130" width="240" height="70" rx="8" fill="#fbeee2" stroke="#ca6f1e" stroke-width="1.5"/>
+<text x="510.0" y="171.0" text-anchor="middle" font-size="18" fill="#925113"><tspan x="510.0" dy="0">6 arrive at t = 0</tspan></text>
+<polyline data-rg-kind="connector" points="390,180 265,184" fill="none" stroke="#4078f2" stroke-width="2" marker-end="url(#leaky-bucket-arrow)"/>
+<rect data-rg-kind="shape" data-rg-role="red" x="390" y="255" width="240" height="70" rx="8" fill="#fde8e6" stroke="#e45649" stroke-width="1.5"/>
+<text x="510.0" y="296.0" text-anchor="middle" font-size="18" fill="#a83329"><tspan x="510.0" dy="0">2 rejected: queue full</tspan></text>
+<polyline data-rg-kind="connector" points="510,200 510,255" fill="none" stroke="#e45649" stroke-width="2" marker-end="url(#leaky-bucket-arrow)"/>
+<text x="340" y="440" text-anchor="middle" font-size="18" fill="#771977"><tspan x="340" dy="0">4 accepted requests leave one at a time</tspan></text>
+<polyline data-rg-kind="connector" points="60,490 640,490" fill="none" stroke="#5c5e66" stroke-width="2" marker-end="url(#leaky-bucket-arrow)"/>
+<circle data-rg-kind="data" data-evidence="modelled" data-description="one queued request released at 0.5s" cx="200.0" cy="490" r="7" fill="#a626a4"/>
+<text x="200.0" y="535" text-anchor="middle" font-size="18" fill="#771977"><tspan x="200.0" dy="0">0.5s</tspan></text>
+<circle data-rg-kind="data" data-evidence="modelled" data-description="one queued request released at 1s" cx="340" cy="490" r="7" fill="#a626a4"/>
+<text x="340" y="535" text-anchor="middle" font-size="18" fill="#771977"><tspan x="340" dy="0">1s</tspan></text>
+<circle data-rg-kind="data" data-evidence="modelled" data-description="one queued request released at 1.5s" cx="480.0" cy="490" r="7" fill="#a626a4"/>
+<text x="480.0" y="535" text-anchor="middle" font-size="18" fill="#771977"><tspan x="480.0" dy="0">1.5s</tspan></text>
+<circle data-rg-kind="data" data-evidence="modelled" data-description="one queued request released at 2s" cx="620" cy="490" r="7" fill="#a626a4"/>
+<text x="620" y="535" text-anchor="middle" font-size="18" fill="#771977"><tspan x="620" dy="0">2s</tspan></text>
+<text x="340" y="595" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">Queue holds requests; acceptance is not immediate execution</tspan></text></g></svg>

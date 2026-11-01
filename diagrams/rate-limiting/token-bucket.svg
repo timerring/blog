@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="token-bucket" class="logic2image" role="img" aria-labelledby="token-bucket-title" aria-describedby="token-bucket-desc" viewBox="0 0 680 480" width="680" height="480" style="max-width:100%;height:auto"><title id="token-bucket-title">Token bucket: spend saved permits on a burst</title><desc id="token-bucket-desc">Continuous refill model: capacity 4, rate 2 tokens/s, cost 1. Initially full, six arrivals at t=0 use four tokens and two fail. At t=0.5s one token is available for a new request.</desc><style>#token-bucket text {font-family: Georgia, serif;}</style><defs><marker id="token-bucket-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="context-stroke"/></marker></defs><rect width="680" height="480" fill="#ffffff"/><g data-rg-content="true"><text x="340" y="36" text-anchor="middle" font-size="23" fill="#383a42" data-rg-title="true"><tspan x="340" dy="0">Token bucket: spend saved permits on a burst</tspan></text>
+<text x="340" y="85" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">Capacity B = 4; refill r = 2/s; cost c = 1</tspan></text>
+<rect data-rg-kind="shape" x="20" y="120" width="195" height="180" rx="10" fill="#ffffff" stroke="#5c5e66" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="35" y="147" text-anchor="start" font-size="18" fill="#383a42"><tspan x="35" dy="0">t = 0: full</tspan></text>
+<circle data-rg-kind="shape" cx="55" cy="205" r="15" fill="#e1f3fa" stroke="#0184bc" stroke-width="2"/>
+<circle data-rg-kind="shape" cx="97" cy="205" r="15" fill="#e1f3fa" stroke="#0184bc" stroke-width="2"/>
+<circle data-rg-kind="shape" cx="139" cy="205" r="15" fill="#e1f3fa" stroke="#0184bc" stroke-width="2"/>
+<circle data-rg-kind="shape" cx="181" cy="205" r="15" fill="#e1f3fa" stroke="#0184bc" stroke-width="2"/>
+<text x="117.5" y="275" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="117.5" dy="0">4 tokens</tspan></text>
+<rect data-rg-kind="shape" x="245" y="120" width="195" height="180" rx="10" fill="#ffffff" stroke="#5c5e66" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="260" y="147" text-anchor="start" font-size="18" fill="#383a42"><tspan x="260" dy="0">After the burst</tspan></text>
+<circle data-rg-kind="shape" cx="280" cy="205" r="15" fill="#ffffff" stroke="#0184bc" stroke-width="2"/>
+<circle data-rg-kind="shape" cx="322" cy="205" r="15" fill="#ffffff" stroke="#0184bc" stroke-width="2"/>
+<circle data-rg-kind="shape" cx="364" cy="205" r="15" fill="#ffffff" stroke="#0184bc" stroke-width="2"/>
+<circle data-rg-kind="shape" cx="406" cy="205" r="15" fill="#ffffff" stroke="#0184bc" stroke-width="2"/>
+<text x="342.5" y="275" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="342.5" dy="0">0 tokens</tspan></text>
+<rect data-rg-kind="shape" x="470" y="120" width="195" height="180" rx="10" fill="#ffffff" stroke="#5c5e66" stroke-width="1.5" stroke-dasharray="6 4"/>
+<text x="485" y="147" text-anchor="start" font-size="18" fill="#383a42"><tspan x="485" dy="0">t = 0.5s</tspan></text>
+<circle data-rg-kind="shape" cx="505" cy="205" r="15" fill="#e1f3fa" stroke="#0184bc" stroke-width="2"/>
+<circle data-rg-kind="shape" cx="547" cy="205" r="15" fill="#ffffff" stroke="#0184bc" stroke-width="2"/>
+<circle data-rg-kind="shape" cx="589" cy="205" r="15" fill="#ffffff" stroke="#0184bc" stroke-width="2"/>
+<circle data-rg-kind="shape" cx="631" cy="205" r="15" fill="#ffffff" stroke="#0184bc" stroke-width="2"/>
+<text x="567.5" y="275" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="567.5" dy="0">1 token</tspan></text>
+<polyline data-rg-kind="connector" points="215,220 245,220" fill="none" stroke="#ca6f1e" stroke-width="2" marker-end="url(#token-bucket-arrow)"/>
+<polyline data-rg-kind="connector" points="440,220 470,220" fill="none" stroke="#0184bc" stroke-width="2" marker-end="url(#token-bucket-arrow)"/>
+<text x="117.5" y="350" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="117.5" dy="0">4 saved permits</tspan></text>
+<text x="342.5" y="350" text-anchor="middle" font-size="18" fill="#925113"><tspan x="342.5" dy="0">4 pass immediately</tspan><tspan x="342.5" dy="24">2 rejected</tspan></text>
+<text x="567.5" y="350" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="567.5" dy="0">1 refilled permit</tspan><tspan x="567.5" dy="24">1 new request can pass</tspan></text>
+<text x="340" y="445" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">The bucket holds permission, not queued requests</tspan></text></g></svg>

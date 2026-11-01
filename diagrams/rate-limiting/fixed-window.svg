@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="fixed-window" class="logic2image" role="img" aria-labelledby="fixed-window-title" aria-describedby="fixed-window-desc" viewBox="0 0 680 510" width="680" height="510" style="max-width:100%;height:auto"><title id="fixed-window-title">Fixed windows allow a burst across the boundary</title><desc id="fixed-window-desc">Limit 60 per aligned minute. Two batches at 59.9 and 60.1 seconds both pass. Positions follow x=60+(t-58)*140. Thus 120 requests pass across a 0.2-second span without violating either window.</desc><style>#fixed-window text {font-family: Georgia, serif;}</style><defs><marker id="fixed-window-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="context-stroke"/></marker></defs><rect width="680" height="510" fill="#ffffff"/><g data-rg-content="true"><text x="340" y="36" text-anchor="middle" font-size="23" fill="#383a42" data-rg-title="true"><tspan x="340" dy="0">Fixed windows allow a burst across the boundary</tspan></text>
+<rect data-rg-kind="shape" x="60" y="130" width="280" height="100" fill="#e6efff" stroke="#4078f2" stroke-width="1"/>
+<rect data-rg-kind="shape" x="340" y="130" width="280" height="100" fill="#faecf9" stroke="#a626a4" stroke-width="1"/>
+<text x="200" y="165" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="200" dy="0">Window A: 60 / 60</tspan></text>
+<text x="480" y="165" text-anchor="middle" font-size="18" fill="#771977"><tspan x="480" dy="0">Window B: 60 / 60</tspan></text>
+<text x="340" y="95" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">Counter resets at 60s</tspan></text>
+<polyline data-rg-kind="guide" points="340,105 340,240" fill="none" stroke="#5c5e66" stroke-width="1.5"/>
+<polyline data-rg-kind="connector" points="60,240 640,240" fill="none" stroke="#5c5e66" stroke-width="2" marker-end="url(#fixed-window-arrow)"/>
+<polyline data-rg-kind="guide" points="60,240 60,250" fill="none" stroke="#5c5e66" stroke-width="1.5"/>
+<text x="60" y="280" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="60" dy="0">58s</tspan></text>
+<polyline data-rg-kind="guide" points="200,240 200,250" fill="none" stroke="#5c5e66" stroke-width="1.5"/>
+<text x="200" y="280" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="200" dy="0">59s</tspan></text>
+<polyline data-rg-kind="guide" points="340,240 340,250" fill="none" stroke="#5c5e66" stroke-width="1.5"/>
+<text x="340" y="280" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">60s</tspan></text>
+<polyline data-rg-kind="guide" points="480,240 480,250" fill="none" stroke="#5c5e66" stroke-width="1.5"/>
+<text x="480" y="280" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="480" dy="0">61s</tspan></text>
+<polyline data-rg-kind="guide" points="620,240 620,250" fill="none" stroke="#5c5e66" stroke-width="1.5"/>
+<text x="620" y="280" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="620" dy="0">62s</tspan></text>
+<polyline data-rg-kind="guide" points="326,205 326,240" fill="none" stroke="#5c5e66" stroke-width="1.5"/>
+<circle data-rg-kind="data" data-evidence="modelled" data-description="60 requests at 59.9 seconds; admitted" cx="326" cy="205" r="7" fill="#4078f2"/>
+<polyline data-rg-kind="guide" points="354,205 354,240" fill="none" stroke="#5c5e66" stroke-width="1.5"/>
+<circle data-rg-kind="data" data-evidence="modelled" data-description="60 requests at 60.1 seconds; admitted" cx="354" cy="205" r="7" fill="#a626a4"/>
+<rect data-rg-kind="shape" data-rg-role="blue" x="35" y="335" width="280" height="56" rx="8" fill="#e6efff" stroke="#4078f2" stroke-width="1.5"/>
+<text x="175.0" y="369.0" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="175.0" dy="0">59.9s: admit 60</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="purple" x="365" y="335" width="280" height="56" rx="8" fill="#faecf9" stroke="#a626a4" stroke-width="1.5"/>
+<text x="505.0" y="369.0" text-anchor="middle" font-size="18" fill="#771977"><tspan x="505.0" dy="0">60.1s: admit 60</tspan></text>
+<text x="340" y="440" text-anchor="middle" font-size="18" fill="#a83329"><tspan x="340" dy="0">0.2 seconds apart → 120 requests admitted</tspan></text>
+<text x="340" y="490" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">Each aligned minute passes its own limit check</tspan></text></g></svg>

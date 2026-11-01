@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="sliding-window" class="logic2image" role="img" aria-labelledby="sliding-window-title" aria-describedby="sliding-window-desc" viewBox="0 0 680 550" width="680" height="550" style="max-width:100%;height:auto"><title id="sliding-window-title">Sliding window: the earlier batch still counts</title><desc id="sliding-window-desc">At t=60.1s, the exact trailing interval is (0.1,60.1]. It still contains 60 accepted requests from t=59.9s. Reject the next batch. Six cells illustrate ten-second time slices, not exact bucket implementation edges.</desc><style>#sliding-window text {font-family: Georgia, serif;}</style><defs><marker id="sliding-window-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 1 L 9 5 L 0 9 z" fill="context-stroke"/></marker></defs><rect width="680" height="550" fill="#ffffff"/><g data-rg-content="true"><text x="340" y="36" text-anchor="middle" font-size="23" fill="#383a42" data-rg-title="true"><tspan x="340" dy="0">Sliding window: the earlier batch still counts</tspan></text>
+<text x="340" y="95" text-anchor="middle" font-size="18" fill="#015f88"><tspan x="340" dy="0">At 60.1s: count the preceding 60 seconds</tspan></text>
+<text x="70" y="150" text-anchor="start" font-size="18" fill="#383a42"><tspan x="70" dy="0">0.1s</tspan></text>
+<text x="610" y="150" text-anchor="end" font-size="18" fill="#383a42"><tspan x="610" dy="0">60.1s</tspan></text>
+<rect data-rg-kind="shape" x="70" y="180" width="90" height="75" fill="#f0f0f1" stroke="#5c5e66" stroke-width="1"/>
+<text x="115" y="224" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="115" dy="0">0</tspan></text>
+<rect data-rg-kind="shape" x="160" y="180" width="90" height="75" fill="#f0f0f1" stroke="#5c5e66" stroke-width="1"/>
+<text x="205" y="224" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="205" dy="0">0</tspan></text>
+<rect data-rg-kind="shape" x="250" y="180" width="90" height="75" fill="#f0f0f1" stroke="#5c5e66" stroke-width="1"/>
+<text x="295" y="224" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="295" dy="0">0</tspan></text>
+<rect data-rg-kind="shape" x="340" y="180" width="90" height="75" fill="#f0f0f1" stroke="#5c5e66" stroke-width="1"/>
+<text x="385" y="224" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="385" dy="0">0</tspan></text>
+<rect data-rg-kind="shape" x="430" y="180" width="90" height="75" fill="#f0f0f1" stroke="#5c5e66" stroke-width="1"/>
+<text x="475" y="224" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="475" dy="0">0</tspan></text>
+<rect data-rg-kind="shape" x="520" y="180" width="90" height="75" fill="#e6efff" stroke="#4078f2" stroke-width="1"/>
+<text x="565" y="224" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="565" dy="0">60</tspan></text>
+<text x="340" y="300" text-anchor="middle" font-size="18" fill="#1a52cf"><tspan x="340" dy="0">The 59.9s batch is still inside: total = 60</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="coral" x="30" y="355" width="270" height="80" rx="8" fill="#fbeee2" stroke="#ca6f1e" stroke-width="1.5"/>
+<text x="165.0" y="389.0" text-anchor="middle" font-size="18" fill="#925113"><tspan x="165.0" dy="0">New batch at 60.1s</tspan><tspan x="165.0" dy="24">60 more requests</tspan></text>
+<rect data-rg-kind="shape" data-rg-role="red" x="390" y="355" width="260" height="80" rx="8" fill="#fde8e6" stroke="#e45649" stroke-width="1.5"/>
+<text x="520.0" y="389.0" text-anchor="middle" font-size="18" fill="#a83329"><tspan x="520.0" dy="0">Limit already reached</tspan><tspan x="520.0" dy="24">Reject the new batch</tspan></text>
+<polyline data-rg-kind="connector" points="300,395 390,395" fill="none" stroke="#e45649" stroke-width="2" marker-end="url(#sliding-window-arrow)"/>
+<text x="340" y="490" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">Cells illustrate 10s slices; timestamp logs use exact edges</tspan></text>
+<text x="340" y="530" text-anchor="middle" font-size="18" fill="#383a42"><tspan x="340" dy="0">Bucketed counters approximate the edges by their bucket width</tspan></text></g></svg>
