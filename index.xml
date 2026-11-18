@@ -757,7 +757,7 @@ HTML is HyperText Markup Language. It is responsible for the page&amp;rsquo;s st
  &lt;a class="bookmark-action is-website" href="https://github.com/hardikpandya/stop-slop/tree/main" target="_blank" rel="noopener noreferrer" title="Visit github.com" aria-label="Visit github.com">
  &lt;i class="bi bi-display" aria-hidden="true">&lt;/i>
  &lt;/a>
- &lt;a class="bookmark-action is-x" href="https://x.com/timerringX/status/2098682730452263399" target="_blank" rel="noopener noreferrer" title="Open @timerringX on X" aria-label="X for Stop Slop">
+ &lt;a class="bookmark-action is-x" href="https://x.com/timerring/status/2098682730452263399" target="_blank" rel="noopener noreferrer" title="Open @timerring on X" aria-label="X for Stop Slop">
  &lt;i class="bi bi-twitter-x" aria-hidden="true">&lt;/i>
  &lt;/a>
  &lt;/div>
@@ -776,7 +776,7 @@ HTML is HyperText Markup Language. It is responsible for the page&amp;rsquo;s st
  &lt;a class="bookmark-action is-website" href="https://github.com/KKKKhazix/human-writing" target="_blank" rel="noopener noreferrer" title="Visit github.com" aria-label="Visit github.com">
  &lt;i class="bi bi-display" aria-hidden="true">&lt;/i>
  &lt;/a>
- &lt;a class="bookmark-action is-x" href="https://x.com/timerringX/status/2098684688110067993" target="_blank" rel="noopener noreferrer" title="Open @timerringX on X" aria-label="X for Human Writing">
+ &lt;a class="bookmark-action is-x" href="https://x.com/timerring/status/2098684688110067993" target="_blank" rel="noopener noreferrer" title="Open @timerring on X" aria-label="X for Human Writing">
  &lt;i class="bi bi-twitter-x" aria-hidden="true">&lt;/i>
  &lt;/a>
  &lt;/div>
@@ -795,7 +795,7 @@ HTML is HyperText Markup Language. It is responsible for the page&amp;rsquo;s st
  &lt;a class="bookmark-action is-website" href="https://developers.openai.com/blog/" target="_blank" rel="noopener noreferrer" title="Visit openai.com" aria-label="Visit openai.com">
  &lt;i class="bi bi-display" aria-hidden="true">&lt;/i>
  &lt;/a>
- &lt;a class="bookmark-action is-x" href="https://x.com/timerringX" target="_blank" rel="noopener noreferrer" title="Open @timerringX on X" aria-label="X for OpenAI Developers">
+ &lt;a class="bookmark-action is-x" href="https://x.com/timerring" target="_blank" rel="noopener noreferrer" title="Open @timerring on X" aria-label="X for OpenAI Developers">
  &lt;i class="bi bi-twitter-x" aria-hidden="true">&lt;/i>
  &lt;/a>
  &lt;/div>
@@ -814,7 +814,7 @@ HTML is HyperText Markup Language. It is responsible for the page&amp;rsquo;s st
  &lt;a class="bookmark-action is-website" href="https://research.google/blog/" target="_blank" rel="noopener noreferrer" title="Visit research.google" aria-label="Visit research.google">
  &lt;i class="bi bi-display" aria-hidden="true">&lt;/i>
  &lt;/a>
- &lt;a class="bookmark-action is-x" href="https://x.com/timerringX" target="_blank" rel="noopener noreferrer" title="Open @timerringX on X" aria-label="X for Google Research">
+ &lt;a class="bookmark-action is-x" href="https://x.com/timerring" target="_blank" rel="noopener noreferrer" title="Open @timerring on X" aria-label="X for Google Research">
  &lt;i class="bi bi-twitter-x" aria-hidden="true">&lt;/i>
  &lt;/a>
  &lt;a class="bookmark-action is-blog" href="https://blogs.timerring.com/tags/google/" title="Related writing tagged Google" aria-label="Blog for Google Research">
